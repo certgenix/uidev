@@ -19,7 +19,7 @@ export default function WeaknessToStrength() {
           </div>
 
           <div className="order-1 lg:order-2 space-y-6">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold" data-testid="text-weakness-title">
+            <h2 className="text-2xl md:text-3xl font-semibold mb-3" data-testid="text-weakness-title">
               We Turn Your Weakness into Your Biggest Win.
             </h2>
             
