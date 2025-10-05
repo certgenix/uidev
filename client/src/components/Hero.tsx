@@ -28,15 +28,16 @@ export default function Hero() {
             </h1>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8 items-center">
-            <div className="lg:text-right text-center">
+          <div className="relative grid lg:grid-cols-3 gap-8 items-center">
+            <div className="absolute inset-0 left-1/2 -translate-x-1/2 w-[120%] h-full bg-gradient-to-tr from-primary/20 to-chart-2/20 blur-3xl" />
+            
+            <div className="relative lg:text-right text-center">
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed" data-testid="text-hero-subheadline">
                 Every learner is unique. That's why CertGenix begins with you — your strengths, gaps, and goals.
               </p>
             </div>
 
             <div className="relative flex justify-center">
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-chart-2/20 blur-3xl" />
               <img 
                 src={heroImage}
                 alt="AI-Powered Learning"
@@ -44,7 +45,7 @@ export default function Hero() {
               />
             </div>
 
-            <div className="lg:text-left text-center">
+            <div className="relative lg:text-left text-center">
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
                 Our AI builds a personalized study plan that adapts as you progress, turning preparation into confidence.
               </p>
