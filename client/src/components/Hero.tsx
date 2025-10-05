@@ -64,7 +64,7 @@ export default function Hero() {
             <img 
               src={heroImage}
               alt="AI-Powered Learning"
-              className="relative w-full h-auto object-contain drop-shadow-2xl animate-float"
+              className="relative w-full h-auto object-contain drop-shadow-2xl"
             />
           </div>
         </div>
@@ -76,19 +76,6 @@ export default function Hero() {
             linear-gradient(to right, hsl(var(--foreground) / 0.1) 1px, transparent 1px),
             linear-gradient(to bottom, hsl(var(--foreground) / 0.1) 1px, transparent 1px);
           background-size: 4rem 4rem;
-        }
-
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-20px);
-          }
-        }
-
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
         }
       `}</style>
     </section>
