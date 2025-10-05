@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { User, Brain, Trophy } from "lucide-react";
+import { User, Brain, Trophy, ArrowRight } from "lucide-react";
 
 export default function HowItWorks() {
   const steps = [
@@ -32,23 +32,39 @@ export default function HowItWorks() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {steps.map((step, index) => (
-            <Card key={step.number} className="p-6 md:p-8 hover-elevate" data-testid={`card-step-${index + 1}`}>
-              <div className="flex items-center gap-4 mb-4">
-                <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-primary to-chart-2 text-primary-foreground font-bold text-xl" data-testid={`badge-step-number-${step.number}`}>
-                  {step.number}
-                </div>
-                <step.icon className="h-8 w-8 text-primary" />
+        <div className="relative">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+            {steps.map((step, index) => (
+              <div key={step.number} className="relative" data-testid={`step-${index + 1}`}>
+                <Card className="p-6 md:p-8 hover-elevate relative z-10" data-testid={`card-step-${index + 1}`}>
+                  <div className="flex flex-col items-center text-center">
+                    <div className="flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-primary to-chart-2 text-primary-foreground font-bold text-2xl mb-4" data-testid={`badge-step-number-${step.number}`}>
+                      {step.number}
+                    </div>
+                    <step.icon className="h-12 w-12 text-primary mb-4" />
+                    <h3 className="text-xl font-semibold mb-3" data-testid={`text-step-title-${index + 1}`}>
+                      {step.title}
+                    </h3>
+                    <p className="text-muted-foreground" data-testid={`text-step-description-${index + 1}`}>
+                      {step.description}
+                    </p>
+                  </div>
+                </Card>
+                
+                {index < steps.length - 1 && (
+                  <div className="hidden md:flex absolute top-1/2 -right-6 transform -translate-y-1/2 z-20">
+                    <ArrowRight className="h-8 w-8 text-primary" data-testid={`arrow-${index + 1}`} />
+                  </div>
+                )}
+                
+                {index < steps.length - 1 && (
+                  <div className="md:hidden flex justify-center my-4">
+                    <ArrowRight className="h-8 w-8 text-primary rotate-90" data-testid={`arrow-mobile-${index + 1}`} />
+                  </div>
+                )}
               </div>
-              <h3 className="text-xl font-semibold mb-3" data-testid={`text-step-title-${index + 1}`}>
-                {step.title}
-              </h3>
-              <p className="text-muted-foreground" data-testid={`text-step-description-${index + 1}`}>
-                {step.description}
-              </p>
-            </Card>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
