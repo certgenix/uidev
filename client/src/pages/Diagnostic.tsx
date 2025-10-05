@@ -103,11 +103,19 @@ export default function Diagnostic() {
       <Header />
       
       <main className="relative flex-1 bg-gradient-to-br from-background via-background to-primary/5 flex items-center justify-center p-4 py-12 md:py-20 overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.08] dark:opacity-[0.12]">
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/4 pointer-events-none opacity-20 dark:opacity-25 hidden lg:block">
           <img 
             src={strengthImage} 
             alt="" 
-            className="w-[600px] md:w-[800px] lg:w-[1000px] h-auto object-contain"
+            className="w-[400px] xl:w-[500px] h-auto object-contain"
+          />
+        </div>
+        
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 pointer-events-none opacity-20 dark:opacity-25 hidden lg:block">
+          <img 
+            src={strengthImage} 
+            alt="" 
+            className="w-[400px] xl:w-[500px] h-auto object-contain"
           />
         </div>
         
