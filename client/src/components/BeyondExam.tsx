@@ -4,16 +4,16 @@ import careerImage from "@assets/generated_images/Professional_career_success_wo
 export default function BeyondExam() {
   const features = [
     {
-      title: "Real-World Scenarios to Build Your Job-Readiness",
-      description: "Practice applying certification concepts in real job situations.",
+      title: "Practice what you'll actually use at work",
+      description: "Apply certification concepts in real job situations, not just theory.",
     },
     {
-      title: "Walk Into Any Interview Prepared",
-      description: "Be prepared to answer, 'How did you apply this framework in practice?'",
+      title: "Walk into any interview prepared",
+      description: "Know how to answer \"How did you apply this framework in practice?\"",
     },
     {
-      title: "Career Growth Roadmap",
-      description: "See which roles and opportunities open up after your certification.",
+      title: "See what opens up after you certify",
+      description: "Which roles, promotions, and opportunities become available.",
     },
   ];
 
@@ -47,7 +47,7 @@ export default function BeyondExam() {
               </div>
             ))}
             <p className="text-base font-medium text-chart-2 pt-3" data-testid="text-beyond-highlight">
-              CertGenix prepares you not just for the exam — but for the job, the promotion, and the impact you want to make.
+              CertGenix prepares you not just for the exam—but for the job, the promotion, and the career you want.
             </p>
           </div>
 
