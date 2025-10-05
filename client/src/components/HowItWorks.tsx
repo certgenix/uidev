@@ -21,7 +21,7 @@ export default function HowItWorks() {
       number: "3",
       icon: Trophy,
       title: "You Certify & Apply",
-      description: "Pass your exam with confidence and apply your knowledge to accelerate your career.",
+      description: "Pass with confidence and use what you learned to get promoted or land a better job.",
       color: "from-emerald-500 to-chart-3",
     },
   ];
@@ -45,44 +45,51 @@ export default function HowItWorks() {
           {/* Desktop Layout */}
           <div className="hidden lg:block relative">
             {/* Dotted Connection Lines */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ height: '400px' }}>
+            <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ height: '500px' }}>
               {/* Line from card 1 to connector 1 */}
-              <line x1="20%" y1="50%" x2="30%" y2="20%" stroke="hsl(var(--primary))" strokeWidth="2" strokeDasharray="8,8" opacity="0.4" />
+              <line x1="20%" y1="35%" x2="30%" y2="20%" stroke="hsl(var(--primary))" strokeWidth="2" strokeDasharray="8,8" opacity="0.4" />
               {/* Line from connector 1 to card 2 */}
-              <line x1="30%" y1="20%" x2="50%" y2="50%" stroke="hsl(var(--primary))" strokeWidth="2" strokeDasharray="8,8" opacity="0.4" />
+              <line x1="30%" y1="20%" x2="50%" y2="55%" stroke="hsl(var(--primary))" strokeWidth="2" strokeDasharray="8,8" opacity="0.4" />
               {/* Line from card 2 to connector 2 */}
-              <line x1="50%" y1="50%" x2="50%" y2="60%" stroke="hsl(var(--primary))" strokeWidth="2" strokeDasharray="8,8" opacity="0.4" />
+              <line x1="50%" y1="55%" x2="50%" y2="65%" stroke="hsl(var(--primary))" strokeWidth="2" strokeDasharray="8,8" opacity="0.4" />
               {/* Line from connector 2 to connector 3 */}
-              <line x1="50%" y1="60%" x2="70%" y2="30%" stroke="hsl(var(--primary))" strokeWidth="2" strokeDasharray="8,8" opacity="0.4" />
+              <line x1="50%" y1="65%" x2="70%" y2="30%" stroke="hsl(var(--primary))" strokeWidth="2" strokeDasharray="8,8" opacity="0.4" />
               {/* Line from connector 3 to card 3 */}
-              <line x1="70%" y1="30%" x2="80%" y2="50%" stroke="hsl(var(--primary))" strokeWidth="2" strokeDasharray="8,8" opacity="0.4" />
+              <line x1="70%" y1="30%" x2="80%" y2="35%" stroke="hsl(var(--primary))" strokeWidth="2" strokeDasharray="8,8" opacity="0.4" />
             </svg>
 
             {/* Content Cards */}
-            <div className="relative flex justify-between items-center" style={{ minHeight: '400px' }}>
+            <div className="relative flex justify-between items-start" style={{ minHeight: '500px' }}>
               {steps.map((step, index) => (
-                <div key={step.number} className="relative w-72" data-testid={`step-${index + 1}`} style={{ zIndex: 10 }}>
-                  <Card className="p-5 hover-elevate bg-background" data-testid={`card-step-${index + 1}`}>
-                    {/* Icon with gradient background */}
-                    <div className={`inline-flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br ${step.color} mb-3`}>
-                      <step.icon className="h-6 w-6 text-white" />
-                    </div>
+                <div 
+                  key={step.number} 
+                  className={`relative w-72 transition-all duration-500 ${index === 1 ? 'lg:translate-y-24' : ''}`} 
+                  data-testid={`step-${index + 1}`} 
+                  style={{ zIndex: 10 }}
+                >
+                  <div className="relative p-[1px] rounded-xl bg-gradient-to-br from-primary/30 via-chart-2/20 to-primary/30 hover:from-primary/50 hover:via-chart-2/30 hover:to-primary/50 transition-all duration-300">
+                    <Card className="p-6 bg-background/95 backdrop-blur-sm rounded-xl border-0 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300" data-testid={`card-step-${index + 1}`}>
+                      {/* Icon with gradient background */}
+                      <div className={`inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br ${step.color} mb-4 shadow-lg`}>
+                        <step.icon className="h-7 w-7 text-white" />
+                      </div>
 
-                    {/* Step Number */}
-                    <div className="text-xs font-medium text-muted-foreground mb-2" data-testid={`badge-step-number-${step.number}`}>
-                      STEP {step.number}
-                    </div>
+                      {/* Step Number */}
+                      <div className="text-xs font-semibold tracking-wider text-primary/80 mb-3" data-testid={`badge-step-number-${step.number}`}>
+                        STEP {step.number}
+                      </div>
 
-                    {/* Title */}
-                    <h3 className="text-base font-semibold mb-2" data-testid={`text-step-title-${index + 1}`}>
-                      {step.title}
-                    </h3>
+                      {/* Title */}
+                      <h3 className="text-lg font-bold mb-3" data-testid={`text-step-title-${index + 1}`}>
+                        {step.title}
+                      </h3>
 
-                    {/* Description */}
-                    <p className="text-sm text-muted-foreground leading-relaxed" data-testid={`text-step-description-${index + 1}`}>
-                      {step.description}
-                    </p>
-                  </Card>
+                      {/* Description */}
+                      <p className="text-sm text-muted-foreground leading-relaxed" data-testid={`text-step-description-${index + 1}`}>
+                        {step.description}
+                      </p>
+                    </Card>
+                  </div>
                 </div>
               ))}
 
@@ -104,23 +111,25 @@ export default function HowItWorks() {
           <div className="lg:hidden space-y-8">
             {steps.map((step, index) => (
               <div key={step.number} className="relative" data-testid={`step-${index + 1}`}>
-                <Card className="p-5 hover-elevate bg-background" data-testid={`card-step-${index + 1}`}>
-                  <div className={`inline-flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br ${step.color} mb-3`}>
-                    <step.icon className="h-6 w-6 text-white" />
-                  </div>
+                <div className="relative p-[1px] rounded-xl bg-gradient-to-br from-primary/30 via-chart-2/20 to-primary/30">
+                  <Card className="p-6 bg-background/95 backdrop-blur-sm rounded-xl border-0" data-testid={`card-step-${index + 1}`}>
+                    <div className={`inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br ${step.color} mb-4 shadow-lg`}>
+                      <step.icon className="h-7 w-7 text-white" />
+                    </div>
 
-                  <div className="text-xs font-medium text-muted-foreground mb-2" data-testid={`badge-step-number-${step.number}`}>
-                    STEP {step.number}
-                  </div>
+                    <div className="text-xs font-semibold tracking-wider text-primary/80 mb-3" data-testid={`badge-step-number-${step.number}`}>
+                      STEP {step.number}
+                    </div>
 
-                  <h3 className="text-base font-semibold mb-2" data-testid={`text-step-title-${index + 1}`}>
-                    {step.title}
-                  </h3>
+                    <h3 className="text-lg font-bold mb-3" data-testid={`text-step-title-${index + 1}`}>
+                      {step.title}
+                    </h3>
 
-                  <p className="text-sm text-muted-foreground leading-relaxed" data-testid={`text-step-description-${index + 1}`}>
-                    {step.description}
-                  </p>
-                </Card>
+                    <p className="text-sm text-muted-foreground leading-relaxed" data-testid={`text-step-description-${index + 1}`}>
+                      {step.description}
+                    </p>
+                  </Card>
+                </div>
 
                 {/* Connector for Mobile */}
                 {index < steps.length - 1 && (
