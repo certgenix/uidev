@@ -11,7 +11,6 @@ export default function WeaknessToStrength() {
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 relative">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="relative order-2 lg:order-1">
-            <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/30 to-teal-500/30 blur-3xl" />
             <img 
               src={strengthImage}
               alt="Strength Building"
