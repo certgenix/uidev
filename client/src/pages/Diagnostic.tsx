@@ -8,6 +8,7 @@ import { ArrowRight, ArrowLeft, Sparkles, CheckCircle2, Rocket } from "lucide-re
 import { motion, AnimatePresence } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import strengthImage from "@assets/Strength 3D 3_1759707811606.png";
 
 const certifications = [
   "PMP®", "CISSP®", "CCSP®", "CISM®", "PRINCE2®", 
@@ -101,8 +102,16 @@ export default function Diagnostic() {
     <div className="min-h-screen flex flex-col">
       <Header />
       
-      <main className="flex-1 bg-gradient-to-br from-background via-background to-primary/5 flex items-center justify-center p-4 py-12 md:py-20">
-        <div className="w-full max-w-4xl">
+      <main className="relative flex-1 bg-gradient-to-br from-background via-background to-primary/5 flex items-center justify-center p-4 py-12 md:py-20 overflow-hidden">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.08] dark:opacity-[0.12]">
+          <img 
+            src={strengthImage} 
+            alt="" 
+            className="w-[600px] md:w-[800px] lg:w-[1000px] h-auto object-contain"
+          />
+        </div>
+        
+        <div className="w-full max-w-4xl relative z-10">
           <div className="mb-8 flex justify-center">
             <div className="flex items-center gap-2">
               {[0, 1, 2, 3, 4, 5].map((step) => (
