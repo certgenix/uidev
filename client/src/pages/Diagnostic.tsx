@@ -262,30 +262,32 @@ export default function Diagnostic() {
                   </div>
 
                   <div className="space-y-3">
-                    {domains.map((domain) => (
-                      <div
-                        key={domain}
-                        className={`flex items-center space-x-3 p-4 rounded-lg border-2 transition-all cursor-pointer ${
-                          formData.weaknesses.includes(domain)
-                            ? "border-primary bg-primary/10"
-                            : "border-border hover:bg-accent"
-                        }`}
-                        onClick={() => handleWeaknessToggle(domain)}
-                        data-testid={`checkbox-domain-${domain.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
-                      >
-                        <Checkbox
-                          checked={formData.weaknesses.includes(domain)}
-                          onCheckedChange={() => handleWeaknessToggle(domain)}
-                          id={domain}
-                        />
-                        <Label
-                          htmlFor={domain}
-                          className="flex-1 cursor-pointer text-base"
+                    {domains.map((domain) => {
+                      const domainId = `domain-${domain.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
+                      return (
+                        <div
+                          key={domain}
+                          className={`flex items-center space-x-3 p-4 rounded-lg border-2 transition-all ${
+                            formData.weaknesses.includes(domain)
+                              ? "border-primary bg-primary/10"
+                              : "border-border hover:bg-accent"
+                          }`}
+                          data-testid={`checkbox-${domainId}`}
                         >
-                          {domain}
-                        </Label>
-                      </div>
-                    ))}
+                          <Checkbox
+                            checked={formData.weaknesses.includes(domain)}
+                            onCheckedChange={() => handleWeaknessToggle(domain)}
+                            id={domainId}
+                          />
+                          <Label
+                            htmlFor={domainId}
+                            className="flex-1 cursor-pointer text-base"
+                          >
+                            {domain}
+                          </Label>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}
