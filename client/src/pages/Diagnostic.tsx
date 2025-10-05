@@ -6,6 +6,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { ArrowRight, ArrowLeft, Sparkles, CheckCircle2, Rocket } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const certifications = [
   "PMP®", "CISSP®", "CCSP®", "CISM®", "PRINCE2®", 
@@ -96,25 +98,28 @@ export default function Diagnostic() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5 flex items-center justify-center p-4">
-      <div className="w-full max-w-4xl">
-        <div className="mb-8 flex justify-center">
-          <div className="flex items-center gap-2">
-            {[0, 1, 2, 3, 4, 5].map((step) => (
-              <div
-                key={step}
-                className={`h-2 rounded-full transition-all duration-500 ${
-                  step <= currentStep 
-                    ? "w-12 bg-primary" 
-                    : "w-8 bg-primary/20"
-                }`}
-                data-testid={`progress-step-${step}`}
-              />
-            ))}
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      
+      <main className="flex-1 bg-gradient-to-br from-background via-background to-primary/5 flex items-center justify-center p-4 py-12 md:py-20">
+        <div className="w-full max-w-4xl">
+          <div className="mb-8 flex justify-center">
+            <div className="flex items-center gap-2">
+              {[0, 1, 2, 3, 4, 5].map((step) => (
+                <div
+                  key={step}
+                  className={`h-2 rounded-full transition-all duration-500 ${
+                    step <= currentStep 
+                      ? "w-12 bg-primary" 
+                      : "w-8 bg-primary/20"
+                  }`}
+                  data-testid={`progress-step-${step}`}
+                />
+              ))}
+            </div>
           </div>
-        </div>
 
-        <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait">
           <motion.div
             key={currentStep}
             variants={stepVariants}
@@ -395,8 +400,11 @@ export default function Diagnostic() {
               )}
             </Card>
           </motion.div>
-        </AnimatePresence>
-      </div>
+          </AnimatePresence>
+        </div>
+      </main>
+      
+      <Footer />
     </div>
   );
 }
