@@ -1,5 +1,5 @@
 import { CheckCircle2 } from "lucide-react";
-import careerImage from "@assets/generated_images/Professional_career_success_workplace_scene_48bc8cb9.png";
+import careerImage from "@assets/transition 2_1759687805990.png";
 
 export default function BeyondExam() {
   const features = [
