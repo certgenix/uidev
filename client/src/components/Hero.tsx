@@ -32,7 +32,7 @@ export default function Hero() {
             <div className="absolute inset-0 left-1/2 -translate-x-1/2 w-[120%] h-full bg-gradient-to-tr from-primary/20 to-chart-2/20 blur-3xl" />
             
             <div className="relative lg:text-right text-center">
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed" data-testid="text-hero-subheadline">
+              <p className="text-lg md:text-xl text-foreground/90 font-medium leading-relaxed" data-testid="text-hero-subheadline">
                 Every learner is unique. That's why CertGenix begins with you — your strengths, gaps, and goals.
               </p>
             </div>
@@ -46,15 +46,15 @@ export default function Hero() {
             </div>
 
             <div className="relative lg:text-left text-center">
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+              <p className="text-lg md:text-xl text-foreground/90 font-medium leading-relaxed">
                 Our AI builds a personalized study plan that adapts as you progress, turning preparation into confidence.
               </p>
             </div>
           </div>
 
           <div className="text-center space-y-6">
-            <p className="text-base md:text-lg text-foreground/90 leading-relaxed max-w-4xl mx-auto" data-testid="text-hero-certifications">
-              Prepare for <strong className="text-primary font-semibold">PMP®, CISSP®, CCSP®, CISM®</strong>, and more. Our adaptive AI and real exam simulations ensure you study smarter, not longer.
+            <p className="text-base md:text-lg text-foreground font-medium leading-relaxed max-w-4xl mx-auto" data-testid="text-hero-certifications">
+              Prepare for <strong className="text-primary font-bold">PMP®, CISSP®, CCSP®, CISM®</strong>, and more. Our adaptive AI and real exam simulations ensure you study smarter, not longer.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
