@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, integer } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -16,3 +16,19 @@ export const insertUserSchema = createInsertSchema(users).pick({
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
+
+export const diagnostics = pgTable("diagnostics", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  certification: text("certification").notNull(),
+  examTimeline: text("exam_timeline").notNull(),
+  weeklyHours: text("weekly_hours").notNull(),
+  weaknesses: text("weaknesses").array().notNull(),
+  background: text("background"),
+});
+
+export const insertDiagnosticSchema = createInsertSchema(diagnostics).omit({
+  id: true,
+});
+
+export type InsertDiagnostic = z.infer<typeof insertDiagnosticSchema>;
+export type Diagnostic = typeof diagnostics.$inferSelect;
