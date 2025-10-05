@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { Link } from "wouter";
 import heroImage from "@assets/hero-image-3d.png";
 
 export default function Hero() {
@@ -58,14 +59,16 @@ export default function Hero() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
-              <Button
-                size="lg"
-                className="rounded-full text-base px-8 h-14 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all"
-                data-testid="button-hero-cta"
-              >
-                Start Your Personalized Prep Today
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+              <Link href="/diagnostic">
+                <Button
+                  size="lg"
+                  className="rounded-full text-base px-8 h-14 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all"
+                  data-testid="button-hero-cta"
+                >
+                  Start Your Personalized Prep Today
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

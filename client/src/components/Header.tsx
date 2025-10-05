@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { Link } from "wouter";
 import logoImage from "@assets/Gemini_logo 7_1759694336419.png";
 
 export default function Header() {
@@ -27,13 +28,15 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <Button
-              variant="default"
-              className="hidden md:inline-flex rounded-full"
-              data-testid="button-get-started"
-            >
-              Get Started
-            </Button>
+            <Link href="/diagnostic">
+              <Button
+                variant="default"
+                className="hidden md:inline-flex rounded-full"
+                data-testid="button-get-started"
+              >
+                Get Started
+              </Button>
+            </Link>
 
             <Button
               variant="ghost"
@@ -74,14 +77,16 @@ export default function Header() {
               >
                 Testimonials
               </a>
-              <Button
-                variant="default"
-                className="mt-2 rounded-full"
-                onClick={() => setMobileMenuOpen(false)}
-                data-testid="button-mobile-get-started"
-              >
-                Get Started
-              </Button>
+              <Link href="/diagnostic">
+                <Button
+                  variant="default"
+                  className="mt-2 rounded-full"
+                  onClick={() => setMobileMenuOpen(false)}
+                  data-testid="button-mobile-get-started"
+                >
+                  Get Started
+                </Button>
+              </Link>
             </nav>
           </div>
         )}

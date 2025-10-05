@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { Link } from "wouter";
 
 export default function ClosingCTA() {
   return (
@@ -13,15 +14,17 @@ export default function ClosingCTA() {
           Let CertGenix learn about you, so you can learn smarter.
         </p>
 
-        <Button
-          size="default"
-          variant="secondary"
-          className="rounded-full"
-          data-testid="button-closing-cta"
-        >
-          Join CertGenix Today — Learn. Certify. Apply.
-          <ArrowRight className="ml-2 h-4 w-4" />
-        </Button>
+        <Link href="/diagnostic">
+          <Button
+            size="default"
+            variant="secondary"
+            className="rounded-full"
+            data-testid="button-closing-cta"
+          >
+            Join CertGenix Today — Learn. Certify. Apply.
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+        </Link>
       </div>
     </section>
   );
