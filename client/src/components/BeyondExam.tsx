@@ -55,7 +55,7 @@ export default function BeyondExam() {
             <img
               src={careerImage}
               alt="Professional career success"
-              className="rounded-lg shadow-lg w-full h-auto"
+              className="w-full h-auto"
               data-testid="img-career"
             />
           </div>
