@@ -6,6 +6,7 @@ import Benefits from "@/components/Benefits";
 import WeaknessToStrength from "@/components/WeaknessToStrength";
 import BeyondExam from "@/components/BeyondExam";
 import Testimonials from "@/components/Testimonials";
+import Commitment from "@/components/Commitment";
 import ClosingCTA from "@/components/ClosingCTA";
 import Footer from "@/components/Footer";
 
@@ -59,6 +60,9 @@ export default function Home() {
         </section>
         <section ref={addToRefs} className="section-transition">
           <Testimonials />
+        </section>
+        <section ref={addToRefs} className="section-transition">
+          <Commitment />
         </section>
         <section ref={addToRefs} className="section-transition">
           <ClosingCTA />
