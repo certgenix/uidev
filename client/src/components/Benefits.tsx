@@ -58,8 +58,8 @@ export default function Benefits() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 relative">
-        <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4" data-testid="text-benefits-title">
+        <div className="text-center mb-10 md:mb-14">
+          <h2 className="text-2xl md:text-3xl font-semibold mb-3" data-testid="text-benefits-title">
             Why Choose CertGenix?
           </h2>
         </div>
@@ -80,25 +80,25 @@ export default function Benefits() {
               <div className={`absolute -inset-0.5 bg-gradient-to-r ${benefit.color} rounded-xl opacity-0 group-hover:opacity-20 blur transition-opacity duration-500`} />
               
               {/* Main Card */}
-              <div className="relative h-full bg-card border border-border rounded-xl p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+              <div className="relative h-full bg-card border border-border rounded-lg p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
                 {/* Icon Container with Gradient Background */}
-                <div className="relative mb-6">
-                  <div className={`absolute inset-0 bg-gradient-to-br ${benefit.bgColor} rounded-2xl blur-xl transition-all duration-300 ${hoveredIndex === index ? 'scale-110' : 'scale-100'}`} />
-                  <div className={`relative flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br ${benefit.color} transition-all duration-300 ${hoveredIndex === index ? 'rotate-12 scale-110' : 'rotate-0'}`}>
-                    <benefit.icon className="h-8 w-8 text-white" />
+                <div className="relative mb-4">
+                  <div className={`absolute inset-0 bg-gradient-to-br ${benefit.bgColor} rounded-xl blur-lg transition-all duration-300 ${hoveredIndex === index ? 'scale-110' : 'scale-100'}`} />
+                  <div className={`relative flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${benefit.color} transition-all duration-300 ${hoveredIndex === index ? 'rotate-12 scale-110' : 'rotate-0'}`}>
+                    <benefit.icon className="h-6 w-6 text-white" />
                   </div>
                 </div>
 
                 {/* Content */}
-                <h3 className="text-xl font-semibold mb-3 transition-colors duration-300 group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-chart-2 group-hover:bg-clip-text group-hover:text-transparent" data-testid={`text-benefit-title-${index}`}>
+                <h3 className="text-base font-semibold mb-2 transition-colors duration-300 group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-chart-2 group-hover:bg-clip-text group-hover:text-transparent" data-testid={`text-benefit-title-${index}`}>
                   {benefit.title}
                 </h3>
-                <p className="text-muted-foreground leading-relaxed" data-testid={`text-benefit-description-${index}`}>
+                <p className="text-sm text-muted-foreground leading-relaxed" data-testid={`text-benefit-description-${index}`}>
                   {benefit.description}
                 </p>
 
                 {/* Decorative Corner Element */}
-                <div className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${benefit.color} opacity-0 group-hover:opacity-10 rounded-bl-full transition-opacity duration-300`} />
+                <div className={`absolute top-0 right-0 w-16 h-16 bg-gradient-to-br ${benefit.color} opacity-0 group-hover:opacity-10 rounded-bl-full transition-opacity duration-300`} />
               </div>
             </div>
           ))}

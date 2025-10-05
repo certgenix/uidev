@@ -17,17 +17,17 @@ export default function Hero() {
       <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-20 md:py-32">
         <div className="max-w-4xl">
           <h1
-            className="text-4xl md:text-5xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent"
+            className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-5 bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent leading-tight"
             data-testid="text-hero-headline"
           >
             Pass Your Exam. Own Your Career.
           </h1>
 
-          <p className="text-lg md:text-xl lg:text-2xl text-foreground mb-6 leading-relaxed" data-testid="text-hero-subheadline">
+          <p className="text-base md:text-lg text-foreground mb-5 leading-relaxed" data-testid="text-hero-subheadline">
             Every learner is unique. That's why CertGenix begins with you — your strengths, gaps, and goals. Our AI builds a personalized study plan that adapts as you progress, turning preparation into confidence.
           </p>
 
-          <p className="text-base md:text-lg text-muted-foreground mb-8" data-testid="text-hero-certifications">
+          <p className="text-sm md:text-base text-muted-foreground mb-6" data-testid="text-hero-certifications">
             Prepare smarter for the industry's top certifications — PMP®, CISSP®, CCSP®, CISM®, and more — with adaptive AI, real exam simulations, and real-world readiness tools.
           </p>
 

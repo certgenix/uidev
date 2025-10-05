@@ -35,8 +35,8 @@ export default function HowItWorks() {
   return (
     <section id="how-it-works" className="py-16 md:py-24 lg:py-32 bg-card relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-        <div className="text-center mb-16 md:mb-20">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4" data-testid="text-how-it-works-title">
+        <div className="text-center mb-12 md:mb-16">
+          <h2 className="text-2xl md:text-3xl font-semibold mb-3" data-testid="text-how-it-works-title">
             How CertGenix Works
           </h2>
         </div>
@@ -62,19 +62,19 @@ export default function HowItWorks() {
             <div className="relative flex justify-between items-center" style={{ minHeight: '400px' }}>
               {steps.map((step, index) => (
                 <div key={step.number} className="relative w-72" data-testid={`step-${index + 1}`} style={{ zIndex: 10 }}>
-                  <Card className="p-6 hover-elevate bg-background" data-testid={`card-step-${index + 1}`}>
+                  <Card className="p-5 hover-elevate bg-background" data-testid={`card-step-${index + 1}`}>
                     {/* Icon with gradient background */}
-                    <div className={`inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br ${step.color} mb-4`}>
-                      <step.icon className="h-7 w-7 text-white" />
+                    <div className={`inline-flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br ${step.color} mb-3`}>
+                      <step.icon className="h-6 w-6 text-white" />
                     </div>
 
                     {/* Step Number */}
-                    <div className="text-xs font-semibold text-muted-foreground mb-2" data-testid={`badge-step-number-${step.number}`}>
+                    <div className="text-xs font-medium text-muted-foreground mb-2" data-testid={`badge-step-number-${step.number}`}>
                       STEP {step.number}
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-lg font-bold mb-3" data-testid={`text-step-title-${index + 1}`}>
+                    <h3 className="text-base font-semibold mb-2" data-testid={`text-step-title-${index + 1}`}>
                       {step.title}
                     </h3>
 
@@ -104,16 +104,16 @@ export default function HowItWorks() {
           <div className="lg:hidden space-y-8">
             {steps.map((step, index) => (
               <div key={step.number} className="relative" data-testid={`step-${index + 1}`}>
-                <Card className="p-6 hover-elevate bg-background" data-testid={`card-step-${index + 1}`}>
-                  <div className={`inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br ${step.color} mb-4`}>
-                    <step.icon className="h-7 w-7 text-white" />
+                <Card className="p-5 hover-elevate bg-background" data-testid={`card-step-${index + 1}`}>
+                  <div className={`inline-flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br ${step.color} mb-3`}>
+                    <step.icon className="h-6 w-6 text-white" />
                   </div>
 
-                  <div className="text-xs font-semibold text-muted-foreground mb-2" data-testid={`badge-step-number-${step.number}`}>
+                  <div className="text-xs font-medium text-muted-foreground mb-2" data-testid={`badge-step-number-${step.number}`}>
                     STEP {step.number}
                   </div>
 
-                  <h3 className="text-lg font-bold mb-3" data-testid={`text-step-title-${index + 1}`}>
+                  <h3 className="text-base font-semibold mb-2" data-testid={`text-step-title-${index + 1}`}>
                     {step.title}
                   </h3>
 
