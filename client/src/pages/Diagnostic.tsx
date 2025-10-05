@@ -103,23 +103,7 @@ export default function Diagnostic() {
       <Header />
       
       <main className="relative flex-1 bg-gradient-to-br from-background via-background to-primary/5 flex items-center justify-center p-4 py-12 md:py-20 overflow-hidden">
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/4 pointer-events-none opacity-20 dark:opacity-25 hidden lg:block">
-          <img 
-            src={strengthImage} 
-            alt="" 
-            className="w-[400px] xl:w-[500px] h-auto object-contain"
-          />
-        </div>
-        
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 pointer-events-none opacity-20 dark:opacity-25 hidden lg:block">
-          <img 
-            src={strengthImage} 
-            alt="" 
-            className="w-[400px] xl:w-[500px] h-auto object-contain"
-          />
-        </div>
-        
-        <div className="w-full max-w-4xl relative z-10">
+        <div className="w-full max-w-4xl relative">
           <div className="mb-8 flex justify-center">
             <div className="flex items-center gap-2">
               {[0, 1, 2, 3, 4, 5].map((step) => (
@@ -144,8 +128,17 @@ export default function Diagnostic() {
             animate="visible"
             exit="exit"
             transition={{ duration: 0.4 }}
+            className="relative"
           >
-            <Card className="p-8 md:p-12 shadow-2xl border-0 bg-card/95 backdrop-blur">
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.06] dark:opacity-[0.08]">
+              <img 
+                src={strengthImage} 
+                alt="" 
+                className="w-[300px] md:w-[400px] lg:w-[450px] h-auto object-contain"
+              />
+            </div>
+            
+            <Card className="relative p-8 md:p-12 shadow-2xl border-0 bg-card/95 backdrop-blur">
               {currentStep === 0 && (
                 <div className="text-center space-y-6">
                   <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
