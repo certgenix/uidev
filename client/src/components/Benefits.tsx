@@ -1,109 +1,122 @@
 import { Target, Bot, Clock, TrendingUp, Globe, Rocket } from "lucide-react";
+import { useState } from "react";
 
 export default function Benefits() {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
   const benefits = [
     {
       icon: Target,
       title: "Practice exams that feel like the real thing",
       description: "Practice for PMP, CISSP, CCSP, CISM, and more in true exam conditions.",
       color: "from-red-500 to-orange-500",
-      gridClass: "lg:col-span-2 lg:row-span-1",
-      featured: true,
+      bgColor: "from-red-500/10 to-orange-500/10",
     },
     {
       icon: Bot,
       title: "Your plan adapts to you, not the other way around",
       description: "We figure out what you're good at and what you need to work on.",
       color: "from-primary to-blue-600",
-      gridClass: "lg:col-span-1 lg:row-span-2",
-      featured: true,
+      bgColor: "from-primary/10 to-blue-600/10",
     },
     {
       icon: Clock,
       title: "Study when it works for you—even if that's 20 minutes before bed",
       description: "Flexible study blocks that fit your schedule.",
       color: "from-purple-500 to-pink-500",
-      gridClass: "lg:col-span-1 lg:row-span-1",
-      featured: false,
+      bgColor: "from-purple-500/10 to-pink-500/10",
     },
     {
       icon: TrendingUp,
       title: "We'll tell you exactly when you're ready to pass—no guessing",
       description: "Always know when you're exam-ready with our confidence tracking.",
       color: "from-chart-3 to-emerald-600",
-      gridClass: "lg:col-span-1 lg:row-span-1",
-      featured: false,
+      bgColor: "from-chart-3/10 to-emerald-600/10",
     },
     {
       icon: Globe,
       title: "Use what you learn at work, not just on test day",
       description: "Learn with case studies and scenarios that prepare you for your job, not just the test.",
       color: "from-chart-2 to-cyan-500",
-      gridClass: "lg:col-span-1 lg:row-span-1",
-      featured: false,
+      bgColor: "from-chart-2/10 to-cyan-500/10",
     },
     {
       icon: Rocket,
       title: "Land the job you want",
       description: "Move beyond exams into mastery and professional growth.",
       color: "from-amber-500 to-yellow-500",
-      gridClass: "lg:col-span-2 lg:row-span-1",
-      featured: true,
+      bgColor: "from-amber-500/10 to-yellow-500/10",
     },
   ];
 
   return (
-    <section id="benefits" className="py-16 md:py-24 lg:py-32 relative overflow-hidden bg-gradient-to-b from-background to-muted/20">
+    <section id="benefits" className="py-16 md:py-24 lg:py-32 relative overflow-hidden">
+      {/* Animated Background Gradient Orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-chart-2/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 relative">
-        <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="text-benefits-title">
+        <div className="text-center mb-10 md:mb-14">
+          <h2 className="text-2xl md:text-3xl font-semibold mb-3" data-testid="text-benefits-title">
             Why Choose CertGenix?
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 auto-rows-fr">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {benefits.map((benefit, index) => (
             <div
               key={index}
-              className={`group relative ${benefit.gridClass}`}
+              className="group relative"
               data-testid={`card-benefit-${index}`}
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              style={{
+                animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
+              }}
             >
-              <div className="relative h-full">
-                <div className={`absolute inset-0 bg-gradient-to-br ${benefit.color} opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-500`} />
-                
-                <div className={`relative h-full bg-card/60 backdrop-blur-sm border border-border/50 rounded-2xl p-6 lg:p-8 transition-all duration-300 hover:border-primary/30 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/10 ${benefit.featured ? 'bg-card/80' : ''}`}>
-                  <div className="flex flex-col h-full">
-                    <div className="flex items-start gap-4 mb-4">
-                      <div className={`flex-shrink-0 w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-gradient-to-br ${benefit.color} flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300`}>
-                        <benefit.icon className="h-6 w-6 lg:h-7 lg:w-7 text-white" />
-                      </div>
-                      
-                      <div className="flex-1 min-w-0">
-                        <div className="text-xs font-semibold tracking-wider text-primary/60 mb-2 uppercase">
-                          Benefit {index + 1}
-                        </div>
-                        <h3 
-                          className={`${benefit.featured ? 'text-xl lg:text-2xl' : 'text-lg lg:text-xl'} font-bold leading-tight mb-3 transition-colors duration-300 group-hover:text-primary`} 
-                          data-testid={`text-benefit-title-${index}`}
-                        >
-                          {benefit.title}
-                        </h3>
-                      </div>
-                    </div>
-                    
-                    <p 
-                      className={`${benefit.featured ? 'text-base' : 'text-sm'} text-muted-foreground leading-relaxed mt-auto`} 
-                      data-testid={`text-benefit-description-${index}`}
-                    >
-                      {benefit.description}
-                    </p>
+              {/* Glowing border effect on hover */}
+              <div className={`absolute -inset-0.5 bg-gradient-to-r ${benefit.color} rounded-xl opacity-0 group-hover:opacity-20 blur transition-opacity duration-500`} />
+              
+              {/* Main Card */}
+              <div className="relative h-full bg-card border border-border rounded-lg p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                {/* Icon Container with Gradient Background */}
+                <div className="relative mb-4">
+                  <div className={`absolute inset-0 bg-gradient-to-br ${benefit.bgColor} rounded-xl blur-lg transition-all duration-300 ${hoveredIndex === index ? 'scale-110' : 'scale-100'}`} />
+                  <div className={`relative flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${benefit.color} transition-all duration-300 ${hoveredIndex === index ? 'rotate-12 scale-110' : 'rotate-0'}`}>
+                    <benefit.icon className="h-6 w-6 text-white" />
                   </div>
                 </div>
+
+                {/* Content */}
+                <h3 className="text-base font-semibold mb-2 transition-colors duration-300 group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-chart-2 group-hover:bg-clip-text group-hover:text-transparent" data-testid={`text-benefit-title-${index}`}>
+                  {benefit.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed" data-testid={`text-benefit-description-${index}`}>
+                  {benefit.description}
+                </p>
+
+                {/* Decorative Corner Element */}
+                <div className={`absolute top-0 right-0 w-16 h-16 bg-gradient-to-br ${benefit.color} opacity-0 group-hover:opacity-10 rounded-bl-full transition-opacity duration-300`} />
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      <style>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </section>
   );
 }
