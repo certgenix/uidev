@@ -41,7 +41,7 @@ export default function Hero() {
               <img 
                 src={heroImage}
                 alt="AI-Powered Learning"
-                className="relative w-64 md:w-72 lg:w-80 h-auto object-contain drop-shadow-2xl"
+                className="relative w-80 md:w-96 lg:w-[28rem] h-auto object-contain drop-shadow-2xl"
               />
             </div>
 
