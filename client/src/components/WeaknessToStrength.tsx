@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import strengthImage from "@assets/strength-3d.png";
+import strengthImage from "@assets/Strength-3D2_1759686901921.png";
 
 export default function WeaknessToStrength() {
   return (
