@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Sparkles } from "lucide-react";
+import heroImage from "@assets/hero-image-3d.png";
 
 export default function Hero() {
   const certifications = ["PMP®", "CISSP®", "CCSP®", "CISM®"];
@@ -61,7 +62,7 @@ export default function Hero() {
           <div className="relative lg:block hidden">
             <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-chart-2/20 blur-3xl rounded-full transform scale-75" />
             <img 
-              src="/attached_assets/Hero Image 3 3D No BG_1759679073254.png"
+              src={heroImage}
               alt="AI-Powered Learning"
               className="relative w-full h-auto object-contain drop-shadow-2xl animate-float"
             />
