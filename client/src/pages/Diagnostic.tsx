@@ -128,17 +128,17 @@ export default function Diagnostic() {
             animate="visible"
             exit="exit"
             transition={{ duration: 0.4 }}
-            className="relative"
           >
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.06] dark:opacity-[0.08]">
-              <img 
-                src={strengthImage} 
-                alt="" 
-                className="w-[300px] md:w-[400px] lg:w-[450px] h-auto object-contain"
-              />
-            </div>
-            
-            <Card className="relative p-8 md:p-12 shadow-2xl border-0 bg-card/95 backdrop-blur">
+            <Card className="relative p-8 md:p-12 shadow-2xl border-0 bg-card/95 backdrop-blur overflow-hidden">
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-15 dark:opacity-20 z-0">
+                <img 
+                  src={strengthImage} 
+                  alt="" 
+                  className="w-[300px] md:w-[400px] lg:w-[500px] h-auto object-contain"
+                />
+              </div>
+              
+              <div className="relative z-10">
               {currentStep === 0 && (
                 <div className="text-center space-y-6">
                   <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
@@ -408,6 +408,7 @@ export default function Diagnostic() {
                   </Button>
                 </div>
               )}
+              </div>
             </Card>
           </motion.div>
           </AnimatePresence>
