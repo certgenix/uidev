@@ -129,7 +129,7 @@ export default function Diagnostic() {
             transition={{ duration: 0.4 }}
           >
             <Card className="relative p-8 md:p-12 shadow-2xl border-0 bg-card/95 backdrop-blur overflow-hidden">
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent z-0" />
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/30 via-primary/10 to-transparent z-0" />
               
               <div className="relative z-10">
               {currentStep === 0 && (
