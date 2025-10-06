@@ -8,7 +8,6 @@ import { ArrowRight, ArrowLeft, Sparkles, CheckCircle2, Rocket } from "lucide-re
 import { motion, AnimatePresence } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import strengthImage from "@assets/Strength 3D 3_1759707811606.png";
 
 const certifications = [
   "PMP®", "CISSP®", "CCSP®", "CISM®", "PRINCE2®", 
@@ -130,13 +129,7 @@ export default function Diagnostic() {
             transition={{ duration: 0.4 }}
           >
             <Card className="relative p-8 md:p-12 shadow-2xl border-0 bg-card/95 backdrop-blur overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-15 dark:opacity-20 z-0">
-                <img 
-                  src={strengthImage} 
-                  alt="" 
-                  className="w-[300px] md:w-[400px] lg:w-[500px] h-auto object-contain"
-                />
-              </div>
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent z-0" />
               
               <div className="relative z-10">
               {currentStep === 0 && (
