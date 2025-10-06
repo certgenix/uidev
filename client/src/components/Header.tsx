@@ -10,10 +10,16 @@ import logoImage from "@assets/Gemini_logo 7_1759694336419.png";
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
+  const [signupOpen, setSignupOpen] = useState(false);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle login logic here
+  };
+
+  const handleSignup = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle signup logic here
   };
 
   return (
@@ -94,25 +100,89 @@ export default function Header() {
                   </Button>
                   <p className="text-sm text-center text-muted-foreground">
                     Don't have an account?{" "}
-                    <Link href="/register">
-                      <a className="text-primary hover:underline" onClick={() => setLoginOpen(false)}>
-                        Sign up
-                      </a>
-                    </Link>
+                    <a 
+                      className="text-primary hover:underline cursor-pointer" 
+                      onClick={() => {
+                        setLoginOpen(false);
+                        setSignupOpen(true);
+                      }}
+                      data-testid="link-switch-to-signup"
+                    >
+                      Sign up
+                    </a>
                   </p>
                 </form>
               </DialogContent>
             </Dialog>
             
-            <Link href="/register">
-              <Button
-                variant="default"
-                className="hidden md:inline-flex rounded-full"
-                data-testid="button-signup"
-              >
-                Sign up
-              </Button>
-            </Link>
+            <Dialog open={signupOpen} onOpenChange={setSignupOpen}>
+              <DialogTrigger asChild>
+                <Button
+                  variant="default"
+                  className="hidden md:inline-flex rounded-full"
+                  data-testid="button-signup"
+                >
+                  Sign up
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                  <DialogTitle>Sign up for CertGenix</DialogTitle>
+                </DialogHeader>
+                <form onSubmit={handleSignup} className="space-y-4 mt-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="firstName">First Name</Label>
+                    <Input
+                      id="firstName"
+                      type="text"
+                      placeholder="John"
+                      required
+                      data-testid="input-signup-firstname"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="lastName">Last Name</Label>
+                    <Input
+                      id="lastName"
+                      type="text"
+                      placeholder="Doe"
+                      required
+                      data-testid="input-signup-lastname"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="signupEmail">Email Address</Label>
+                    <Input
+                      id="signupEmail"
+                      type="email"
+                      placeholder="your@email.com"
+                      required
+                      data-testid="input-signup-email"
+                    />
+                  </div>
+                  <Button
+                    type="submit"
+                    className="w-full rounded-full"
+                    data-testid="button-signup-submit"
+                  >
+                    Sign up
+                  </Button>
+                  <p className="text-sm text-center text-muted-foreground">
+                    Already have an account?{" "}
+                    <a 
+                      className="text-primary hover:underline cursor-pointer" 
+                      onClick={() => {
+                        setSignupOpen(false);
+                        setLoginOpen(true);
+                      }}
+                      data-testid="link-switch-to-login"
+                    >
+                      Login
+                    </a>
+                  </p>
+                </form>
+              </DialogContent>
+            </Dialog>
 
             <Button
               variant="ghost"
@@ -166,16 +236,18 @@ export default function Header() {
                     </Button>
                   </DialogTrigger>
                 </Dialog>
-                <Link href="/register" className="flex-1">
-                  <Button
-                    variant="default"
-                    className="w-full rounded-full"
-                    onClick={() => setMobileMenuOpen(false)}
-                    data-testid="button-mobile-signup"
-                  >
-                    Sign up
-                  </Button>
-                </Link>
+                <Dialog open={signupOpen} onOpenChange={setSignupOpen}>
+                  <DialogTrigger asChild>
+                    <Button
+                      variant="default"
+                      className="flex-1 rounded-full"
+                      onClick={() => setMobileMenuOpen(false)}
+                      data-testid="button-mobile-signup"
+                    >
+                      Sign up
+                    </Button>
+                  </DialogTrigger>
+                </Dialog>
               </div>
             </nav>
           </div>
