@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Link } from "wouter";
-import logoImage from "@assets/Gemini_logo 7_1759694336419.png";
+import logoImage from "@assets/certgenix-logo-new.png";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
