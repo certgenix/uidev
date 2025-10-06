@@ -30,13 +30,23 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <Link href="/diagnostic">
+            <Link href="/login">
+              <Button
+                variant="ghost"
+                className="hidden md:inline-flex rounded-full"
+                data-testid="button-login"
+              >
+                Login
+              </Button>
+            </Link>
+            
+            <Link href="/register">
               <Button
                 variant="default"
                 className="hidden md:inline-flex rounded-full"
-                data-testid="button-get-started"
+                data-testid="button-register"
               >
-                Get Started
+                Register
               </Button>
             </Link>
 
@@ -79,16 +89,28 @@ export default function Header() {
               >
                 Testimonials
               </a>
-              <Link href="/diagnostic">
-                <Button
-                  variant="default"
-                  className="mt-2 rounded-full"
-                  onClick={() => setMobileMenuOpen(false)}
-                  data-testid="button-mobile-get-started"
-                >
-                  Get Started
-                </Button>
-              </Link>
+              <div className="flex gap-2 mt-2">
+                <Link href="/login" className="flex-1">
+                  <Button
+                    variant="ghost"
+                    className="w-full rounded-full"
+                    onClick={() => setMobileMenuOpen(false)}
+                    data-testid="button-mobile-login"
+                  >
+                    Login
+                  </Button>
+                </Link>
+                <Link href="/register" className="flex-1">
+                  <Button
+                    variant="default"
+                    className="w-full rounded-full"
+                    onClick={() => setMobileMenuOpen(false)}
+                    data-testid="button-mobile-register"
+                  >
+                    Register
+                  </Button>
+                </Link>
+              </div>
             </nav>
           </div>
         )}
