@@ -133,6 +133,9 @@ export default function ExamTaking() {
     mutationFn: async ({ qid, selected }: { qid: string; selected: string[] }) => {
       return await apiRequest("POST", `/api/sessions/${sessionId}/grade`, { qid, selected });
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/sessions", sessionId] });
+    },
     onError: (error: Error) => {
       toast({
         title: "Failed to save answer",
