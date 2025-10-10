@@ -8,7 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Clock, ChevronLeft, ChevronRight, Save, Pause, Play } from "lucide-react";
+import { Clock, ChevronLeft, ChevronRight, Save, Pause, Play, CheckCircle, XCircle } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
@@ -153,6 +153,9 @@ export default function ExamTaking() {
   });
 
   const currentQuestion = questions[currentIndex];
+  const sessionMode = (session as any)?.mode || "quiz";
+  const showExplanations = (session as any)?.review?.explanationsWhileTaking || sessionMode === "quiz";
+  const currentQuestionGrade = (session as any)?.answers?.[currentQuestion?.qid];
 
   const handleAnswerChange = (qid: string, optionId: string, isChecked: boolean) => {
     const currentAnswer = answers[qid] || [];
@@ -246,30 +249,69 @@ export default function ExamTaking() {
                 onValueChange={(value) => handleRadioChange(currentQuestion.qid, value)}
                 className="space-y-3"
               >
-                {currentQuestion.options.map(option => (
-                  <div key={option.id} className="flex items-start space-x-3 p-3 rounded-lg border hover:bg-accent/50 transition-colors">
-                    <RadioGroupItem value={option.id} id={`${currentQuestion.qid}-${option.id}`} data-testid={`radio-option-${option.id}`} />
-                    <Label htmlFor={`${currentQuestion.qid}-${option.id}`} className="flex-1 cursor-pointer font-normal">
-                      {option.text}
-                    </Label>
-                  </div>
-                ))}
+                {currentQuestion.options.map(option => {
+                  const isSelected = answers[currentQuestion.qid]?.[0] === option.id;
+                  const isCorrect = currentQuestionGrade?.feedback?.correct?.includes(option.id);
+                  const isIncorrect = currentQuestionGrade?.feedback?.incorrect?.includes(option.id);
+                  const showFeedback = showExplanations && isSelected;
+                  
+                  return (
+                    <div key={option.id} className={`flex items-start space-x-3 p-3 rounded-lg border transition-colors ${
+                      showFeedback && isCorrect ? 'bg-green-50 dark:bg-green-950 border-green-500' :
+                      showFeedback && isIncorrect ? 'bg-red-50 dark:bg-red-950 border-red-500' :
+                      'hover:bg-accent/50'
+                    }`}>
+                      <RadioGroupItem value={option.id} id={`${currentQuestion.qid}-${option.id}`} data-testid={`radio-option-${option.id}`} />
+                      <Label htmlFor={`${currentQuestion.qid}-${option.id}`} className="flex-1 cursor-pointer font-normal">
+                        <div className="flex items-start justify-between gap-2">
+                          <span>{option.text}</span>
+                          {showFeedback && isCorrect && <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0" />}
+                          {showFeedback && isIncorrect && <XCircle className="h-5 w-5 text-red-600 dark:text-red-400 flex-shrink-0" />}
+                        </div>
+                      </Label>
+                    </div>
+                  );
+                })}
               </RadioGroup>
             ) : (
               <div className="space-y-3">
-                {currentQuestion.options.map(option => (
-                  <div key={option.id} className="flex items-start space-x-3 p-3 rounded-lg border hover:bg-accent/50 transition-colors">
-                    <Checkbox
-                      id={`${currentQuestion.qid}-${option.id}`}
-                      checked={answers[currentQuestion.qid]?.includes(option.id) || false}
-                      onCheckedChange={(checked) => handleAnswerChange(currentQuestion.qid, option.id, checked as boolean)}
-                      data-testid={`checkbox-option-${option.id}`}
-                    />
-                    <Label htmlFor={`${currentQuestion.qid}-${option.id}`} className="flex-1 cursor-pointer font-normal">
-                      {option.text}
-                    </Label>
-                  </div>
-                ))}
+                {currentQuestion.options.map(option => {
+                  const isSelected = answers[currentQuestion.qid]?.includes(option.id);
+                  const isCorrect = currentQuestionGrade?.feedback?.correct?.includes(option.id);
+                  const isIncorrect = currentQuestionGrade?.feedback?.incorrect?.includes(option.id);
+                  const showFeedback = showExplanations && isSelected;
+                  
+                  return (
+                    <div key={option.id} className={`flex items-start space-x-3 p-3 rounded-lg border transition-colors ${
+                      showFeedback && isCorrect ? 'bg-green-50 dark:bg-green-950 border-green-500' :
+                      showFeedback && isIncorrect ? 'bg-red-50 dark:bg-red-950 border-red-500' :
+                      'hover:bg-accent/50'
+                    }`}>
+                      <Checkbox
+                        id={`${currentQuestion.qid}-${option.id}`}
+                        checked={answers[currentQuestion.qid]?.includes(option.id) || false}
+                        onCheckedChange={(checked) => handleAnswerChange(currentQuestion.qid, option.id, checked as boolean)}
+                        data-testid={`checkbox-option-${option.id}`}
+                      />
+                      <Label htmlFor={`${currentQuestion.qid}-${option.id}`} className="flex-1 cursor-pointer font-normal">
+                        <div className="flex items-start justify-between gap-2">
+                          <span>{option.text}</span>
+                          {showFeedback && isCorrect && <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0" />}
+                          {showFeedback && isIncorrect && <XCircle className="h-5 w-5 text-red-600 dark:text-red-400 flex-shrink-0" />}
+                        </div>
+                      </Label>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+            
+            {showExplanations && currentQuestionGrade?.feedback?.explanation && (
+              <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg">
+                <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">Explanation</h4>
+                <p className="text-blue-800 dark:text-blue-200 text-sm">
+                  {currentQuestionGrade.feedback.explanation}
+                </p>
               </div>
             )}
           </CardContent>
