@@ -67,11 +67,11 @@ export default function Header() {
             <a href="#how-it-works" className="text-sm font-medium text-foreground hover-elevate px-3 py-2 rounded-md" data-testid="link-how-it-works">
               How It Works
             </a>
-            <a href="#benefits" className="text-sm font-medium text-foreground hover-elevate px-3 py-2 rounded-md" data-testid="link-benefits">
-              Benefits
+            <a href="#certifications" className="text-sm font-medium text-foreground hover-elevate px-3 py-2 rounded-md" data-testid="link-certifications">
+              Certifications
             </a>
-            <a href="#testimonials" className="text-sm font-medium text-foreground hover-elevate px-3 py-2 rounded-md" data-testid="link-testimonials">
-              Testimonials
+            <a href="#about-us" className="text-sm font-medium text-foreground hover-elevate px-3 py-2 rounded-md" data-testid="link-about-us">
+              About Us
             </a>
           </nav>
 
@@ -248,20 +248,20 @@ export default function Header() {
                 How It Works
               </a>
               <a
-                href="#benefits"
+                href="#certifications"
                 className="text-sm font-medium text-foreground hover-elevate px-3 py-2 rounded-md"
                 onClick={() => setMobileMenuOpen(false)}
-                data-testid="link-mobile-benefits"
+                data-testid="link-mobile-certifications"
               >
-                Benefits
+                Certifications
               </a>
               <a
-                href="#testimonials"
+                href="#about-us"
                 className="text-sm font-medium text-foreground hover-elevate px-3 py-2 rounded-md"
                 onClick={() => setMobileMenuOpen(false)}
-                data-testid="link-mobile-testimonials"
+                data-testid="link-mobile-about-us"
               >
-                Testimonials
+                About Us
               </a>
               <div className="flex gap-2 mt-2">
                 <Dialog open={loginOpen} onOpenChange={setLoginOpen}>
