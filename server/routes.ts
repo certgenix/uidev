@@ -141,13 +141,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const { score, feedback } = gradeQuestion(question, selected);
       const review = session.review as any;
+      const mode = session.mode;
+      
+      // Show feedback in quiz mode or when explanationsWhileTaking is enabled in exam mode
+      const shouldShowFeedback = mode === "quiz" || review.explanationsWhileTaking;
       
       // Update answers
       const answers = session.answers as any;
       answers[qid] = {
         selected,
         perItemScore: score,
-        revealed: review.explanationsWhileTaking ? feedback : {}
+        feedback: shouldShowFeedback ? feedback : {}
       };
       
       await storage.updateSession(req.params.id, { answers });
@@ -155,8 +159,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({
         certificationName: session.certificationName,
         perItemScore: score,
-        feedbackAllowed: review.explanationsWhileTaking,
-        explanation: review.explanationsWhileTaking ? feedback : undefined
+        feedbackAllowed: shouldShowFeedback,
+        feedback: shouldShowFeedback ? feedback : undefined
       });
     } catch (error: any) {
       res.status(500).json({ message: error.message });
