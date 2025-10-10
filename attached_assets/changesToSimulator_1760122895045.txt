@@ -1,0 +1,57 @@
+Main Heading: "Let's Set Up Your Practice Session"
+Subheading: "Choose how you want to study today. Practice mode helps you learn with instant feedback, while Exam mode simulates the real test experience."
+
+
+Domains Section
+Current: "Domains (select at least one)"
+Suggested: "Select Study Areas" with helper text: "Choose one or more domains to focus on"
+
+Number of Questions
+Current: "Number of Questions (5-100)"
+Suggested:
+Label: "Questions per Session"
+Placeholder: "Enter 5-100"
+Add small text: "Recommended: 30 for practice, 100 for full simulation"
+
+Mode Section
+Current: Mode descriptions are helpful but could be clearer
+Suggested:
+Quiz (Practice)
+"Learn as you go - Get instant explanations after each question"
+Exam (Simulation)
+"Test yourself - Timed exam with results at the end"
+
+Timer Section
+Current: "Enable Timer (Required for Exam Mode)"
+Suggested:
+For Quiz mode: "Add Timer (Optional)" with description "Challenge yourself with time pressure"
+For Exam mode: Show automatically with label "Exam Duration"
+
+Review Options
+Current: Technical labels that may confuse users
+Suggested:
+"Quick Review Before" → Remove this
+"Quick Review After" → Remove this
+"Show Explanations While Taking" → "See explanations during the session"
+
+Add helper text: "(Available in Quiz mode only)" for the last option
+
+
+Visual Improvements
+Add icons next to mode options 
+Use cards or panels to separate Quiz vs Exam mode options visually
+Add progress indicator showing "Step 1 of 1: Configure Session"
+Highlight required fields with an asterisk (*)
+Add tooltip icons (ⓘ) next to complex options for additional help
+
+Call-to-Action Button
+Current: "Start Session"
+Suggested: Make it dynamic:
+"Start Practice Quiz" (when Quiz mode selected)
+"Begin Exam Simulation" (when Exam mode selected)
+
+Additional Recommendations
+
+Add a "Save Configuration" option for returning users.
+Include estimated completion time based on number of questions.
+Show a summary panel: "You're about to start: 30 questions from 8 domains in Quiz mode"
