@@ -1,0 +1,98 @@
+Progressive Disclosure - Detailed Breakdown
+Step 1: Choose Your Study Mode (Landing Screen)
+Header Section
+Main Heading: "Let's Set Up Your Practice Session"
+Subheading: "Choose how you'd like to study today"
+Mode Selection (Two Large Cards - Side by Side)
+
+
+Card 1: Practice Mode
+📝 Practice Quiz
+Perfect for learning and skill building
+
+- Get instant feedback after each question
+- See detailed explanations as you go
+- Track your progress in real-time
+- No time pressure - learn at your pace
+
+Default: 30 questions from all domains
+
+[Start Practice] (Primary button)
+[Customize →] (Secondary link below)
+
+Card 2: Exam Mode
+📋 Exam Simulation
+Test yourself under real exam conditions
+
+- Timed session mimics actual CISSP exam
+- No hints or feedback during the test
+- Review all answers at the end
+- Get your final score and performance report
+
+Default: 100 questions, 90 minutes, all 8 domains
+
+[Start Exam] (Primary button)
+[Customize →] (Secondary link below)
+Key Features:
+
+One decision: Quiz or Exam
+Smart defaults: Pre-configured with best practices
+Clear expectations: Users know exactly what they're getting
+Quick action: Can start in 5 seconds
+Escape hatch: "Customize" link for power users
+
+
+Step 2: Customize Settings (Optional - Expandable/New Screen)
+This only appears when user clicks "Customize" from Step 1.
+Header Section
+Main Heading: "Customize Your [Practice Quiz / Exam Simulation]"
+Subheading: "Adjust your session settings (or use our recommended defaults)"
+Configuration Options (Cleaner, More Focused)
+Section 1: Study Areas
+Focus on Specific Domains? (Optional)
+
+By default, questions cover all domains:
+✓ Security & Risk Management
+✓ Asset Security  
+✓ Security Architecture & Engineering
+✓ Communication & Network Security
+✓ Identity & Access Management
+✓ Security Assessment & Testing
+✓ Security Operations
+✓ Software Development Security
+
+[Select Specific Domains ▼] (Collapsed by default)
+
+Section 2: Session Length
+Number of Questions
+[30] (Input field with +/- buttons)
+Range: 5-100 questions
+Recommended: 30 for practice, 100 for exam simulation
+
+Section 3: Timer Settings (Conditional - only show if relevant)
+For Quiz Mode:
+☐ Add Timer (Optional)
+Challenge yourself with time pressure
+Duration: [45] minutes
+For Exam Mode:
+✓ Timer Enabled (Required for exam simulation)
+Duration: [180] minutes (automatically calculated based on questions)
+Note: Actual CISSP exam allows 1.5 minutes per question
+
+Section 4: Review Preferences (Simple checkboxes)
+After Completing This Session:
+✓ Review all questions and answers
+✓ See detailed performance breakdown by domain
+
+During Quiz (Practice Mode Only):
+✓ Show explanations immediately after each answer
+Summary Box (Sticky at bottom or sidebar)
+📊 Your Session Setup
+
+Mode: Practice Quiz
+Questions: 30 from 8 domains  
+Timer: Not enabled
+Estimated time: ~30 minutes
+
+[Start Practice Quiz] (Primary button)
+[← Back to Quick Start] (Secondary link)
