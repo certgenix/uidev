@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
@@ -45,6 +45,14 @@ export default function Simulator() {
   const [quickBefore, setQuickBefore] = useState(false);
   const [quickAfter, setQuickAfter] = useState(true);
   const [explanationsWhileTaking, setExplanationsWhileTaking] = useState(false);
+
+  // Auto-enable timer for exam mode
+  useEffect(() => {
+    if (mode === "exam") {
+      setTimerEnabled(true);
+      setExplanationsWhileTaking(false);
+    }
+  }, [mode]);
 
   const createSessionMutation = useMutation({
     mutationFn: async () => {
@@ -161,6 +169,15 @@ export default function Simulator() {
                     <SelectItem value="exam">Exam (Simulation)</SelectItem>
                   </SelectContent>
                 </Select>
+                {mode === "quiz" ? (
+                  <p className="text-sm text-muted-foreground">
+                    Interactive practice with instant feedback and explanations after each question
+                  </p>
+                ) : (
+                  <p className="text-sm text-muted-foreground">
+                    Real exam simulation with countdown timer, no feedback until submission (unless enabled below)
+                  </p>
+                )}
               </div>
             </div>
 
@@ -170,9 +187,12 @@ export default function Simulator() {
                   id="timerEnabled"
                   checked={timerEnabled}
                   onCheckedChange={(checked) => setTimerEnabled(checked as boolean)}
+                  disabled={mode === "exam"}
                   data-testid="checkbox-timer-enabled"
                 />
-                <Label htmlFor="timerEnabled" className="cursor-pointer">Enable Timer</Label>
+                <Label htmlFor="timerEnabled" className="cursor-pointer">
+                  Enable Timer {mode === "exam" && "(Required for Exam Mode)"}
+                </Label>
               </div>
               {timerEnabled && (
                 <div className="ml-6 space-y-2">
@@ -214,11 +234,16 @@ export default function Simulator() {
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     id="explanationsWhileTaking"
-                    checked={explanationsWhileTaking}
+                    checked={mode === "quiz" ? true : explanationsWhileTaking}
                     onCheckedChange={(checked) => setExplanationsWhileTaking(checked as boolean)}
+                    disabled={mode === "quiz"}
                     data-testid="checkbox-explanations-while-taking"
                   />
-                  <Label htmlFor="explanationsWhileTaking" className="cursor-pointer">Show Explanations While Taking</Label>
+                  <Label htmlFor="explanationsWhileTaking" className="cursor-pointer">
+                    {mode === "quiz" 
+                      ? "Show Explanations While Taking (Always On in Quiz Mode)" 
+                      : "Show Explanations While Taking (Exam Mode Only)"}
+                  </Label>
                 </div>
               </div>
             </div>
