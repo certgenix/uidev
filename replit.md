@@ -182,13 +182,23 @@ Added comprehensive Exam Simulator functionality for certification exam practice
 - Updated Header with Products dropdown menu containing "Simulator" link
 - Mobile-responsive navigation with proper keyboard accessibility
 
-**Configuration Page** (`/simulator`):
-- Certification selector (CISSP, PMP, CCSP, CISM)
-- Domain selection with checkboxes (8 CISSP domains available)
-- Question count input (5-100 range)
-- Mode selector (Quiz/Practice vs Timed Exam)
-- Timer configuration with customizable minutes
-- Review options (Quick Review Before/After, Show Explanations)
+**Configuration Page** (`/simulator`) - Progressive Disclosure Design:
+
+**Step 1: Quick Start (Landing View)**
+- Two-card layout for instant decision making
+- Practice Quiz card: 30 questions, all domains, no timer, instant explanations
+- Exam Simulation card: 100 questions, 180 minutes, all 8 domains
+- Smart defaults allow users to start in 5 seconds
+- "Customize" links for power users who need control
+
+**Step 2: Customize (Optional View)**
+- Collapsible domain selection (collapsed by default, showing first 3)
+- Question count with +/- increment buttons (5-100 range)
+- Conditional timer settings (optional for Quiz, required for Exam)
+- Simplified review preferences (removed Quick Review options)
+- Sticky summary box showing current configuration
+- Back navigation to return to Quick Start
+- Estimated completion time calculation
 
 **Exam Taking Interface** (`/exam/:sessionId`):
 - Real-time countdown timer with setInterval implementation
