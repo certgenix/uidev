@@ -61,7 +61,7 @@ function parseCSV(csvContent: string): CSVQuestion[] {
 
 export async function seedQuestions() {
   try {
-    const csvContent = readFileSync('attached_assets/CISSP_sample_questions_1760115343188.csv', 'utf-8');
+    const csvContent = readFileSync('attached_assets/CISSP_sample_questions_1760134957283.csv', 'utf-8');
     const csvQuestions = parseCSV(csvContent);
     
     const questions: InsertQuestion[] = csvQuestions.map(q => {
@@ -78,9 +78,14 @@ export async function seedQuestions() {
       
       let optionNotes = {};
       try {
-        optionNotes = JSON.parse(q.explanation_optionNotes.replace(/\\"/g, '"'));
+        let notesStr = q.explanation_optionNotes.trim();
+        if (notesStr.startsWith('"') && notesStr.endsWith('"')) {
+          notesStr = notesStr.slice(1, -1);
+        }
+        notesStr = notesStr.replace(/""/g, '"');
+        optionNotes = JSON.parse(notesStr);
       } catch (e) {
-        console.warn(`Failed to parse option notes for ${q.id}`);
+        console.warn(`Failed to parse option notes for ${q.id}`, e);
       }
       
       return {

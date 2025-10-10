@@ -258,20 +258,31 @@ export default function ExamTaking() {
                   const isIncorrect = currentQuestionGrade?.feedback?.incorrect?.includes(option.id);
                   const showFeedback = showExplanations && isSelected;
                   
+                  const optionExplanation = currentQuestionGrade?.feedback?.explanation?.optionNotes?.[option.id];
+                  
                   return (
-                    <div key={option.id} className={`flex items-start space-x-3 p-3 rounded-lg border transition-colors ${
+                    <div key={option.id} className={`rounded-lg border transition-colors ${
                       showFeedback && isCorrect ? 'bg-green-50 dark:bg-green-950 border-green-500' :
                       showFeedback && isIncorrect ? 'bg-red-50 dark:bg-red-950 border-red-500' :
                       'hover:bg-accent/50'
                     }`}>
-                      <RadioGroupItem value={option.id} id={`${currentQuestion.qid}-${option.id}`} data-testid={`radio-option-${option.id}`} />
-                      <Label htmlFor={`${currentQuestion.qid}-${option.id}`} className="flex-1 cursor-pointer font-normal">
-                        <div className="flex items-start justify-between gap-2">
-                          <span>{option.text}</span>
-                          {showFeedback && isCorrect && <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0" />}
-                          {showFeedback && isIncorrect && <XCircle className="h-5 w-5 text-red-600 dark:text-red-400 flex-shrink-0" />}
+                      <div className="flex items-start space-x-3 p-3">
+                        <RadioGroupItem value={option.id} id={`${currentQuestion.qid}-${option.id}`} data-testid={`radio-option-${option.id}`} />
+                        <Label htmlFor={`${currentQuestion.qid}-${option.id}`} className="flex-1 cursor-pointer font-normal">
+                          <div className="flex items-start justify-between gap-2">
+                            <span>{option.text}</span>
+                            {showFeedback && isCorrect && <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0" />}
+                            {showFeedback && isIncorrect && <XCircle className="h-5 w-5 text-red-600 dark:text-red-400 flex-shrink-0" />}
+                          </div>
+                        </Label>
+                      </div>
+                      {showFeedback && optionExplanation && (
+                        <div className="px-3 pb-3 pt-0">
+                          <div className="pl-7 text-sm text-muted-foreground border-l-2 border-current ml-2 pl-3">
+                            {optionExplanation}
+                          </div>
                         </div>
-                      </Label>
+                      )}
                     </div>
                   );
                 })}
@@ -284,25 +295,36 @@ export default function ExamTaking() {
                   const isIncorrect = currentQuestionGrade?.feedback?.incorrect?.includes(option.id);
                   const showFeedback = showExplanations && isSelected;
                   
+                  const optionExplanation = currentQuestionGrade?.feedback?.explanation?.optionNotes?.[option.id];
+                  
                   return (
-                    <div key={option.id} className={`flex items-start space-x-3 p-3 rounded-lg border transition-colors ${
+                    <div key={option.id} className={`rounded-lg border transition-colors ${
                       showFeedback && isCorrect ? 'bg-green-50 dark:bg-green-950 border-green-500' :
                       showFeedback && isIncorrect ? 'bg-red-50 dark:bg-red-950 border-red-500' :
                       'hover:bg-accent/50'
                     }`}>
-                      <Checkbox
-                        id={`${currentQuestion.qid}-${option.id}`}
-                        checked={answers[currentQuestion.qid]?.includes(option.id) || false}
-                        onCheckedChange={(checked) => handleAnswerChange(currentQuestion.qid, option.id, checked as boolean)}
-                        data-testid={`checkbox-option-${option.id}`}
-                      />
-                      <Label htmlFor={`${currentQuestion.qid}-${option.id}`} className="flex-1 cursor-pointer font-normal">
-                        <div className="flex items-start justify-between gap-2">
-                          <span>{option.text}</span>
-                          {showFeedback && isCorrect && <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0" />}
-                          {showFeedback && isIncorrect && <XCircle className="h-5 w-5 text-red-600 dark:text-red-400 flex-shrink-0" />}
+                      <div className="flex items-start space-x-3 p-3">
+                        <Checkbox
+                          id={`${currentQuestion.qid}-${option.id}`}
+                          checked={answers[currentQuestion.qid]?.includes(option.id) || false}
+                          onCheckedChange={(checked) => handleAnswerChange(currentQuestion.qid, option.id, checked as boolean)}
+                          data-testid={`checkbox-option-${option.id}`}
+                        />
+                        <Label htmlFor={`${currentQuestion.qid}-${option.id}`} className="flex-1 cursor-pointer font-normal">
+                          <div className="flex items-start justify-between gap-2">
+                            <span>{option.text}</span>
+                            {showFeedback && isCorrect && <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0" />}
+                            {showFeedback && isIncorrect && <XCircle className="h-5 w-5 text-red-600 dark:text-red-400 flex-shrink-0" />}
+                          </div>
+                        </Label>
+                      </div>
+                      {showFeedback && optionExplanation && (
+                        <div className="px-3 pb-3 pt-0">
+                          <div className="pl-7 text-sm text-muted-foreground border-l-2 border-current ml-2 pl-3">
+                            {optionExplanation}
+                          </div>
                         </div>
-                      </Label>
+                      )}
                     </div>
                   );
                 })}
