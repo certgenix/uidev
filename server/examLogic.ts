@@ -74,11 +74,25 @@ export function gradeQuestion(
 ): { score: number; feedback: any } {
   const options = question.options as any[];
   
+  // Determine correct and incorrect selected answers based on weight
+  const correct = selected.filter(id => {
+    const opt = options.find(o => o.id === id);
+    return opt && opt.weight > 0;
+  });
+  const incorrect = selected.filter(id => {
+    const opt = options.find(o => o.id === id);
+    return opt && opt.weight === 0;
+  });
+  
   if (question.type === 'MCQ') {
     const selectedOption = options.find(o => o.id === selected[0]);
     return {
       score: selectedOption ? selectedOption.weight : 0,
-      feedback: question.explanation
+      feedback: {
+        correct,
+        incorrect,
+        explanation: question.explanation
+      }
     };
   } else {
     // MSQ scoring
@@ -99,7 +113,11 @@ export function gradeQuestion(
     
     return {
       score: isNaN(score) ? 0 : score,
-      feedback: question.explanation
+      feedback: {
+        correct,
+        incorrect,
+        explanation: question.explanation
+      }
     };
   }
 }

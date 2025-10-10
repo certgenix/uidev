@@ -313,7 +313,9 @@ export default function ExamTaking() {
               <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg">
                 <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">Explanation</h4>
                 <p className="text-blue-800 dark:text-blue-200 text-sm">
-                  {currentQuestionGrade.feedback.explanation}
+                  {typeof currentQuestionGrade.feedback.explanation === 'string' 
+                    ? currentQuestionGrade.feedback.explanation 
+                    : currentQuestionGrade.feedback.explanation.overview}
                 </p>
               </div>
             )}
