@@ -282,19 +282,21 @@ export default function ExamTaking() {
                   <DialogTitle>Accessibility Settings</DialogTitle>
                 </DialogHeader>
                 <div className="space-y-6 mt-4">
-                  <div className="flex items-center justify-between">
-                    <div className="space-y-0.5">
-                      <Label htmlFor="show-domain">Show Domain</Label>
-                      <p className="text-sm text-muted-foreground">Display question domain badges</p>
+                  {sessionMode === "quiz" && (
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-0.5">
+                        <Label htmlFor="show-domain">Show Domain</Label>
+                        <p className="text-sm text-muted-foreground">Display question domain badges</p>
+                      </div>
+                      <Switch
+                        id="show-domain"
+                        checked={showDomain}
+                        onCheckedChange={setShowDomain}
+                        data-testid="switch-show-domain"
+                        aria-label="Toggle domain visibility"
+                      />
                     </div>
-                    <Switch
-                      id="show-domain"
-                      checked={showDomain}
-                      onCheckedChange={setShowDomain}
-                      data-testid="switch-show-domain"
-                      aria-label="Toggle domain visibility"
-                    />
-                  </div>
+                  )}
                   <div className="space-y-2">
                     <Label htmlFor="font-size">Font Size</Label>
                     <Select value={fontSize} onValueChange={setFontSize}>
@@ -328,8 +330,8 @@ export default function ExamTaking() {
           </div>
         </div>
 
-        <Card role="region" aria-label="Question" className={getFontSizeClass()}>
-          <CardHeader>
+        <Card role="region" aria-label="Question">
+          <CardHeader className={getFontSizeClass()}>
             <CardTitle className="font-semibold" data-testid="text-question-stem" role="heading" aria-level={1}>
               {currentQuestion.stem}
             </CardTitle>
@@ -337,7 +339,7 @@ export default function ExamTaking() {
               {currentQuestion.type === "MSQ" && "Multiple Select Question - Choose all that apply"}
             </p>
           </CardHeader>
-          <CardContent role="form" aria-label="Answer options">
+          <CardContent role="form" aria-label="Answer options" className={getFontSizeClass()}>
             {currentQuestion.type === "MCQ" ? (
               <RadioGroup
                 value={answers[currentQuestion.qid]?.[0] || ""}
