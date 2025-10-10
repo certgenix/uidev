@@ -16,9 +16,12 @@ Preferred communication style: Simple, everyday language.
 
 **Framework**: React 18 with TypeScript, using Vite as the build tool and development server.
 
-**Routing**: Wouter for lightweight client-side routing with two main routes:
+**Routing**: Wouter for lightweight client-side routing with main routes:
 - `/` - Marketing homepage
 - `/diagnostic` - Multi-step diagnostic assessment flow
+- `/simulator` - Exam configuration page
+- `/exam/:sessionId` - Active exam taking interface
+- `/results/:sessionId` - Exam results with domain breakdown
 
 **UI Components**: Radix UI primitives with shadcn/ui styling system for accessible, customizable components. The design system uses a "new-york" style variant with Tailwind CSS for styling.
 
@@ -48,7 +51,14 @@ Preferred communication style: Simple, everyday language.
 
 **Server Framework**: Express.js running on Node.js with TypeScript.
 
-**API Structure**: RESTful API with routes prefixed by `/api`. Currently uses a minimal route setup with placeholders for future endpoints.
+**API Structure**: RESTful API with routes prefixed by `/api`. Includes:
+- POST `/api/sessions` - Create new exam session
+- GET `/api/sessions/:id` - Get session state
+- GET `/api/sessions/:id/items` - Get paginated exam questions
+- POST `/api/sessions/:id/grade` - Grade individual answer
+- POST `/api/sessions/:id/pause` - Pause exam timer
+- POST `/api/sessions/:id/resume` - Resume exam timer
+- POST `/api/sessions/:id/submit` - Submit and score exam
 
 **Development Features**:
 - Request/response logging middleware
@@ -85,6 +95,32 @@ Preferred communication style: Simple, everyday language.
    - `weeklyHours` (text) - Available study time
    - `weaknesses` (text array) - Knowledge gaps by domain
    - `background` (text, optional) - Professional context
+
+3. **Questions Table** (Exam Simulator):
+   - `qid` (text, primary key) - Unique question identifier
+   - `certification` (text) - Associated certification
+   - `domain` (text) - Knowledge domain/category
+   - `difficulty` (text) - Easy/Medium/Hard
+   - `type` (text) - Multiple choice types
+   - `question` (text) - Question text
+   - `options` (JSONB array) - Answer options with IDs and text
+   - `correctAnswers` (text array) - Correct option IDs
+   - `explanation` (text) - Answer explanation
+   - `references` (text array) - Source references
+
+4. **Exam Sessions Table**:
+   - `id` (UUID, auto-generated)
+   - `certification` (text) - Exam type
+   - `domains` (text array) - Selected domains
+   - `questionCount` (integer) - Number of questions
+   - `mode` (text) - Quiz or Exam mode
+   - `timerEnabled` (boolean) - Timer on/off
+   - `timerMinutes` (integer) - Timer duration
+   - `status` (text) - active/paused/completed
+   - `questionIds` (text array) - Selected question IDs
+   - `answers` (JSONB) - User answers and grading
+   - `score` (JSONB) - Overall and domain scores
+   - `startedAt`, `endsAt`, `completedAt` - Timestamps
 
 **Validation**: Zod schemas generated from Drizzle tables via `drizzle-zod` for runtime type checking.
 
@@ -135,3 +171,52 @@ Preferred communication style: Simple, everyday language.
 **No Payment Processing**: No Stripe, PayPal, or other payment gateway integration present.
 
 **No AI/ML Services**: Despite AI-powered features in the product description, no OpenAI, Anthropic, or other AI service integration exists yet. This would be a critical addition for the adaptive learning features.
+
+## Recent Changes
+
+### Exam Simulator Feature (October 10, 2025)
+
+Added comprehensive Exam Simulator functionality for certification exam practice:
+
+**Navigation**:
+- Updated Header with Products dropdown menu containing "Simulator" link
+- Mobile-responsive navigation with proper keyboard accessibility
+
+**Configuration Page** (`/simulator`):
+- Certification selector (CISSP, PMP, CCSP, CISM)
+- Domain selection with checkboxes (8 CISSP domains available)
+- Question count input (5-100 range)
+- Mode selector (Quiz/Practice vs Timed Exam)
+- Timer configuration with customizable minutes
+- Review options (Quick Review Before/After, Show Explanations)
+
+**Exam Taking Interface** (`/exam/:sessionId`):
+- Real-time countdown timer with setInterval implementation
+- Pause/Resume functionality with timer continuity
+- Auto-submit when timer expires
+- Question display with domain badges
+- Multiple choice and checkbox question support
+- Previous/Next navigation with progress tracking
+- Sticky bottom navigation bar for mobile
+- Error handling with toast notifications
+- Optimistic UI updates with rollback on failure
+
+**Results Page** (`/results/:sessionId`):
+- Overall score percentage
+- Domain-weighted scoring breakdown
+- Question-by-question review
+- Correct/incorrect status indicators
+- Answer explanations and references
+- Mobile-responsive grid layout
+
+**Sample Data**:
+- 30 CISSP sample questions imported from CSV
+- Covers all 8 CISSP domains with varying difficulty levels
+- Includes explanations and references for each question
+
+**Technical Implementation**:
+- In-memory storage (MemStorage) for exam sessions and questions
+- Domain-weighted scoring algorithm in `server/examLogic.ts`
+- Paginated question loading for performance
+- Timer synchronization using endsAt timestamp
+- Comprehensive error handling and user feedback
