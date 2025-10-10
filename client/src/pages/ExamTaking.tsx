@@ -97,10 +97,7 @@ export default function ExamTaking() {
 
   const pauseMutation = useMutation({
     mutationFn: async () => {
-      return await apiRequest(`/api/sessions/${sessionId}/pause`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" }
-      });
+      return await apiRequest("POST", `/api/sessions/${sessionId}/pause`);
     },
     onSuccess: () => {
       setIsPaused(true);
@@ -117,10 +114,7 @@ export default function ExamTaking() {
 
   const resumeMutation = useMutation({
     mutationFn: async () => {
-      return await apiRequest(`/api/sessions/${sessionId}/resume`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" }
-      });
+      return await apiRequest("POST", `/api/sessions/${sessionId}/resume`);
     },
     onSuccess: () => {
       setIsPaused(false);
@@ -137,11 +131,7 @@ export default function ExamTaking() {
 
   const gradeMutation = useMutation({
     mutationFn: async ({ qid, selected }: { qid: string; selected: string[] }) => {
-      return await apiRequest(`/api/sessions/${sessionId}/grade`, {
-        method: "POST",
-        body: JSON.stringify({ qid, selected }),
-        headers: { "Content-Type": "application/json" }
-      });
+      return await apiRequest("POST", `/api/sessions/${sessionId}/grade`, { qid, selected });
     },
     onError: (error: Error) => {
       toast({
@@ -154,10 +144,7 @@ export default function ExamTaking() {
 
   const submitMutation = useMutation({
     mutationFn: async () => {
-      return await apiRequest(`/api/sessions/${sessionId}/submit`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" }
-      });
+      return await apiRequest("POST", `/api/sessions/${sessionId}/submit`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/sessions", sessionId] });

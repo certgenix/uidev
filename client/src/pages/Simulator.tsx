@@ -48,27 +48,23 @@ export default function Simulator() {
 
   const createSessionMutation = useMutation({
     mutationFn: async () => {
-      const response = await apiRequest("/api/sessions", {
-        method: "POST",
-        body: JSON.stringify({
-          certificationName: certification,
-          mode,
-          domains: selectedDomains,
-          blueprint: CISSP_BLUEPRINT,
-          questionCount,
-          timer: {
-            enabled: timerEnabled,
-            durationMin: timerMinutes
-          },
-          review: {
-            quickBefore,
-            quickAfter,
-            explanationsWhileTaking
-          }
-        }),
-        headers: { "Content-Type": "application/json" }
+      const response = await apiRequest("POST", "/api/sessions", {
+        certificationName: certification,
+        mode,
+        domains: selectedDomains,
+        blueprint: CISSP_BLUEPRINT,
+        questionCount,
+        timer: {
+          enabled: timerEnabled,
+          durationMin: timerMinutes
+        },
+        review: {
+          quickBefore,
+          quickAfter,
+          explanationsWhileTaking
+        }
       });
-      return response as { sessionId: string };
+      return response.json() as Promise<{ sessionId: string }>;
     },
     onSuccess: (data) => {
       toast({
