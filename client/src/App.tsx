@@ -5,6 +5,9 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Home from "@/pages/Home";
 import Diagnostic from "@/pages/Diagnostic";
+import Simulator from "@/pages/Simulator";
+import ExamTaking from "@/pages/ExamTaking";
+import ExamResults from "@/pages/ExamResults";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -12,6 +15,9 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/diagnostic" component={Diagnostic} />
+      <Route path="/simulator" component={Simulator} />
+      <Route path="/simulator/exam/:sessionId" component={ExamTaking} />
+      <Route path="/simulator/results/:sessionId" component={ExamResults} />
       <Route component={NotFound} />
     </Switch>
   );

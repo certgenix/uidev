@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, integer } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, integer, timestamp, jsonb } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -32,3 +32,54 @@ export const insertDiagnosticSchema = createInsertSchema(diagnostics).omit({
 
 export type InsertDiagnostic = z.infer<typeof insertDiagnosticSchema>;
 export type Diagnostic = typeof diagnostics.$inferSelect;
+
+export const questions = pgTable("questions", {
+  id: varchar("id").primaryKey(),
+  status: text("status").notNull().default("published"),
+  type: text("type").notNull(),
+  stem: text("stem").notNull(),
+  options: jsonb("options").notNull(),
+  explanation: jsonb("explanation").notNull(),
+  domain: text("domain").notNull(),
+  difficulty: integer("difficulty").notNull(),
+  timeSuggestedSec: integer("time_suggested_sec").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const insertQuestionSchema = createInsertSchema(questions).omit({
+  createdAt: true,
+  updatedAt: true,
+});
+
+export type InsertQuestion = z.infer<typeof insertQuestionSchema>;
+export type Question = typeof questions.$inferSelect;
+
+export const sessions = pgTable("sessions", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull(),
+  certificationName: text("certification_name").notNull(),
+  mode: text("mode").notNull(),
+  domains: text("domains").array().notNull(),
+  blueprint: jsonb("blueprint").notNull(),
+  questionCount: integer("question_count").notNull(),
+  timer: jsonb("timer").notNull(),
+  review: jsonb("review").notNull(),
+  status: text("status").notNull().default("active"),
+  index: integer("index").notNull().default(0),
+  questions: jsonb("questions").notNull(),
+  answers: jsonb("answers").notNull().default(sql`'{}'::jsonb`),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  submittedAt: timestamp("submitted_at"),
+});
+
+export const insertSessionSchema = createInsertSchema(sessions).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+  submittedAt: true,
+});
+
+export type InsertSession = z.infer<typeof insertSessionSchema>;
+export type Session = typeof sessions.$inferSelect;
