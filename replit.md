@@ -230,3 +230,50 @@ Added comprehensive Exam Simulator functionality for certification exam practice
 - Paginated question loading for performance
 - Timer synchronization using endsAt timestamp
 - Comprehensive error handling and user feedback
+
+### Accessibility Features (October 10, 2025)
+
+Added comprehensive accessibility features to the Exam Taking Interface to support users with disabilities and diverse learning needs:
+
+**Customization Dialog**:
+- Settings icon in exam header opens customization dialog
+- Domain badge visibility toggle (hidden by default, can be shown)
+- Font size adjustment: Small (text-sm), Medium (text-base), Large (text-lg), Extra Large (text-xl)
+- High-contrast mode toggle for improved readability
+- Settings persist in localStorage across sessions
+
+**Keyboard Navigation**:
+- Arrow keys (Up/Down) for question navigation
+- Tab key for sequential focus through interactive elements
+- Enter/Space keys for activating buttons and selecting options
+- Skip to main content functionality
+- Escape key closes dialogs
+
+**Screen Reader Support**:
+- ARIA labels on all interactive elements (buttons, inputs, options)
+- ARIA live regions for dynamic content (timer countdown, explanations)
+- ARIA describedby for option explanations
+- Semantic HTML with proper roles (navigation, form, region)
+- Descriptive alt text and labels for all UI elements
+- Proper heading hierarchy with aria-level
+
+**High-Contrast Mode**:
+- Enhanced color contrast ratios for WCAG compliance
+- Black/white color scheme with minimal grays
+- 3px focus indicators with primary color
+- 2px borders on all interactive elements
+- Supports both light and dark theme variants
+
+**Visual Accessibility**:
+- Adjustable text sizes without breaking layout
+- Clear focus indicators on all interactive elements
+- Color is not the only indicator (icons and text labels used)
+- Sufficient spacing between interactive elements
+- Mobile-responsive design maintains accessibility
+
+**Implementation Details**:
+- Font sizing implemented via `getFontSizeClass()` function returning Tailwind classes
+- High-contrast CSS in `client/src/index.css` with `.high-contrast-mode` class
+- Keyboard event listeners in `useEffect` hook for arrow key navigation
+- LocalStorage key: `customizationSettings` stores user preferences
+- All settings apply immediately without page reload
