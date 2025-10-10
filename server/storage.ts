@@ -10,6 +10,7 @@ export interface IStorage {
   getQuestionsByDomains(domains: string[], status?: string): Promise<Question[]>;
   createQuestion(question: InsertQuestion): Promise<Question>;
   createQuestions(questions: InsertQuestion[]): Promise<Question[]>;
+  clearQuestions(): Promise<void>;
   
   getSession(id: string): Promise<Session | undefined>;
   createSession(session: InsertSession): Promise<Session>;
@@ -74,6 +75,10 @@ export class MemStorage implements IStorage {
       created.push(question);
     }
     return created;
+  }
+
+  async clearQuestions(): Promise<void> {
+    this.questions.clear();
   }
 
   async getSession(id: string): Promise<Session | undefined> {

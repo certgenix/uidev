@@ -30,8 +30,12 @@ function parseCSVLine(line: string): string[] {
 
   for (let i = 0; i < line.length; i++) {
     const char = line[i];
+    const nextChar = i + 1 < line.length ? line[i + 1] : null;
     
-    if (char === '"') {
+    if (char === '"' && nextChar === '"' && inQuotes) {
+      current += '"';
+      i++;
+    } else if (char === '"') {
       inQuotes = !inQuotes;
     } else if (char === ',' && !inQuotes) {
       result.push(current);
@@ -61,7 +65,10 @@ function parseCSV(csvContent: string): CSVQuestion[] {
 
 export async function seedQuestions() {
   try {
-    const csvContent = readFileSync('attached_assets/CISSP_sample_questions_1760134957283.csv', 'utf-8');
+    await storage.clearQuestions();
+    console.log('Cleared old questions from database');
+    
+    const csvContent = readFileSync('attached_assets/CISSP_sample_questions_1760135926255.csv', 'utf-8');
     const csvQuestions = parseCSV(csvContent);
     
     const questions: InsertQuestion[] = csvQuestions.map(q => {
@@ -78,14 +85,10 @@ export async function seedQuestions() {
       
       let optionNotes = {};
       try {
-        let notesStr = q.explanation_optionNotes.trim();
-        if (notesStr.startsWith('"') && notesStr.endsWith('"')) {
-          notesStr = notesStr.slice(1, -1);
-        }
-        notesStr = notesStr.replace(/""/g, '"');
+        const notesStr = q.explanation_optionNotes.trim();
         optionNotes = JSON.parse(notesStr);
       } catch (e) {
-        console.warn(`Failed to parse option notes for ${q.id}`, e);
+        console.warn(`Failed to parse option notes for ${q.id}:`, e);
       }
       
       return {
