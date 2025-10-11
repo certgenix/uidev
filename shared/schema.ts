@@ -20,10 +20,18 @@ export type User = typeof users.$inferSelect;
 export const diagnostics = pgTable("diagnostics", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   certification: text("certification").notNull(),
+  knowledgeLevel: text("knowledge_level").notNull(),
+  learningStyle: text("learning_style").notNull(),
+  studyStructure: text("study_structure").notNull(),
+  focusAreas: text("focus_areas").array(),
+  previousAttempts: text("previous_attempts").notNull(),
+  failedDomains: text("failed_domains").array(),
+  examDate: text("exam_date"),
   examTimeline: text("exam_timeline").notNull(),
   weeklyHours: text("weekly_hours").notNull(),
-  weaknesses: text("weaknesses").array().notNull(),
-  background: text("background"),
+  studyTimes: text("study_times").notNull(),
+  existingMaterials: text("existing_materials"),
+  motivationPreferences: text("motivation_preferences"),
 });
 
 export const insertDiagnosticSchema = createInsertSchema(diagnostics).omit({
