@@ -1,279 +1,50 @@
 # CertGenix - AI-Powered Certification Exam Platform
 
 ## Overview
-
-CertGenix is an EdTech SaaS platform that helps professionals prepare for certification exams (PMP, CISSP, CCSP, CISM, etc.) using AI-powered personalized study plans. The platform begins with a diagnostic assessment to understand each learner's strengths, weaknesses, timeline, and background, then adapts the learning path in real-time based on their performance.
-
-The application features a modern, marketing-focused homepage that emphasizes trust and professionalism, following design patterns from leading platforms like Coursera and Udemy. It includes a multi-step diagnostic flow to collect user preferences and create customized study plans.
+CertGenix is an EdTech SaaS platform designed to help professionals prepare for certification exams (PMP, CISSP, CCSP, CISM, etc.) through AI-powered personalized study plans. The platform features a diagnostic assessment to tailor learning paths based on individual strengths, weaknesses, timelines, and backgrounds, adapting in real-time to performance. It includes a modern, marketing-focused homepage, a multi-step diagnostic flow for customized study plans, and a comprehensive exam simulator. The project aims to provide a professional, trustworthy, and effective learning experience, drawing design inspiration from leading platforms.
 
 ## User Preferences
-
 Preferred communication style: Simple, everyday language.
 
 ## System Architecture
 
-### Frontend Architecture
+### Frontend
+The frontend is built with React 18 and TypeScript, using Vite for development. Wouter handles client-side routing, defining paths for the homepage, diagnostic flow, exam simulator configuration, active exams, and results. UI components leverage Radix UI primitives with shadcn/ui styling, employing a "new-york" style variant and Tailwind CSS for a consistent design system. State management is primarily handled by TanStack Query for server state and local React state for UI interactions. Form handling uses React Hook Form with Zod validation. Framer Motion is used for animations, particularly in the diagnostic flow. The design system features Deep Blue and Vibrant Teal as primary colors, Inter and Space Grotesk for typography, and a consistent spacing scale.
 
-**Framework**: React 18 with TypeScript, using Vite as the build tool and development server.
-
-**Routing**: Wouter for lightweight client-side routing with main routes:
-- `/` - Marketing homepage
-- `/diagnostic` - Multi-step diagnostic assessment flow
-- `/simulator` - Exam configuration page
-- `/exam/:sessionId` - Active exam taking interface
-- `/results/:sessionId` - Exam results with domain breakdown
-
-**UI Components**: Radix UI primitives with shadcn/ui styling system for accessible, customizable components. The design system uses a "new-york" style variant with Tailwind CSS for styling.
-
-**State Management**: 
-- TanStack Query (React Query) for server state management and caching
-- Local React state for form data and UI interactions
-- No global state management library (Redux, Zustand) currently implemented
-
-**Styling Approach**:
-- Tailwind CSS with custom design tokens
-- CSS variables for theming (supports light/dark modes)
-- HSL color system for dynamic theme switching
-- Custom spacing scale and border radius values
-- Hover and active state utilities via custom CSS classes (`hover-elevate`, `active-elevate-2`)
-
-**Form Handling**: React Hook Form with Zod validation via @hookform/resolvers for type-safe form schemas.
-
-**Animation**: Framer Motion for page transitions and interactive elements (used in diagnostic flow).
-
-**Design System**:
-- Primary colors: Deep Blue (217 91% 35%) and Vibrant Teal (174 65% 45%)
-- Typography: Inter for body/headlines, Space Grotesk for metrics
-- Consistent spacing using Tailwind's 4/6/8/12/16/20/24 unit system
-- Component library includes 40+ pre-built UI components (buttons, cards, forms, dialogs, etc.)
-
-### Backend Architecture
-
-**Server Framework**: Express.js running on Node.js with TypeScript.
-
-**API Structure**: RESTful API with routes prefixed by `/api`. Includes:
-- POST `/api/sessions` - Create new exam session
-- GET `/api/sessions/:id` - Get session state
-- GET `/api/sessions/:id/items` - Get paginated exam questions
-- POST `/api/sessions/:id/grade` - Grade individual answer
-- POST `/api/sessions/:id/pause` - Pause exam timer
-- POST `/api/sessions/:id/resume` - Resume exam timer
-- POST `/api/sessions/:id/submit` - Submit and score exam
-
-**Development Features**:
-- Request/response logging middleware
-- Error handling middleware with status code extraction
-- CORS and JSON body parsing enabled
-- Vite integration in development for HMR and asset serving
-
-**Data Storage Strategy**: 
-- Designed for PostgreSQL via Drizzle ORM
-- Currently implements in-memory storage (`MemStorage` class) as a temporary solution
-- Storage interface (`IStorage`) abstracts CRUD operations for easy database swap
-- Session management planned via `connect-pg-simple`
-
-**Build Process**:
-- Frontend: Vite builds React app to `dist/public`
-- Backend: esbuild bundles Express server to `dist/index.js`
-- Single production entry point serves static files and API routes
+### Backend
+The backend is an Express.js server on Node.js with TypeScript, providing a RESTful API. Key API endpoints manage exam sessions, question retrieval, grading, and submission. Development features include request/response logging, error handling, and CORS support. The system is designed for PostgreSQL via Drizzle ORM, currently utilizing an in-memory storage solution (`MemStorage`) with a flexible `IStorage` interface for future database integration. The build process uses Vite for the frontend and esbuild for the backend, resulting in a single production entry point.
 
 ### Database Schema
+Drizzle ORM is used with a PostgreSQL dialect, connected to Neon Database. The schema includes tables for `Users`, `Diagnostics` (certification, timeline, weekly hours, weaknesses, background), `Questions` (qid, certification, domain, difficulty, type, question, options, correct answers, explanation, references), and `Exam Sessions` (certification, domains, questionCount, mode, timer settings, status, question IDs, user answers, score). Zod schemas are generated from Drizzle tables for runtime type checking, and Drizzle Kit manages schema migrations.
 
-**ORM**: Drizzle ORM with PostgreSQL dialect, using Neon Database serverless driver.
+### UI/UX Decisions
+The platform features a modern, marketing-focused homepage. The diagnostic flow uses a scrolling multi-step design where questions appear sequentially, stacking vertically as answered, allowing users to scroll and re-edit previous responses. A sticky summary card on desktop provides real-time progress updates. The exam simulator features a progressive disclosure design for configuration, allowing quick starts or detailed customization. The exam interface includes real-time timers, pause/resume functionality, and clear navigation. The results page provides a comprehensive breakdown of scores and question review. Accessibility features include a customization dialog for font size and high-contrast mode, robust keyboard navigation, and screen reader support with ARIA labels and semantic HTML.
 
-**Schema Design** (in `shared/schema.ts`):
+## External Dependencies
 
-1. **Users Table**:
-   - `id` (UUID, auto-generated)
-   - `username` (unique, text)
-   - `password` (text, plaintext - authentication not yet implemented)
+### Database
+- **Neon Database**: PostgreSQL-compatible serverless database.
+- `@neondatabase/serverless`: Driver for Neon Database connection.
 
-2. **Diagnostics Table**:
-   - `id` (UUID, auto-generated)
-   - `certification` (text) - Selected exam (PMP, CISSP, etc.)
-   - `examTimeline` (text) - When user plans to take exam
-   - `weeklyHours` (text) - Available study time
-   - `weaknesses` (text array) - Knowledge gaps by domain
-   - `background` (text, optional) - Professional context
+### UI Component Libraries
+- **Radix UI**: Primitive components for accessibility.
+- **shadcn/ui**: Pre-styled Radix components.
+- **Lucide React**: Icon library.
+- **cmdk**: Command palette component.
+- **embla-carousel-react**: Carousel functionality.
 
-3. **Questions Table** (Exam Simulator):
-   - `qid` (text, primary key) - Unique question identifier
-   - `certification` (text) - Associated certification
-   - `domain` (text) - Knowledge domain/category
-   - `difficulty` (text) - Easy/Medium/Hard
-   - `type` (text) - Multiple choice types
-   - `question` (text) - Question text
-   - `options` (JSONB array) - Answer options with IDs and text
-   - `correctAnswers` (text array) - Correct option IDs
-   - `explanation` (text) - Answer explanation
-   - `references` (text array) - Source references
+### Utilities
+- `clsx` + `tailwind-merge`: For dynamic CSS class management.
+- `date-fns`: For date manipulation.
+- `nanoid`: For unique ID generation.
+- `class-variance-authority`: For component variant management.
 
-4. **Exam Sessions Table**:
-   - `id` (UUID, auto-generated)
-   - `certification` (text) - Exam type
-   - `domains` (text array) - Selected domains
-   - `questionCount` (integer) - Number of questions
-   - `mode` (text) - Quiz or Exam mode
-   - `timerEnabled` (boolean) - Timer on/off
-   - `timerMinutes` (integer) - Timer duration
-   - `status` (text) - active/paused/completed
-   - `questionIds` (text array) - Selected question IDs
-   - `answers` (JSONB) - User answers and grading
-   - `score` (JSONB) - Overall and domain scores
-   - `startedAt`, `endsAt`, `completedAt` - Timestamps
+### Fonts
+- **Google Fonts**: Architects Daughter, DM Sans, Fira Code, Geist Mono (loaded via HTML link tags).
 
-**Validation**: Zod schemas generated from Drizzle tables via `drizzle-zod` for runtime type checking.
-
-**Migration Strategy**: Drizzle Kit configured to output migrations to `./migrations` directory with `db:push` script for schema deployment.
-
-### External Dependencies
-
-**Database**: 
-- Neon Database (PostgreSQL-compatible serverless database)
-- Connection via `@neondatabase/serverless` package
-- DATABASE_URL environment variable required
-
-**UI Component Libraries**:
-- Radix UI (40+ primitive components for accessibility)
-- shadcn/ui component system (pre-styled Radix components)
-- Lucide React (icon library)
-- cmdk (command palette component)
-- embla-carousel-react (carousel functionality)
-
-**Development Tools**:
-- Replit-specific plugins: runtime error modal, cartographer, dev banner
-- TypeScript with strict mode enabled
-- ESLint and Prettier (implied by project structure)
-
-**Utilities**:
-- clsx + tailwind-merge via custom `cn()` utility
-- date-fns for date manipulation
-- nanoid for unique ID generation
-- class-variance-authority for component variant management
-
-**Session Management** (planned):
-- connect-pg-simple for PostgreSQL-backed sessions
-- Express session middleware (not yet configured)
-
-**Asset Management**:
-- Static images stored in `attached_assets` directory
-- Imported via Vite's asset handling with @assets alias
-- Includes 3D renders, logos, and marketing imagery
-
-**Fonts**:
-- Google Fonts: Architects Daughter, DM Sans, Fira Code, Geist Mono
-- Loaded via HTML link tags in `client/index.html`
-
-**No External Authentication**: Authentication system not yet implemented. Password storage is plaintext, requiring bcrypt/argon2 integration before production use.
-
-**No Email Service**: No transactional email or notification system currently integrated.
-
-**No Payment Processing**: No Stripe, PayPal, or other payment gateway integration present.
-
-**No AI/ML Services**: Despite AI-powered features in the product description, no OpenAI, Anthropic, or other AI service integration exists yet. This would be a critical addition for the adaptive learning features.
-
-## Recent Changes
-
-### Exam Simulator Feature (October 10, 2025)
-
-Added comprehensive Exam Simulator functionality for certification exam practice:
-
-**Navigation**:
-- Updated Header with Products dropdown menu containing "Simulator" link
-- Mobile-responsive navigation with proper keyboard accessibility
-
-**Configuration Page** (`/simulator`) - Progressive Disclosure Design:
-
-**Step 1: Quick Start (Landing View)**
-- Two-card layout for instant decision making
-- Practice Quiz card: 30 questions, all domains, no timer, instant explanations
-- Exam Simulation card: 100 questions, 180 minutes, all 8 domains
-- Smart defaults allow users to start in 5 seconds
-- "Customize" links for power users who need control
-
-**Step 2: Customize (Optional View)**
-- Collapsible domain selection (collapsed by default, showing first 3)
-- Question count with +/- increment buttons (5-100 range)
-- Conditional timer settings (optional for Quiz, required for Exam)
-- Simplified review preferences (removed Quick Review options)
-- Sticky summary box showing current configuration
-- Back navigation to return to Quick Start
-- Estimated completion time calculation
-
-**Exam Taking Interface** (`/exam/:sessionId`):
-- Real-time countdown timer with setInterval implementation
-- Pause/Resume functionality with timer continuity
-- Auto-submit when timer expires
-- Question display with domain badges
-- Multiple choice and checkbox question support
-- Previous/Next navigation with progress tracking
-- Sticky bottom navigation bar for mobile
-- Error handling with toast notifications
-- Optimistic UI updates with rollback on failure
-
-**Results Page** (`/results/:sessionId`):
-- Overall score percentage
-- Domain-weighted scoring breakdown
-- Question-by-question review
-- Correct/incorrect status indicators
-- Answer explanations and references
-- Mobile-responsive grid layout
-
-**Sample Data**:
-- 30 CISSP sample questions imported from CSV
-- Covers all 8 CISSP domains with varying difficulty levels
-- Includes explanations and references for each question
-
-**Technical Implementation**:
-- In-memory storage (MemStorage) for exam sessions and questions
-- Domain-weighted scoring algorithm in `server/examLogic.ts`
-- Paginated question loading for performance
-- Timer synchronization using endsAt timestamp
-- Comprehensive error handling and user feedback
-
-### Accessibility Features (October 10, 2025)
-
-Added comprehensive accessibility features to the Exam Taking Interface to support users with disabilities and diverse learning needs:
-
-**Customization Dialog**:
-- Settings icon in exam header opens customization dialog
-- Domain badge visibility toggle (hidden by default, can be shown)
-- Font size adjustment: Small (text-sm), Medium (text-base), Large (text-lg), Extra Large (text-xl)
-- High-contrast mode toggle for improved readability
-- Settings persist in localStorage across sessions
-
-**Keyboard Navigation**:
-- Arrow keys (Up/Down) for question navigation
-- Tab key for sequential focus through interactive elements
-- Enter/Space keys for activating buttons and selecting options
-- Skip to main content functionality
-- Escape key closes dialogs
-
-**Screen Reader Support**:
-- ARIA labels on all interactive elements (buttons, inputs, options)
-- ARIA live regions for dynamic content (timer countdown, explanations)
-- ARIA describedby for option explanations
-- Semantic HTML with proper roles (navigation, form, region)
-- Descriptive alt text and labels for all UI elements
-- Proper heading hierarchy with aria-level
-
-**High-Contrast Mode**:
-- Enhanced color contrast ratios for WCAG compliance
-- Black/white color scheme with minimal grays
-- 3px focus indicators with primary color
-- 2px borders on all interactive elements
-- Supports both light and dark theme variants
-
-**Visual Accessibility**:
-- Adjustable text sizes without breaking layout
-- Clear focus indicators on all interactive elements
-- Color is not the only indicator (icons and text labels used)
-- Sufficient spacing between interactive elements
-- Mobile-responsive design maintains accessibility
-
-**Implementation Details**:
-- Font sizing implemented via `getFontSizeClass()` function returning Tailwind classes
-- High-contrast CSS in `client/src/index.css` with `.high-contrast-mode` class
-- Keyboard event listeners in `useEffect` hook for arrow key navigation
-- LocalStorage key: `customizationSettings` stores user preferences
-- All settings apply immediately without page reload
+### Planned/Future Integrations (Not yet implemented)
+- `connect-pg-simple`: For PostgreSQL-backed session management.
+- External authentication (e.g., bcrypt/argon2).
+- Email service for transactional emails.
+- Payment processing (e.g., Stripe, PayPal).
+- AI/ML services (e.g., OpenAI, Anthropic) for adaptive learning features.
