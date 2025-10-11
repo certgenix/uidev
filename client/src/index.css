@@ -366,4 +366,25 @@
   .high-contrast-mode select {
     border: 2px solid hsl(var(--border));
   }
+
+  /* Font size accessibility classes */
+  .font-size-small,
+  .font-size-small * {
+    font-size: 0.875rem !important;
+  }
+
+  .font-size-medium,
+  .font-size-medium * {
+    font-size: 1rem !important;
+  }
+
+  .font-size-large,
+  .font-size-large * {
+    font-size: 1.125rem !important;
+  }
+
+  .font-size-extra-large,
+  .font-size-extra-large * {
+    font-size: 1.25rem !important;
+  }
 }

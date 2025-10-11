@@ -245,10 +245,10 @@ export default function ExamTaking() {
 
   const getFontSizeClass = () => {
     switch (fontSize) {
-      case 'small': return 'text-sm';
-      case 'large': return 'text-lg';
-      case 'extra-large': return 'text-xl';
-      default: return 'text-base';
+      case 'small': return 'font-size-small';
+      case 'large': return 'font-size-large';
+      case 'extra-large': return 'font-size-extra-large';
+      default: return 'font-size-medium';
     }
   };
 
@@ -362,7 +362,7 @@ export default function ExamTaking() {
           </div>
         </div>
 
-        <Card role="region" aria-label="Question" style={{ fontSize: getFontSizeValue() }}>
+        <Card role="region" aria-label="Question" className={getFontSizeClass()}>
           <CardHeader>
             <CardTitle className="font-semibold" data-testid="text-question-stem" role="heading" aria-level={1}>
               {currentQuestion.stem}
