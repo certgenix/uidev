@@ -229,6 +229,15 @@ export default function ExamTaking() {
     }
   };
 
+  const getFontSizeValue = () => {
+    switch (fontSize) {
+      case 'small': return '0.875rem'; // 14px
+      case 'large': return '1.125rem'; // 18px
+      case 'extra-large': return '1.25rem'; // 20px
+      default: return '1rem'; // 16px
+    }
+  };
+
   const getContrastClass = () => {
     return highContrast ? 'high-contrast-mode' : '';
   };
@@ -330,12 +339,12 @@ export default function ExamTaking() {
           </div>
         </div>
 
-        <Card role="region" aria-label="Question" className={getFontSizeClass()}>
+        <Card role="region" aria-label="Question" style={{ fontSize: getFontSizeValue() }}>
           <CardHeader>
             <CardTitle className="font-semibold" data-testid="text-question-stem" role="heading" aria-level={1}>
               {currentQuestion.stem}
             </CardTitle>
-            <p className="text-muted-foreground" role="note" style={{ fontSize: 'inherit' }}>
+            <p className="text-muted-foreground" role="note">
               {currentQuestion.type === "MSQ" && "Multiple Select Question - Choose all that apply"}
             </p>
           </CardHeader>
