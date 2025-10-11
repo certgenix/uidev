@@ -1,0 +1,61 @@
+Flow Structure:
+[Page loads - shows only Question 1]
+
+User answers Q1
+  ↓
+[Q1 collapses slightly, Q2 smoothly animates in below]
+
+User answers Q2
+  ↓
+[Q2 collapses slightly, Q3 smoothly animates in below]
+
+...and so on...
+
+All questions answered
+  ↓
+[Summary box appears at bottom]
+[Entire history visible by scrolling up]
+
+--- 
+
+Here are the critical UX Details to Get Right:
+1. Smooth Animations
+- Questions should slide/fade in (not pop)
+- Answered questions should condense slightly but remain readable
+- Auto-scroll to new question (but not too aggressively)
+
+2. Clear Visual States
+Answered question:
+- Slightly reduced opacity or size
+- Shows selected answer clearly
+- Has subtle "Edit" indicator on hover
+
+Active question:
+- Full size, prominent
+- Clear focus state
+- Animation draws attention
+
+Unanswered questions below:
+- Invisible/hidden until previous is answered
+
+3. Editing Mechanism
+- Click on any previous answer to edit
+- Active question collapses
+- Clicked question expands back to full size
+Save change → returns to where you were
+
+
+4. Smart Scrolling
+- Auto-scroll should be gentle
+- Leave previous question partially visible at top
+- Don't scroll too far past the new question
+- On mobile: ensure keyboard doesn't hide content
+
+5. Add a sticky summary card that builds as they answer:
+[Sticky at top-right]
+Your Plan So Far - example:
+✓ CISSP certification
+✓ Beginner level
+✓ AI-guided focus
+⏱️ 12 weeks
+[3 questions remaining...]
