@@ -381,7 +381,7 @@ export default function Diagnostic() {
                   className={`
                     relative overflow-hidden transition-all duration-300
                     ${question.state === "active" ? "shadow-2xl border-2 border-primary/40 ring-4 ring-primary/10" : "shadow-md border-border"}
-                    ${question.state === "answered" ? "cursor-pointer hover:shadow-xl hover:border-primary/30" : ""}
+                    ${question.state === "answered" ? "cursor-pointer hover:shadow-xl hover:border-2 hover:border-primary/60 hover:ring-2 hover:ring-primary/20" : ""}
                   `}
                   onClick={() => question.state === "answered" && handleEdit(question.id)}
                 >
