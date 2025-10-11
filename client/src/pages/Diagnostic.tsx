@@ -214,12 +214,11 @@ export default function Diagnostic() {
 
   const scrollToQuestion = (questionId: number) => {
     const questionElement = questionRefs.current[questionId];
-    if (questionElement && containerRef.current) {
-      const containerRect = containerRef.current.getBoundingClientRect();
-      const questionRect = questionElement.getBoundingClientRect();
-      const offset = questionRect.top - containerRect.top - 80;
+    if (questionElement) {
+      const rect = questionElement.getBoundingClientRect();
+      const offset = window.pageYOffset + rect.top - 180; // Account for sticky header and progress bar
       
-      containerRef.current.scrollBy({
+      window.scrollTo({
         top: offset,
         behavior: 'smooth'
       });
@@ -281,6 +280,12 @@ export default function Diagnostic() {
     } else if (formData.focusAreas.length > 0) {
       items.push({ icon: CheckCircle2, label: `${formData.focusAreas.length} focus areas` });
     }
+    if (formData.examDate) {
+      items.push({ icon: Calendar, label: `Exam: ${new Date(formData.examDate).toLocaleDateString()}` });
+    } else if (formData.examTimeline) {
+      const timeline = examTimelines.find(t => t.value === formData.examTimeline);
+      if (timeline) items.push({ icon: Calendar, label: timeline.label });
+    }
     if (formData.weeklyHours) {
       items.push({ icon: Clock, label: formData.weeklyHours + " hrs/week" });
     }
@@ -300,7 +305,7 @@ export default function Diagnostic() {
       <Header />
       
       {/* Sticky Progress Bar */}
-      <div className="sticky top-0 z-20 bg-background/95 backdrop-blur border-b">
+      <div className="sticky top-[72px] z-20 bg-background/95 backdrop-blur border-b">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center gap-4">
             <div className="flex-1">
@@ -313,7 +318,7 @@ export default function Diagnostic() {
         </div>
       </div>
 
-      <main className="relative flex-1 flex">
+      <main className="relative flex-1 px-4 py-8 md:py-12">
         {/* Sticky Summary Card - Desktop Only */}
         <AnimatePresence>
           {activeQuestionId > 0 && activeQuestionId < 9 && getSummaryItems().length > 0 && (
@@ -321,7 +326,7 @@ export default function Diagnostic() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}
-              className="hidden lg:block fixed right-8 top-36 w-72 z-10"
+              className="hidden lg:block fixed right-8 top-[200px] w-72 z-10"
             >
               <Card className="p-5 shadow-xl border-2 border-primary/20 bg-card/95 backdrop-blur">
                 <div className="flex items-center gap-2 mb-4">
@@ -353,10 +358,9 @@ export default function Diagnostic() {
         {/* Main Content Area */}
         <div 
           ref={containerRef}
-          className="flex-1 overflow-y-auto px-4 py-8 md:py-12"
+          className="max-w-3xl mx-auto space-y-6"
         >
-          <div className="max-w-3xl mx-auto space-y-6">
-            {questions.map((question) => (
+          {questions.map((question) => (
               <motion.div
                 key={question.id}
                 ref={(el) => (questionRefs.current[question.id] = el)}
@@ -833,7 +837,6 @@ export default function Diagnostic() {
                 </Card>
               </motion.div>
             ))}
-          </div>
         </div>
       </main>
       
