@@ -75,6 +75,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const timer = session.timer as any;
       res.json({
         certificationName: session.certificationName,
+        mode: session.mode,
         status: session.status,
         index: session.index,
         questions: session.questions,

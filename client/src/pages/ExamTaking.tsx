@@ -164,7 +164,7 @@ export default function ExamTaking() {
   });
 
   const currentQuestion = questions[currentIndex];
-  const sessionMode = (session as any)?.mode || "quiz";
+  const sessionMode = (session as any)?.mode;
   const showExplanations = (session as any)?.review?.explanationsWhileTaking || sessionMode === "quiz";
   const currentQuestionGrade = (session as any)?.answers?.[currentQuestion?.qid];
 
@@ -330,16 +330,16 @@ export default function ExamTaking() {
           </div>
         </div>
 
-        <Card role="region" aria-label="Question">
-          <CardHeader className={getFontSizeClass()}>
+        <Card role="region" aria-label="Question" className={getFontSizeClass()}>
+          <CardHeader>
             <CardTitle className="font-semibold" data-testid="text-question-stem" role="heading" aria-level={1}>
               {currentQuestion.stem}
             </CardTitle>
-            <p className="text-sm text-muted-foreground" role="note">
+            <p className="text-muted-foreground" role="note" style={{ fontSize: 'inherit' }}>
               {currentQuestion.type === "MSQ" && "Multiple Select Question - Choose all that apply"}
             </p>
           </CardHeader>
-          <CardContent role="form" aria-label="Answer options" className={getFontSizeClass()}>
+          <CardContent role="form" aria-label="Answer options">
             {currentQuestion.type === "MCQ" ? (
               <RadioGroup
                 value={answers[currentQuestion.qid]?.[0] || ""}
@@ -378,7 +378,7 @@ export default function ExamTaking() {
                       </div>
                       {showFeedback && optionExplanation && (
                         <div className="px-3 pb-3 pt-0" id={`explanation-${option.id}`} role="note" aria-live="polite">
-                          <div className="pl-7 text-sm text-muted-foreground border-l-2 border-current ml-2 pl-3">
+                          <div className="pl-7 text-muted-foreground border-l-2 border-current ml-2 pl-3">
                             {optionExplanation}
                           </div>
                         </div>
@@ -422,7 +422,7 @@ export default function ExamTaking() {
                       </div>
                       {showFeedback && optionExplanation && (
                         <div className="px-3 pb-3 pt-0" id={`explanation-msq-${option.id}`} role="note" aria-live="polite">
-                          <div className="pl-7 text-sm text-muted-foreground border-l-2 border-current ml-2 pl-3">
+                          <div className="pl-7 text-muted-foreground border-l-2 border-current ml-2 pl-3">
                             {optionExplanation}
                           </div>
                         </div>
@@ -436,7 +436,7 @@ export default function ExamTaking() {
             {showExplanations && currentQuestionGrade?.feedback?.explanation && (
               <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg" role="region" aria-label="Overall explanation" aria-live="polite">
                 <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">Explanation</h4>
-                <p className="text-blue-800 dark:text-blue-200 text-sm">
+                <p className="text-blue-800 dark:text-blue-200">
                   {typeof currentQuestionGrade.feedback.explanation === 'string' 
                     ? currentQuestionGrade.feedback.explanation 
                     : currentQuestionGrade.feedback.explanation.overview}
