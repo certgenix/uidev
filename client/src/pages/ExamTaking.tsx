@@ -39,6 +39,29 @@ export default function ExamTaking() {
   const [highContrast, setHighContrast] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
 
+  useEffect(() => {
+    const savedSettings = localStorage.getItem('accessibilitySettings');
+    if (savedSettings) {
+      try {
+        const settings = JSON.parse(savedSettings);
+        if (settings.fontSize) setFontSize(settings.fontSize);
+        if (settings.highContrast !== undefined) setHighContrast(settings.highContrast);
+        if (settings.showDomain !== undefined) setShowDomain(settings.showDomain);
+      } catch (e) {
+        console.error('Failed to load accessibility settings:', e);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    const settings = {
+      fontSize,
+      highContrast,
+      showDomain
+    };
+    localStorage.setItem('accessibilitySettings', JSON.stringify(settings));
+  }, [fontSize, highContrast, showDomain]);
+
   const { data: session } = useQuery({
     queryKey: ["/api/sessions", sessionId],
     refetchInterval: 30000
