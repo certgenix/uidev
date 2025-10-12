@@ -392,9 +392,6 @@ export default function Diagnostic() {
   };
 
   const handleReviewAnswers = () => {
-    // Hide confirmation panel
-    setShowConfirmationPanel(false);
-    
     // Find the first answered question (skip welcome question 0)
     const firstAnsweredQuestion = questions.find(q => q.id > 0 && q.state === "answered");
     
