@@ -201,6 +201,7 @@ export default function Diagnostic() {
     { id: 9, state: "unanswered", title: "Here's Your Personalized Study Plan 🚀", type: "summary" }
   ]);
 
+  const [selectedValue, setSelectedValue] = useState<any>(null);
   const questionRefs = useRef<{ [key: number]: HTMLDivElement | null }>({});
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -230,20 +231,31 @@ export default function Diagnostic() {
     const question = questions.find(q => q.id === questionId);
     if (!question) return;
 
-    if (question.field) {
-      setFormData(prev => ({
-        ...prev,
-        [question.field!]: value
-      }));
-    }
+    // Step 1: Instantly show selected state (0ms)
+    setSelectedValue(value);
 
-    setQuestions(prev => prev.map(q => {
-      if (q.id === questionId) return { ...q, state: "answered" as QuestionState };
-      if (q.id === questionId + 1) return { ...q, state: "active" as QuestionState };
-      return q;
-    }));
+    // Step 2: Hold for 600ms, then update sidebar & progress bar
+    setTimeout(() => {
+      if (question.field) {
+        setFormData(prev => ({
+          ...prev,
+          [question.field!]: value
+        }));
+      }
 
-    setTimeout(() => scrollToQuestion(questionId + 1), 100);
+      // Step 3: After 300ms more, transition to next question
+      setTimeout(() => {
+        setQuestions(prev => prev.map(q => {
+          if (q.id === questionId) return { ...q, state: "answered" as QuestionState };
+          if (q.id === questionId + 1) return { ...q, state: "active" as QuestionState };
+          return q;
+        }));
+
+        // Clear selected value and scroll to next question
+        setSelectedValue(null);
+        setTimeout(() => scrollToQuestion(questionId + 1), 100);
+      }, 300);
+    }, 600);
   };
 
   const handleEdit = (questionId: number) => {
@@ -489,10 +501,17 @@ export default function Diagnostic() {
                                 <button
                                   key={cert.value}
                                   onClick={() => handleAnswer(question.id, cert.value)}
-                                  className="p-4 rounded-lg border-2 border-border hover:border-primary/50 hover:bg-primary/5 text-left transition-all font-medium"
+                                  className={`p-4 rounded-lg border-2 text-left transition-all font-medium ${
+                                    selectedValue === cert.value
+                                      ? "border-primary bg-primary text-primary-foreground shadow-lg scale-105"
+                                      : "border-border hover:border-primary/50 hover:bg-primary/5"
+                                  }`}
                                   data-testid={`button-cert-${cert.value.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
                                 >
-                                  {cert.label}
+                                  <div className="flex items-center justify-between">
+                                    <span>{cert.label}</span>
+                                    {selectedValue === cert.value && <CheckCircle2 className="h-5 w-5 ml-2" />}
+                                  </div>
                                 </button>
                               ))}
                             </div>
@@ -505,11 +524,22 @@ export default function Diagnostic() {
                                 <button
                                   key={level.value}
                                   onClick={() => handleAnswer(question.id, level.value)}
-                                  className="w-full p-5 rounded-lg border-2 border-border hover:border-primary/50 hover:bg-primary/5 text-left transition-all group"
+                                  className={`w-full p-5 rounded-lg border-2 text-left transition-all group ${
+                                    selectedValue === level.value
+                                      ? "border-primary bg-primary text-primary-foreground shadow-lg scale-105"
+                                      : "border-border hover:border-primary/50 hover:bg-primary/5"
+                                  }`}
                                   data-testid={`button-level-${level.value}`}
                                 >
-                                  <div className="font-medium text-base mb-1">{level.label}</div>
-                                  <div className="text-sm text-muted-foreground group-hover:text-primary/80 transition-colors italic">
+                                  <div className="flex items-center justify-between mb-1">
+                                    <div className="font-medium text-base">{level.label}</div>
+                                    {selectedValue === level.value && <CheckCircle2 className="h-5 w-5" />}
+                                  </div>
+                                  <div className={`text-sm italic ${
+                                    selectedValue === level.value
+                                      ? "text-primary-foreground/90"
+                                      : "text-muted-foreground group-hover:text-primary/80"
+                                  } transition-colors`}>
                                     "{level.description}"
                                   </div>
                                 </button>
@@ -526,14 +556,25 @@ export default function Diagnostic() {
                                   <button
                                     key={style.value}
                                     onClick={() => handleAnswer(question.id, style.value)}
-                                    className="w-full p-5 rounded-lg border-2 border-border hover:border-primary/50 hover:bg-primary/5 text-left transition-all group"
+                                    className={`w-full p-5 rounded-lg border-2 text-left transition-all group ${
+                                      selectedValue === style.value
+                                        ? "border-primary bg-primary text-primary-foreground shadow-lg scale-105"
+                                        : "border-border hover:border-primary/50 hover:bg-primary/5"
+                                    }`}
                                     data-testid={`button-style-${style.value}`}
                                   >
-                                    <div className="flex items-center gap-3 mb-1">
-                                      <Icon className="h-5 w-5 text-primary" />
-                                      <div className="font-medium text-base">{style.label}</div>
+                                    <div className="flex items-center justify-between mb-1">
+                                      <div className="flex items-center gap-3">
+                                        <Icon className={`h-5 w-5 ${selectedValue === style.value ? "text-primary-foreground" : "text-primary"}`} />
+                                        <div className="font-medium text-base">{style.label}</div>
+                                      </div>
+                                      {selectedValue === style.value && <CheckCircle2 className="h-5 w-5" />}
                                     </div>
-                                    <div className="text-sm text-muted-foreground group-hover:text-primary/80 transition-colors italic ml-8">
+                                    <div className={`text-sm italic ml-8 ${
+                                      selectedValue === style.value
+                                        ? "text-primary-foreground/90"
+                                        : "text-muted-foreground group-hover:text-primary/80"
+                                    } transition-colors`}>
                                       "{style.description}"
                                     </div>
                                   </button>
@@ -556,11 +597,22 @@ export default function Diagnostic() {
                                       setFormData(prev => ({ ...prev, studyStructure: structure.value, focusAreas: [] }));
                                     }
                                   }}
-                                  className="w-full p-5 rounded-lg border-2 border-border hover:border-primary/50 hover:bg-primary/5 text-left transition-all group"
+                                  className={`w-full p-5 rounded-lg border-2 text-left transition-all group ${
+                                    selectedValue === structure.value
+                                      ? "border-primary bg-primary text-primary-foreground shadow-lg scale-105"
+                                      : "border-border hover:border-primary/50 hover:bg-primary/5"
+                                  }`}
                                   data-testid={`button-structure-${structure.value}`}
                                 >
-                                  <div className="font-medium text-base mb-1">{structure.label}</div>
-                                  <div className="text-sm text-muted-foreground group-hover:text-primary/80 transition-colors italic">
+                                  <div className="flex items-center justify-between mb-1">
+                                    <div className="font-medium text-base">{structure.label}</div>
+                                    {selectedValue === structure.value && <CheckCircle2 className="h-5 w-5" />}
+                                  </div>
+                                  <div className={`text-sm italic ${
+                                    selectedValue === structure.value
+                                      ? "text-primary-foreground/90"
+                                      : "text-muted-foreground group-hover:text-primary/80"
+                                  } transition-colors`}>
                                     "{structure.description}"
                                   </div>
                                 </button>
@@ -637,11 +689,22 @@ export default function Diagnostic() {
                                       setFormData(prev => ({ ...prev, previousAttempts: attempt.value }));
                                     }
                                   }}
-                                  className="w-full p-5 rounded-lg border-2 border-border hover:border-primary/50 hover:bg-primary/5 text-left transition-all group"
+                                  className={`w-full p-5 rounded-lg border-2 text-left transition-all group ${
+                                    selectedValue === attempt.value
+                                      ? "border-primary bg-primary text-primary-foreground shadow-lg scale-105"
+                                      : "border-border hover:border-primary/50 hover:bg-primary/5"
+                                  }`}
                                   data-testid={`button-attempt-${attempt.value}`}
                                 >
-                                  <div className="font-medium text-base mb-1">{attempt.label}</div>
-                                  <div className="text-sm text-muted-foreground group-hover:text-primary/80 transition-colors italic">
+                                  <div className="flex items-center justify-between mb-1">
+                                    <div className="font-medium text-base">{attempt.label}</div>
+                                    {selectedValue === attempt.value && <CheckCircle2 className="h-5 w-5" />}
+                                  </div>
+                                  <div className={`text-sm italic ${
+                                    selectedValue === attempt.value
+                                      ? "text-primary-foreground/90"
+                                      : "text-muted-foreground group-hover:text-primary/80"
+                                  } transition-colors`}>
                                     "{attempt.description}"
                                   </div>
                                 </button>
@@ -714,11 +777,22 @@ export default function Diagnostic() {
                                         setFormData(prev => ({ ...prev, examTimeline: timeline.value }));
                                       }
                                     }}
-                                    className="w-full p-4 rounded-lg border-2 border-border hover:border-primary/50 hover:bg-primary/5 text-left transition-all"
+                                    className={`w-full p-4 rounded-lg border-2 text-left transition-all ${
+                                      selectedValue === timeline.value
+                                        ? "border-primary bg-primary text-primary-foreground shadow-lg scale-105"
+                                        : "border-border hover:border-primary/50 hover:bg-primary/5"
+                                    }`}
                                     data-testid={`button-timeline-${timeline.value}`}
                                   >
-                                    <div className="font-medium text-base">{timeline.label}</div>
-                                    <div className="text-sm text-muted-foreground mt-1">{timeline.sublabel}</div>
+                                    <div className="flex items-center justify-between">
+                                      <div>
+                                        <div className="font-medium text-base">{timeline.label}</div>
+                                        <div className={`text-sm mt-1 ${
+                                          selectedValue === timeline.value ? "text-primary-foreground/90" : "text-muted-foreground"
+                                        }`}>{timeline.sublabel}</div>
+                                      </div>
+                                      {selectedValue === timeline.value && <CheckCircle2 className="h-5 w-5" />}
+                                    </div>
                                   </button>
                                   
                                   {timeline.showDatePicker && formData.examTimeline === "scheduled" && (
@@ -770,11 +844,22 @@ export default function Diagnostic() {
                                 <button
                                   key={hours.value}
                                   onClick={() => handleAnswer(question.id, hours.value)}
-                                  className="w-full p-4 rounded-lg border-2 border-border hover:border-primary/50 hover:bg-primary/5 text-left transition-all group"
+                                  className={`w-full p-4 rounded-lg border-2 text-left transition-all group ${
+                                    selectedValue === hours.value
+                                      ? "border-primary bg-primary text-primary-foreground shadow-lg scale-105"
+                                      : "border-border hover:border-primary/50 hover:bg-primary/5"
+                                  }`}
                                   data-testid={`button-hours-${hours.value}`}
                                 >
-                                  <div className="font-medium text-base mb-1">{hours.label}</div>
-                                  <div className="text-sm text-muted-foreground group-hover:text-primary/80">
+                                  <div className="flex items-center justify-between mb-1">
+                                    <div className="font-medium text-base">{hours.label}</div>
+                                    {selectedValue === hours.value && <CheckCircle2 className="h-5 w-5" />}
+                                  </div>
+                                  <div className={`text-sm ${
+                                    selectedValue === hours.value
+                                      ? "text-primary-foreground/90"
+                                      : "text-muted-foreground group-hover:text-primary/80"
+                                  }`}>
                                     {hours.estimate}
                                   </div>
                                 </button>
@@ -799,11 +884,22 @@ export default function Diagnostic() {
                                 <button
                                   key={timing.value}
                                   onClick={() => handleAnswer(question.id, timing.value)}
-                                  className="w-full p-5 rounded-lg border-2 border-border hover:border-primary/50 hover:bg-primary/5 text-left transition-all group"
+                                  className={`w-full p-5 rounded-lg border-2 text-left transition-all group ${
+                                    selectedValue === timing.value
+                                      ? "border-primary bg-primary text-primary-foreground shadow-lg scale-105"
+                                      : "border-border hover:border-primary/50 hover:bg-primary/5"
+                                  }`}
                                   data-testid={`button-timing-${timing.value}`}
                                 >
-                                  <div className="font-medium text-base mb-1">{timing.label}</div>
-                                  <div className="text-sm text-muted-foreground group-hover:text-primary/80 transition-colors">
+                                  <div className="flex items-center justify-between mb-1">
+                                    <div className="font-medium text-base">{timing.label}</div>
+                                    {selectedValue === timing.value && <CheckCircle2 className="h-5 w-5" />}
+                                  </div>
+                                  <div className={`text-sm ${
+                                    selectedValue === timing.value
+                                      ? "text-primary-foreground/90"
+                                      : "text-muted-foreground group-hover:text-primary/80"
+                                  } transition-colors`}>
                                     {timing.description}
                                   </div>
                                 </button>
