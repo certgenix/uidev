@@ -360,9 +360,6 @@ export default function Diagnostic() {
   const handleEdit = (questionId: number) => {
     const question = questions.find(q => q.id === questionId);
     
-    // Hide confirmation panel if it's showing
-    setShowConfirmationPanel(false);
-    
     // Clear the previous answer from formData when editing
     if (question?.field) {
       setFormData(prev => ({
@@ -1296,12 +1293,20 @@ export default function Diagnostic() {
                       This takes about 15 seconds
                     </p>
                     
+                    {/* Show message if questions need to be re-answered */}
+                    {answeredCount < 8 && (
+                      <p className="text-sm text-amber-600 dark:text-amber-500 font-medium" data-testid="text-incomplete-warning">
+                        ⚠️ Please complete all questions to continue
+                      </p>
+                    )}
+                    
                     {/* Primary button */}
                     <div className="pt-4">
                       <Button
                         size="lg"
                         onClick={handleGeneratePlan}
-                        className="rounded-full text-base px-10 h-14 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all"
+                        disabled={answeredCount < 8}
+                        className="rounded-full text-base px-10 h-14 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                         data-testid="button-generate-plan"
                       >
                         Generate My Plan →
