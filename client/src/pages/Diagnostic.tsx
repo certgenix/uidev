@@ -266,6 +266,7 @@ export default function Diagnostic() {
   const [selectedValue, setSelectedValue] = useState<any>(null);
   const [encouragingText, setEncouragingText] = useState<string>("");
   const [showEncouraging, setShowEncouraging] = useState(false);
+  const [showConfirmationPanel, setShowConfirmationPanel] = useState(false);
   const questionRefs = useRef<{ [key: number]: HTMLDivElement | null }>({});
   const containerRef = useRef<HTMLDivElement>(null);
 
