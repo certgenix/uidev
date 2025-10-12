@@ -360,6 +360,9 @@ export default function Diagnostic() {
   const handleEdit = (questionId: number) => {
     const question = questions.find(q => q.id === questionId);
     
+    // Hide confirmation panel if it's showing
+    setShowConfirmationPanel(false);
+    
     // Clear the previous answer from formData when editing
     if (question?.field) {
       setFormData(prev => ({
@@ -375,6 +378,28 @@ export default function Diagnostic() {
     }));
 
     setTimeout(() => scrollToQuestion(questionId), 100);
+  };
+
+  const handleGeneratePlan = () => {
+    // Hide confirmation panel
+    setShowConfirmationPanel(false);
+    
+    // Activate the summary question (Q9)
+    setQuestions(prev => prev.map(q => {
+      if (q.id === 9) return { ...q, state: "active" as QuestionState };
+      return q;
+    }));
+    
+    // Scroll to summary
+    setTimeout(() => scrollToQuestion(9), 100);
+  };
+
+  const handleReviewAnswers = () => {
+    // Hide confirmation panel
+    setShowConfirmationPanel(false);
+    
+    // Scroll to first question
+    setTimeout(() => scrollToQuestion(0), 100);
   };
 
   const handleToggle = (field: "focusAreas" | "failedDomains", value: string) => {
@@ -1221,6 +1246,67 @@ export default function Diagnostic() {
                 </Card>
               </motion.div>
             ))}
+
+          {/* Confirmation Panel - Shows after Q8 */}
+          <AnimatePresence>
+            {showConfirmationPanel && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                className="mt-8"
+                data-testid="confirmation-panel"
+              >
+                <Card className="relative overflow-hidden shadow-2xl border-2 border-primary/40">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5" />
+                  
+                  <div className="relative p-8 md:p-12 text-center space-y-6">
+                    {/* Heading */}
+                    <h2 className="text-3xl md:text-4xl font-bold" data-testid="text-confirmation-heading">
+                      🎉 Great job!
+                    </h2>
+                    
+                    {/* Subheading */}
+                    <p className="text-xl md:text-2xl font-medium text-muted-foreground" data-testid="text-confirmation-subheading">
+                      You've completed the diagnostic
+                    </p>
+                    
+                    {/* Body text */}
+                    <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed" data-testid="text-confirmation-body">
+                      ✨ Next, we'll analyze your profile and build a personalized study plan optimized for your goals.
+                    </p>
+                    
+                    {/* Timing indicator */}
+                    <p className="text-sm text-muted-foreground/80" data-testid="text-confirmation-timing">
+                      This takes about 15 seconds
+                    </p>
+                    
+                    {/* Primary button */}
+                    <div className="pt-4">
+                      <Button
+                        size="lg"
+                        onClick={handleGeneratePlan}
+                        className="rounded-full text-base px-10 h-14 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all"
+                        data-testid="button-generate-plan"
+                      >
+                        Generate My Plan →
+                      </Button>
+                    </div>
+                    
+                    {/* Secondary link */}
+                    <button
+                      onClick={handleReviewAnswers}
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors underline"
+                      data-testid="link-review-answers"
+                    >
+                      or review your answers
+                    </button>
+                  </div>
+                </Card>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </main>
       
