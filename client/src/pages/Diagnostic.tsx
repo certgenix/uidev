@@ -398,8 +398,22 @@ export default function Diagnostic() {
     // Hide confirmation panel
     setShowConfirmationPanel(false);
     
-    // Scroll to first question
-    setTimeout(() => scrollToQuestion(0), 100);
+    // Find the first answered question (skip welcome question 0)
+    const firstAnsweredQuestion = questions.find(q => q.id > 0 && q.state === "answered");
+    
+    if (firstAnsweredQuestion) {
+      // Reactivate the first answered question for editing
+      setQuestions(prev => prev.map(q => {
+        if (q.id === firstAnsweredQuestion.id) return { ...q, state: "active" as QuestionState };
+        return q;
+      }));
+      
+      // Scroll to that question
+      setTimeout(() => scrollToQuestion(firstAnsweredQuestion.id), 100);
+    } else {
+      // If no answered questions found, just scroll to welcome
+      setTimeout(() => scrollToQuestion(0), 100);
+    }
   };
 
   const handleToggle = (field: "focusAreas" | "failedDomains", value: string) => {
