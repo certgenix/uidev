@@ -152,7 +152,7 @@ interface Question {
   state: QuestionState;
   title: string;
   subtitle?: string;
-  type: "single" | "multi" | "date" | "summary";
+  type: "single" | "multi" | "date" | "summary" | "welcome";
   field?: keyof FormData;
   helpText?: string;
   conditional?: boolean;
@@ -189,7 +189,8 @@ export default function Diagnostic() {
   });
 
   const [questions, setQuestions] = useState<Question[]>([
-    { id: 1, state: "active", title: "Which certification are you preparing for?", type: "single", field: "certification" },
+    { id: 0, state: "active", title: "Let's Build Your Study Plan! 🎯", type: "welcome" },
+    { id: 1, state: "unanswered", title: "Which certification are you preparing for?", type: "single", field: "certification" },
     { id: 2, state: "unanswered", title: "What's your current knowledge level?", type: "single", field: "knowledgeLevel" },
     { id: 3, state: "unanswered", title: "How do you learn best?", type: "single", field: "learningStyle" },
     { id: 4, state: "unanswered", title: "How do you want to structure your study?", type: "single", field: "studyStructure" },
@@ -419,6 +420,58 @@ export default function Diagnostic() {
                           exit={{ opacity: 0 }}
                           transition={{ duration: 0.3 }}
                         >
+                          {/* Welcome Screen */}
+                          {question.id === 0 && (
+                            <div className="space-y-6">
+                              <div className="space-y-4 text-center md:text-left">
+                                <p className="text-lg text-muted-foreground">
+                                  We'll ask you <span className="font-semibold text-foreground">8 quick questions</span> (takes 2 minutes) to create a personalized study plan just for you.
+                                </p>
+                                
+                                <div className="bg-primary/5 dark:bg-primary/10 rounded-lg p-6 space-y-3">
+                                  <p className="font-semibold text-foreground mb-3">Your answers help us:</p>
+                                  <div className="space-y-2.5">
+                                    <div className="flex items-start gap-3">
+                                      <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                                      <span className="text-foreground">Match content to your experience level</span>
+                                    </div>
+                                    <div className="flex items-start gap-3">
+                                      <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                                      <span className="text-foreground">Optimize your study schedule</span>
+                                    </div>
+                                    <div className="flex items-start gap-3">
+                                      <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                                      <span className="text-foreground">Focus on areas that matter most</span>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4 space-y-2">
+                                  <div className="flex items-center gap-2 text-sm text-blue-900 dark:text-blue-100">
+                                    <Clock className="h-4 w-4" />
+                                    <span className="font-medium">Takes less than 2 minutes</span>
+                                  </div>
+                                  <div className="flex items-start gap-2 text-sm text-blue-800 dark:text-blue-200">
+                                    <Sparkles className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                                    <span><span className="font-medium">Tip:</span> Once you answer a question, the next question opens automatically.</span>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="flex justify-center md:justify-start pt-2">
+                                <Button
+                                  size="lg"
+                                  onClick={() => handleAnswer(question.id, "started")}
+                                  className="text-lg px-8 py-6"
+                                  data-testid="button-start-plan"
+                                >
+                                  <Rocket className="h-5 w-5 mr-2" />
+                                  Start Building My Plan
+                                </Button>
+                              </div>
+                            </div>
+                          )}
+
                           {/* Question 1: Certification */}
                           {question.id === 1 && (
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
