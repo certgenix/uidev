@@ -333,19 +333,26 @@ export default function Diagnostic() {
         }));
       }
 
-      // Step 3: After 300ms more, transition to next question
+      // Step 3: After 300ms more, transition to next question or show confirmation
       setTimeout(() => {
         setQuestions(prev => prev.map(q => {
           if (q.id === questionId) return { ...q, state: "answered" as QuestionState };
-          if (q.id === questionId + 1) return { ...q, state: "active" as QuestionState };
+          // Don't auto-activate Q9 if we're on Q8 - show confirmation panel instead
+          if (questionId !== 8 && q.id === questionId + 1) return { ...q, state: "active" as QuestionState };
           return q;
         }));
 
-        // Clear selected value, hide encouraging text, and scroll to next question
+        // Clear selected value and hide encouraging text
         setSelectedValue(null);
         setShowEncouraging(false);
         setEncouragingText("");
-        setTimeout(() => scrollToQuestion(questionId + 1), 100);
+        
+        // If this was Q8, show confirmation panel instead of scrolling to next
+        if (questionId === 8) {
+          setTimeout(() => setShowConfirmationPanel(true), 100);
+        } else {
+          setTimeout(() => scrollToQuestion(questionId + 1), 100);
+        }
       }, 300);
     }, 600);
   };
