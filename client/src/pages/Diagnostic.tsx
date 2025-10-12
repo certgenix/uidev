@@ -197,7 +197,7 @@ export default function Diagnostic() {
     { id: 5, state: "unanswered", title: "Have you taken this exam before?", type: "single", field: "previousAttempts" },
     { id: 6, state: "unanswered", title: "When's your target exam date?", type: "single", field: "examTimeline", helpText: "💡 Don't worry if you haven't scheduled yet - you can adjust this anytime\n💡 Most CISSP candidates study for 2-4 months" },
     { id: 7, state: "unanswered", title: "How much time can you commit weekly?", subtitle: "Consider your current schedule, work, and other commitments.", type: "single", field: "weeklyHours", helpText: "💡 Even 3 hours a week is enough — our AI will adapt to your schedule.\n💡 Studies show consistent, smaller sessions lead to better retention than cramming." },
-    { id: 8, state: "unanswered", title: "One more quick thing...", subtitle: "When do you prefer to study?", type: "single", field: "studyTimes", helpText: "💡 This helps us send you study reminders at the right time" },
+    { id: 8, state: "unanswered", title: "Final question! You're almost there...", subtitle: "When do you prefer to study?", type: "single", field: "studyTimes", helpText: "💡 This helps us send you study reminders at the right time" },
     { id: 9, state: "unanswered", title: "Here's Your Personalized Study Plan 🚀", type: "summary" }
   ]);
 
@@ -472,7 +472,7 @@ export default function Diagnostic() {
                                 <Button
                                   size="lg"
                                   onClick={() => handleAnswer(question.id, "started")}
-                                  className="text-lg px-8 py-6"
+                                  className="rounded-full text-base px-8 h-14 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all"
                                   data-testid="button-start-plan"
                                 >
                                   <Rocket className="h-5 w-5 mr-2" />
