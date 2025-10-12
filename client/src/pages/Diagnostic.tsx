@@ -247,6 +247,16 @@ export default function Diagnostic() {
   };
 
   const handleEdit = (questionId: number) => {
+    const question = questions.find(q => q.id === questionId);
+    
+    // Clear the previous answer from formData when editing
+    if (question?.field) {
+      setFormData(prev => ({
+        ...prev,
+        [question.field!]: Array.isArray(prev[question.field!]) ? [] : ""
+      }));
+    }
+    
     setQuestions(prev => prev.map(q => {
       if (q.id === questionId) return { ...q, state: "active" as QuestionState };
       if (q.state === "active") return { ...q, state: "answered" as QuestionState };
@@ -453,7 +463,7 @@ export default function Diagnostic() {
                                   </div>
                                   <div className="flex items-start gap-2 text-sm text-blue-800 dark:text-blue-200">
                                     <Sparkles className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                                    <span><span className="font-medium">Tip:</span> Once you answer a question, the next question opens automatically.</span>
+                                    <span>Once you answer a question, the next question opens automatically.</span>
                                   </div>
                                 </div>
                               </div>
