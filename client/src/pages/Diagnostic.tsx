@@ -468,7 +468,7 @@ export default function Diagnostic() {
                                 </div>
                               </div>
 
-                              <div className="flex justify-center md:justify-start pt-2">
+                              <div className="flex justify-center pt-2">
                                 <Button
                                   size="lg"
                                   onClick={() => handleAnswer(question.id, "started")}
