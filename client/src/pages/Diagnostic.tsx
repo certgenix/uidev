@@ -269,6 +269,7 @@ export default function Diagnostic() {
   const [showConfirmationPanel, setShowConfirmationPanel] = useState(false);
   const questionRefs = useRef<{ [key: number]: HTMLDivElement | null }>({});
   const containerRef = useRef<HTMLDivElement>(null);
+  const confirmationPanelRef = useRef<HTMLDivElement | null>(null);
 
   const domains = formData.certification 
     ? (domainsByExam[formData.certification] || domainsByExam.default)
@@ -278,6 +279,24 @@ export default function Diagnostic() {
   const totalQuestions = 8;
   const answeredCount = questions.filter(q => q.state === "answered").length;
   const progressPercentage = (answeredCount / totalQuestions) * 100;
+
+  // Scroll to confirmation panel when it appears
+  useEffect(() => {
+    if (showConfirmationPanel && confirmationPanelRef.current) {
+      setTimeout(() => {
+        const panelElement = confirmationPanelRef.current;
+        if (panelElement) {
+          const rect = panelElement.getBoundingClientRect();
+          const offset = window.pageYOffset + rect.top - 100; // 100px from top for breathing room
+          
+          window.scrollTo({
+            top: offset,
+            behavior: 'smooth'
+          });
+        }
+      }, 400); // Wait for panel animation to start
+    }
+  }, [showConfirmationPanel]);
 
   const scrollToQuestion = (questionId: number) => {
     const questionElement = questionRefs.current[questionId];
@@ -1259,6 +1278,7 @@ export default function Diagnostic() {
           <AnimatePresence>
             {showConfirmationPanel && (
               <motion.div
+                ref={confirmationPanelRef}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
