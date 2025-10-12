@@ -11,6 +11,22 @@ import { Progress } from "@/components/ui/progress";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
+// Animation timing constants (in milliseconds)
+const ANIMATION_TIMING = {
+  FADE_IN: 300,                    // New question appears
+  SELECTION_FEEDBACK: 150,         // Checkmark / highlight pop
+  CONFIRMATION_HOLD: 400,          // Brief pause after selection
+  COLLAPSE_FADE_OUT: 300,          // Answered question collapse
+  AUTO_SCROLL: 400,                // Scroll to next question
+  NEXT_FADE_IN: 300,               // Next question fade-in
+} as const;
+
+// Easing functions
+const EASING = {
+  EASE_OUT: [0.16, 1, 0.3, 1],     // For entries/fade-ins
+  EASE_IN: [0.4, 0, 1, 1],         // For exits/fade-outs
+} as const;
+
 const certifications = [
   { value: "CISSP®", label: "CISSP®" },
   { value: "PMP®", label: "PMP®" },
@@ -237,13 +253,19 @@ export default function Diagnostic() {
       }));
     }
 
-    setQuestions(prev => prev.map(q => {
-      if (q.id === questionId) return { ...q, state: "answered" as QuestionState };
-      if (q.id === questionId + 1) return { ...q, state: "active" as QuestionState };
-      return q;
-    }));
+    // Mark current question as answered after selection feedback + confirmation hold
+    setTimeout(() => {
+      setQuestions(prev => prev.map(q => {
+        if (q.id === questionId) return { ...q, state: "answered" as QuestionState };
+        if (q.id === questionId + 1) return { ...q, state: "active" as QuestionState };
+        return q;
+      }));
+    }, ANIMATION_TIMING.SELECTION_FEEDBACK + ANIMATION_TIMING.CONFIRMATION_HOLD);
 
-    setTimeout(() => scrollToQuestion(questionId + 1), 100);
+    // Auto-scroll starts during collapse for smooth transition (collapse and scroll overlap)
+    setTimeout(() => {
+      scrollToQuestion(questionId + 1);
+    }, ANIMATION_TIMING.SELECTION_FEEDBACK + ANIMATION_TIMING.CONFIRMATION_HOLD + ANIMATION_TIMING.COLLAPSE_FADE_OUT);
   };
 
   const handleEdit = (questionId: number) => {
@@ -381,7 +403,10 @@ export default function Diagnostic() {
                   y: question.state === "unanswered" ? 20 : 0,
                   scale: question.state === "answered" ? 0.98 : 1
                 }}
-                transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                transition={{ 
+                  duration: question.state === "answered" ? ANIMATION_TIMING.COLLAPSE_FADE_OUT / 1000 : ANIMATION_TIMING.FADE_IN / 1000,
+                  ease: question.state === "answered" ? EASING.EASE_IN : EASING.EASE_OUT
+                }}
                 className={`
                   ${question.state === "unanswered" ? "hidden" : "block"}
                   ${question.state === "answered" ? "opacity-70" : "opacity-100"}
@@ -428,7 +453,10 @@ export default function Diagnostic() {
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
-                          transition={{ duration: 0.3 }}
+                          transition={{ 
+                            duration: ANIMATION_TIMING.NEXT_FADE_IN / 1000,
+                            ease: EASING.EASE_OUT
+                          }}
                         >
                           {/* Welcome Screen */}
                           {question.id === 0 && (
@@ -489,7 +517,7 @@ export default function Diagnostic() {
                                 <button
                                   key={cert.value}
                                   onClick={() => handleAnswer(question.id, cert.value)}
-                                  className="p-4 rounded-lg border-2 border-border hover:border-primary/50 hover:bg-primary/5 text-left transition-all font-medium"
+                                  className="p-4 rounded-lg border-2 border-border hover:border-primary/50 hover:bg-primary/5 active:scale-[0.98] active:border-primary active:bg-primary/10 text-left transition-all duration-150 font-medium"
                                   data-testid={`button-cert-${cert.value.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
                                 >
                                   {cert.label}
@@ -505,7 +533,7 @@ export default function Diagnostic() {
                                 <button
                                   key={level.value}
                                   onClick={() => handleAnswer(question.id, level.value)}
-                                  className="w-full p-5 rounded-lg border-2 border-border hover:border-primary/50 hover:bg-primary/5 text-left transition-all group"
+                                  className="w-full p-5 rounded-lg border-2 border-border hover:border-primary/50 hover:bg-primary/5 active:scale-[0.98] active:border-primary active:bg-primary/10 text-left transition-all duration-150 group"
                                   data-testid={`button-level-${level.value}`}
                                 >
                                   <div className="font-medium text-base mb-1">{level.label}</div>
@@ -526,7 +554,7 @@ export default function Diagnostic() {
                                   <button
                                     key={style.value}
                                     onClick={() => handleAnswer(question.id, style.value)}
-                                    className="w-full p-5 rounded-lg border-2 border-border hover:border-primary/50 hover:bg-primary/5 text-left transition-all group"
+                                    className="w-full p-5 rounded-lg border-2 border-border hover:border-primary/50 hover:bg-primary/5 active:scale-[0.98] active:border-primary active:bg-primary/10 text-left transition-all duration-150 group"
                                     data-testid={`button-style-${style.value}`}
                                   >
                                     <div className="flex items-center gap-3 mb-1">
@@ -556,7 +584,7 @@ export default function Diagnostic() {
                                       setFormData(prev => ({ ...prev, studyStructure: structure.value, focusAreas: [] }));
                                     }
                                   }}
-                                  className="w-full p-5 rounded-lg border-2 border-border hover:border-primary/50 hover:bg-primary/5 text-left transition-all group"
+                                  className="w-full p-5 rounded-lg border-2 border-border hover:border-primary/50 hover:bg-primary/5 active:scale-[0.98] active:border-primary active:bg-primary/10 text-left transition-all duration-150 group"
                                   data-testid={`button-structure-${structure.value}`}
                                 >
                                   <div className="font-medium text-base mb-1">{structure.label}</div>
@@ -637,7 +665,7 @@ export default function Diagnostic() {
                                       setFormData(prev => ({ ...prev, previousAttempts: attempt.value }));
                                     }
                                   }}
-                                  className="w-full p-5 rounded-lg border-2 border-border hover:border-primary/50 hover:bg-primary/5 text-left transition-all group"
+                                  className="w-full p-5 rounded-lg border-2 border-border hover:border-primary/50 hover:bg-primary/5 active:scale-[0.98] active:border-primary active:bg-primary/10 text-left transition-all duration-150 group"
                                   data-testid={`button-attempt-${attempt.value}`}
                                 >
                                   <div className="font-medium text-base mb-1">{attempt.label}</div>
@@ -714,7 +742,7 @@ export default function Diagnostic() {
                                         setFormData(prev => ({ ...prev, examTimeline: timeline.value }));
                                       }
                                     }}
-                                    className="w-full p-4 rounded-lg border-2 border-border hover:border-primary/50 hover:bg-primary/5 text-left transition-all"
+                                    className="w-full p-4 rounded-lg border-2 border-border hover:border-primary/50 hover:bg-primary/5 active:scale-[0.98] active:border-primary active:bg-primary/10 text-left transition-all duration-150"
                                     data-testid={`button-timeline-${timeline.value}`}
                                   >
                                     <div className="font-medium text-base">{timeline.label}</div>
@@ -770,7 +798,7 @@ export default function Diagnostic() {
                                 <button
                                   key={hours.value}
                                   onClick={() => handleAnswer(question.id, hours.value)}
-                                  className="w-full p-4 rounded-lg border-2 border-border hover:border-primary/50 hover:bg-primary/5 text-left transition-all group"
+                                  className="w-full p-4 rounded-lg border-2 border-border hover:border-primary/50 hover:bg-primary/5 active:scale-[0.98] active:border-primary active:bg-primary/10 text-left transition-all duration-150 group"
                                   data-testid={`button-hours-${hours.value}`}
                                 >
                                   <div className="font-medium text-base mb-1">{hours.label}</div>
@@ -799,7 +827,7 @@ export default function Diagnostic() {
                                 <button
                                   key={timing.value}
                                   onClick={() => handleAnswer(question.id, timing.value)}
-                                  className="w-full p-5 rounded-lg border-2 border-border hover:border-primary/50 hover:bg-primary/5 text-left transition-all group"
+                                  className="w-full p-5 rounded-lg border-2 border-border hover:border-primary/50 hover:bg-primary/5 active:scale-[0.98] active:border-primary active:bg-primary/10 text-left transition-all duration-150 group"
                                   data-testid={`button-timing-${timing.value}`}
                                 >
                                   <div className="font-medium text-base mb-1">{timing.label}</div>
