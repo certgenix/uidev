@@ -145,6 +145,68 @@ const studyTimings = [
   { value: "short-bursts", label: "Short bursts throughout the day", description: "15-20 minute sessions when I can" }
 ];
 
+const ENCOURAGING_TEXT: Record<string, Record<string, string>> = {
+  q1_certification: {
+    "CISSP®": "✓ Excellent choice! CISSP is one of the most respected security certifications",
+    "PMP®": "✓ Great! PMP will elevate your project management career",
+    "CCSP®": "✓ Smart move! Cloud security expertise is in high demand",
+    "CISM®": "✓ Perfect! CISM focuses on security management and governance",
+    "CISA®": "✓ Excellent! CISA is the gold standard for IT auditors",
+    "AWS Certified Solutions Architect": "✓ Great choice! AWS skills are highly sought after",
+    "CompTIA Security+": "✓ Perfect starting point! Security+ is an excellent foundation",
+    "CompTIA Network+": "✓ Smart choice! Networking fundamentals are essential"
+  },
+  q2_knowledge: {
+    beginner: "✓ Perfect! We'll start with fundamentals and build step by step",
+    intermediate: "✓ Great! We'll build on what you know and focus on exam strategies",
+    advanced: "✓ Excellent! We'll concentrate on practice tests and reinforcing knowledge"
+  },
+  q3_learning: {
+    reading: "✓ Great! We'll emphasize text-based materials and written exercises",
+    videos: "✓ Perfect! We'll focus on video lessons and visual demonstrations",
+    "hands-on": "✓ Excellent! We'll include plenty of practical exercises and labs",
+    mixed: "✓ Smart choice! Variety creates better retention and keeps learning engaging"
+  },
+  q4_structure: {
+    "ai-guided": "✓ Smart choice! Our AI will optimize your study path based on proven patterns",
+    manual: "✓ Perfect! We'll customize your plan around your chosen priorities"
+  },
+  q5_attempts: {
+    "first-time": "✓ Exciting! We'll build your knowledge from the ground up for success",
+    retaking: "✓ You've got this! We'll turn your weak areas into strengths",
+    recertifying: "✓ Great! We'll help you refresh your knowledge and stay current"
+  },
+  q6_timeline: {
+    scheduled: "✓ Perfect! We'll create an intensive plan to get you exam-ready on time",
+    "3-6": "✓ Great timeline! This gives you the right balance of depth and pace",
+    "6+": "✓ Excellent! You have time to build deep understanding and confidence",
+    deciding: "✓ No problem! We'll create a flexible plan you can adjust as you decide"
+  },
+  q7_hours: {
+    "1-3": "✓ Perfect! Steady, consistent progress is the key to retention",
+    "3-5": "✓ Great balance! This pace has helped hundreds of students succeed",
+    "6-10": "✓ Excellent commitment! You'll build strong knowledge quickly",
+    "10+": "✓ Impressive dedication! You'll have deep mastery in a short timeframe"
+  },
+  q8_timing: {
+    "same-time": "✓ Excellent! Routine builds powerful study habits and consistency",
+    weekends: "✓ Perfect! We'll structure longer weekend sessions for productivity",
+    flexible: "✓ Great! We'll set weekly goals that fit your changing schedule",
+    "short-bursts": "✓ Smart! Micro-learning sessions are proven to improve retention"
+  }
+};
+
+const HELPER_TEXT: Record<string, string> = {
+  q1: "💡 This helps us select the right study materials and exam strategies for your certification",
+  q2: "💡 This determines your starting point, content difficulty, and study pace",
+  q3: "💡 This helps us match study activities to how your brain retains information best",
+  q4: "💡 Our AI has helped 800+ students pass - it knows which topics to prioritize for your level",
+  q5: "💡 This helps us adjust your study plan - everyone's journey is different",
+  q6: "💡 Don't worry if you haven't scheduled yet - you can adjust anytime and most students study for 2-4 months",
+  q7: "💡 Studies show consistent, smaller sessions lead to better retention than cramming - even 3 hours weekly is enough!",
+  q8: "💡 This helps us schedule activities at times when you're most alert and send reminders at the right moments"
+};
+
 type QuestionState = "unanswered" | "active" | "answered";
 
 interface Question {
@@ -202,6 +264,8 @@ export default function Diagnostic() {
   ]);
 
   const [selectedValue, setSelectedValue] = useState<any>(null);
+  const [encouragingText, setEncouragingText] = useState<string>("");
+  const [showEncouraging, setShowEncouraging] = useState(false);
   const questionRefs = useRef<{ [key: number]: HTMLDivElement | null }>({});
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -227,12 +291,37 @@ export default function Diagnostic() {
     }
   };
 
+  const getEncouragingText = (questionId: number, value: any): string => {
+    const questionKey = `q${questionId}`;
+    const textMap: Record<number, string> = {
+      1: "q1_certification",
+      2: "q2_knowledge",
+      3: "q3_learning",
+      4: "q4_structure",
+      5: "q5_attempts",
+      6: "q6_timeline",
+      7: "q7_hours",
+      8: "q8_timing"
+    };
+    
+    const key = textMap[questionId];
+    if (key && ENCOURAGING_TEXT[key] && ENCOURAGING_TEXT[key][value]) {
+      return ENCOURAGING_TEXT[key][value];
+    }
+    return "";
+  };
+
   const handleAnswer = (questionId: number, value: any) => {
     const question = questions.find(q => q.id === questionId);
     if (!question) return;
 
-    // Step 1: Instantly show selected state (0ms)
+    // Step 1: Instantly show selected state and encouraging text (0ms)
     setSelectedValue(value);
+    const encouragement = getEncouragingText(questionId, value);
+    if (encouragement) {
+      setEncouragingText(encouragement);
+      setShowEncouraging(true);
+    }
 
     // Step 2: Hold for 600ms, then update sidebar & progress bar
     setTimeout(() => {
@@ -251,8 +340,10 @@ export default function Diagnostic() {
           return q;
         }));
 
-        // Clear selected value and scroll to next question
+        // Clear selected value, hide encouraging text, and scroll to next question
         setSelectedValue(null);
+        setShowEncouraging(false);
+        setEncouragingText("");
         setTimeout(() => scrollToQuestion(questionId + 1), 100);
       }, 300);
     }, 600);
@@ -496,90 +587,147 @@ export default function Diagnostic() {
 
                           {/* Question 1: Certification */}
                           {question.id === 1 && (
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                              {certifications.map((cert) => (
-                                <button
-                                  key={cert.value}
-                                  onClick={() => handleAnswer(question.id, cert.value)}
-                                  className={`p-4 rounded-lg border-2 text-left transition-all font-medium ${
-                                    selectedValue === cert.value
-                                      ? "border-primary bg-primary text-primary-foreground shadow-lg scale-105"
-                                      : "border-border hover:border-primary/50 hover:bg-primary/5"
-                                  }`}
-                                  data-testid={`button-cert-${cert.value.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
-                                >
-                                  <div className="flex items-center justify-between">
-                                    <span>{cert.label}</span>
-                                    {selectedValue === cert.value && <CheckCircle2 className="h-5 w-5 ml-2" />}
-                                  </div>
-                                </button>
-                              ))}
+                            <div className="space-y-4">
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                {certifications.map((cert) => (
+                                  <button
+                                    key={cert.value}
+                                    onClick={() => handleAnswer(question.id, cert.value)}
+                                    className={`p-4 rounded-lg border-2 text-left transition-all font-medium ${
+                                      selectedValue === cert.value
+                                        ? "border-primary bg-primary text-primary-foreground shadow-lg scale-105"
+                                        : "border-border hover:border-primary/50 hover:bg-primary/5"
+                                    }`}
+                                    data-testid={`button-cert-${cert.value.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
+                                  >
+                                    <div className="flex items-center justify-between">
+                                      <span>{cert.label}</span>
+                                      {selectedValue === cert.value && <CheckCircle2 className="h-5 w-5 ml-2" />}
+                                    </div>
+                                  </button>
+                                ))}
+                              </div>
+                              <AnimatePresence>
+                                {showEncouraging && selectedValue && (
+                                  <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="text-sm font-medium text-primary bg-primary/10 border border-primary/20 rounded-lg p-3"
+                                    data-testid="text-encouraging"
+                                  >
+                                    {encouragingText}
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+                              <div className="text-sm text-muted-foreground pt-2">
+                                {HELPER_TEXT.q1}
+                              </div>
                             </div>
                           )}
 
                           {/* Question 2: Knowledge Level */}
                           {question.id === 2 && (
-                            <div className="space-y-3">
-                              {knowledgeLevels.map((level) => (
-                                <button
-                                  key={level.value}
-                                  onClick={() => handleAnswer(question.id, level.value)}
-                                  className={`w-full p-5 rounded-lg border-2 text-left transition-all group ${
-                                    selectedValue === level.value
-                                      ? "border-primary bg-primary text-primary-foreground shadow-lg scale-105"
-                                      : "border-border hover:border-primary/50 hover:bg-primary/5"
-                                  }`}
-                                  data-testid={`button-level-${level.value}`}
-                                >
-                                  <div className="flex items-center justify-between mb-1">
-                                    <div className="font-medium text-base">{level.label}</div>
-                                    {selectedValue === level.value && <CheckCircle2 className="h-5 w-5" />}
-                                  </div>
-                                  <div className={`text-sm italic ${
-                                    selectedValue === level.value
-                                      ? "text-primary-foreground/90"
-                                      : "text-muted-foreground group-hover:text-primary/80"
-                                  } transition-colors`}>
-                                    "{level.description}"
-                                  </div>
-                                </button>
-                              ))}
+                            <div className="space-y-4">
+                              <div className="space-y-3">
+                                {knowledgeLevels.map((level) => (
+                                  <button
+                                    key={level.value}
+                                    onClick={() => handleAnswer(question.id, level.value)}
+                                    className={`w-full p-5 rounded-lg border-2 text-left transition-all group ${
+                                      selectedValue === level.value
+                                        ? "border-primary bg-primary text-primary-foreground shadow-lg scale-105"
+                                        : "border-border hover:border-primary/50 hover:bg-primary/5"
+                                    }`}
+                                    data-testid={`button-level-${level.value}`}
+                                  >
+                                    <div className="flex items-center justify-between mb-1">
+                                      <div className="font-medium text-base">{level.label}</div>
+                                      {selectedValue === level.value && <CheckCircle2 className="h-5 w-5" />}
+                                    </div>
+                                    <div className={`text-sm italic ${
+                                      selectedValue === level.value
+                                        ? "text-primary-foreground/90"
+                                        : "text-muted-foreground group-hover:text-primary/80"
+                                    } transition-colors`}>
+                                      "{level.description}"
+                                    </div>
+                                  </button>
+                                ))}
+                              </div>
+                              <AnimatePresence>
+                                {showEncouraging && selectedValue && (
+                                  <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="text-sm font-medium text-primary bg-primary/10 border border-primary/20 rounded-lg p-3"
+                                    data-testid="text-encouraging"
+                                  >
+                                    {encouragingText}
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+                              <div className="text-sm text-muted-foreground pt-2">
+                                {HELPER_TEXT.q2}
+                              </div>
                             </div>
                           )}
 
                           {/* Question 3: Learning Style */}
                           {question.id === 3 && (
-                            <div className="space-y-3">
-                              {learningStyles.map((style) => {
-                                const Icon = style.icon;
-                                return (
-                                  <button
-                                    key={style.value}
-                                    onClick={() => handleAnswer(question.id, style.value)}
-                                    className={`w-full p-5 rounded-lg border-2 text-left transition-all group ${
-                                      selectedValue === style.value
-                                        ? "border-primary bg-primary text-primary-foreground shadow-lg scale-105"
-                                        : "border-border hover:border-primary/50 hover:bg-primary/5"
-                                    }`}
-                                    data-testid={`button-style-${style.value}`}
-                                  >
-                                    <div className="flex items-center justify-between mb-1">
-                                      <div className="flex items-center gap-3">
-                                        <Icon className={`h-5 w-5 ${selectedValue === style.value ? "text-primary-foreground" : "text-primary"}`} />
-                                        <div className="font-medium text-base">{style.label}</div>
+                            <div className="space-y-4">
+                              <div className="space-y-3">
+                                {learningStyles.map((style) => {
+                                  const Icon = style.icon;
+                                  return (
+                                    <button
+                                      key={style.value}
+                                      onClick={() => handleAnswer(question.id, style.value)}
+                                      className={`w-full p-5 rounded-lg border-2 text-left transition-all group ${
+                                        selectedValue === style.value
+                                          ? "border-primary bg-primary text-primary-foreground shadow-lg scale-105"
+                                          : "border-border hover:border-primary/50 hover:bg-primary/5"
+                                      }`}
+                                      data-testid={`button-style-${style.value}`}
+                                    >
+                                      <div className="flex items-center justify-between mb-1">
+                                        <div className="flex items-center gap-3">
+                                          <Icon className={`h-5 w-5 ${selectedValue === style.value ? "text-primary-foreground" : "text-primary"}`} />
+                                          <div className="font-medium text-base">{style.label}</div>
+                                        </div>
+                                        {selectedValue === style.value && <CheckCircle2 className="h-5 w-5" />}
                                       </div>
-                                      {selectedValue === style.value && <CheckCircle2 className="h-5 w-5" />}
-                                    </div>
-                                    <div className={`text-sm italic ml-8 ${
-                                      selectedValue === style.value
-                                        ? "text-primary-foreground/90"
-                                        : "text-muted-foreground group-hover:text-primary/80"
-                                    } transition-colors`}>
-                                      "{style.description}"
-                                    </div>
-                                  </button>
-                                );
-                              })}
+                                      <div className={`text-sm italic ml-8 ${
+                                        selectedValue === style.value
+                                          ? "text-primary-foreground/90"
+                                          : "text-muted-foreground group-hover:text-primary/80"
+                                      } transition-colors`}>
+                                        "{style.description}"
+                                      </div>
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                              <AnimatePresence>
+                                {showEncouraging && selectedValue && (
+                                  <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="text-sm font-medium text-primary bg-primary/10 border border-primary/20 rounded-lg p-3"
+                                    data-testid="text-encouraging"
+                                  >
+                                    {encouragingText}
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+                              <div className="text-sm text-muted-foreground pt-2">
+                                {HELPER_TEXT.q3}
+                              </div>
                             </div>
                           )}
 
@@ -617,6 +765,21 @@ export default function Diagnostic() {
                                   </div>
                                 </button>
                               ))}
+
+                              <AnimatePresence>
+                                {showEncouraging && selectedValue && (
+                                  <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="text-sm font-medium text-primary bg-primary/10 border border-primary/20 rounded-lg p-3"
+                                    data-testid="text-encouraging"
+                                  >
+                                    {encouragingText}
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
 
                               {/* Domain Selection - Conditional */}
                               {formData.studyStructure === "manual" && (
@@ -672,6 +835,10 @@ export default function Diagnostic() {
                                   )}
                                 </motion.div>
                               )}
+                              
+                              <div className="text-sm text-muted-foreground pt-2">
+                                {HELPER_TEXT.q4}
+                              </div>
                             </div>
                           )}
 
@@ -709,6 +876,21 @@ export default function Diagnostic() {
                                   </div>
                                 </button>
                               ))}
+
+                              <AnimatePresence>
+                                {showEncouraging && selectedValue && (
+                                  <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="text-sm font-medium text-primary bg-primary/10 border border-primary/20 rounded-lg p-3"
+                                    data-testid="text-encouraging"
+                                  >
+                                    {encouragingText}
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
 
                               {/* Failed Domains - Conditional */}
                               {formData.previousAttempts === "retaking" && (
@@ -761,6 +943,10 @@ export default function Diagnostic() {
                                   )}
                                 </motion.div>
                               )}
+                              
+                              <div className="text-sm text-muted-foreground pt-2">
+                                {HELPER_TEXT.q5}
+                              </div>
                             </div>
                           )}
 
@@ -825,15 +1011,24 @@ export default function Diagnostic() {
                                 </div>
                               ))}
                               
-                              {question.helpText && (
-                                <div className="space-y-2 pt-2">
-                                  {question.helpText.split('\n').map((text, idx) => (
-                                    <div key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
-                                      <span>{text}</span>
-                                    </div>
-                                  ))}
-                                </div>
-                              )}
+                              <AnimatePresence>
+                                {showEncouraging && selectedValue && (
+                                  <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="text-sm font-medium text-primary bg-primary/10 border border-primary/20 rounded-lg p-3"
+                                    data-testid="text-encouraging"
+                                  >
+                                    {encouragingText}
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+                              
+                              <div className="text-sm text-muted-foreground pt-2">
+                                {HELPER_TEXT.q6}
+                              </div>
                             </div>
                           )}
 
@@ -865,15 +1060,24 @@ export default function Diagnostic() {
                                 </button>
                               ))}
                               
-                              {question.helpText && (
-                                <div className="space-y-2 pt-2">
-                                  {question.helpText.split('\n').map((text, idx) => (
-                                    <div key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
-                                      <span>{text}</span>
-                                    </div>
-                                  ))}
-                                </div>
-                              )}
+                              <AnimatePresence>
+                                {showEncouraging && selectedValue && (
+                                  <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="text-sm font-medium text-primary bg-primary/10 border border-primary/20 rounded-lg p-3"
+                                    data-testid="text-encouraging"
+                                  >
+                                    {encouragingText}
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+                              
+                              <div className="text-sm text-muted-foreground pt-2">
+                                {HELPER_TEXT.q7}
+                              </div>
                             </div>
                           )}
 
@@ -905,11 +1109,24 @@ export default function Diagnostic() {
                                 </button>
                               ))}
                               
-                              {question.helpText && (
-                                <div className="flex items-start gap-2 text-sm text-muted-foreground pt-2">
-                                  <span>{question.helpText}</span>
-                                </div>
-                              )}
+                              <AnimatePresence>
+                                {showEncouraging && selectedValue && (
+                                  <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="text-sm font-medium text-primary bg-primary/10 border border-primary/20 rounded-lg p-3"
+                                    data-testid="text-encouraging"
+                                  >
+                                    {encouragingText}
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+                              
+                              <div className="text-sm text-muted-foreground pt-2">
+                                {HELPER_TEXT.q8}
+                              </div>
                             </div>
                           )}
 

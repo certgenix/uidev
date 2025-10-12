@@ -1,0 +1,71 @@
+const ENCOURAGING_TEXT = {
+  q1_certification: {
+    cissp: "✓ Excellent choice! CISSP is one of the most respected security certifications",
+    pmp: "✓ Great! PMP will elevate your project management career",
+    ccsp: "✓ Smart move! Cloud security expertise is in high demand",
+    cism: "✓ Perfect! CISM focuses on security management and governance",
+    cisa: "✓ Excellent! CISA is the gold standard for IT auditors",
+    aws: "✓ Great choice! AWS skills are highly sought after",
+    security_plus: "✓ Perfect starting point! Security+ is an excellent foundation",
+    network_plus: "✓ Smart choice! Networking fundamentals are essential"
+  },
+  
+  q2_knowledge: {
+    beginner: "✓ Perfect! We'll start with fundamentals and build step by step",
+    intermediate: "✓ Great! We'll build on what you know and focus on exam strategies",
+    advanced: "✓ Excellent! We'll concentrate on practice tests and reinforcing knowledge"
+  },
+  
+  q3_learning: {
+    reading: "✓ Great! We'll emphasize text-based materials and written exercises",
+    videos: "✓ Perfect! We'll focus on video lessons and visual demonstrations",
+    hands_on: "✓ Excellent! We'll include plenty of practical exercises and labs",
+    mixed: "✓ Smart choice! Variety creates better retention and keeps learning engaging"
+  },
+  
+  q4_structure: {
+    ai_guided: "✓ Smart choice! Our AI will optimize your study path based on proven patterns",
+    manual: "✓ Perfect! We'll customize your plan around your chosen priorities"
+  },
+  
+  q5_attempts: {
+    first_time: "✓ Exciting! We'll build your knowledge from the ground up for success",
+    retaking: "✓ You've got this! We'll turn your weak areas into strengths",
+    recertifying: "✓ Great! We'll help you refresh your knowledge and stay current"
+  },
+  
+  q6_timeline: {
+    scheduled: "✓ Perfect! We'll create an intensive plan to get you exam-ready on time",
+    soon: "✓ Great timeline! This gives you the right balance of depth and pace",
+    later: "✓ Excellent! You have time to build deep understanding and confidence",
+    deciding: "✓ No problem! We'll create a flexible plan you can adjust as you decide"
+  },
+  
+  q7_hours: {
+    low: "✓ Perfect! Steady, consistent progress is the key to retention",
+    medium: "✓ Great balance! This pace has helped hundreds of students succeed",
+    high: "✓ Excellent commitment! You'll build strong knowledge quickly",
+    intensive: "✓ Impressive dedication! You'll have deep mastery in a short timeframe"
+  },
+  
+  q8_timing: {
+    daily: "✓ Excellent! Routine builds powerful study habits and consistency",
+    weekends: "✓ Perfect! We'll structure longer weekend sessions for productivity",
+    flexible: "✓ Great! We'll set weekly goals that fit your changing schedule",
+    bursts: "✓ Smart! Micro-learning sessions are proven to improve retention"
+  }
+};
+
+
+
+const HELPER_TEXT = {
+  q1: "💡 This helps us select the right study materials and exam strategies for your certification",
+  q2: "💡 This determines your starting point, content difficulty, and study pace",
+  q3: "💡 This helps us match study activities to how your brain retains information best",
+  q4: "💡 Our AI has helped 800+ students pass - it knows which topics to prioritize for your level",
+  q5: "💡 This helps us adjust your study plan - everyone's journey is different",
+  q6: "💡 Don't worry if you haven't scheduled yet - you can adjust anytime and most students study for 2-4 months",
+  q7: "💡 Studies show consistent, smaller sessions lead to better retention than cramming - even 3 hours weekly is enough!",
+  q8: "💡 This helps us schedule activities at times when you're most alert and send reminders at the right moments"
+};
+
