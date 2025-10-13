@@ -224,7 +224,7 @@ export default function TransitionScreen({ formData, onComplete }: TransitionScr
     }
     
     if (currentStep === 3) {
-      const duration = 2000;
+      const duration = 6000;
       const steps = 60;
       const interval = duration / steps;
       
