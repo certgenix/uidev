@@ -552,6 +552,7 @@ export default function Diagnostic() {
                 className={`
                   ${question.state === "unanswered" ? "hidden" : "block"}
                   ${question.state === "answered" ? "opacity-70" : "opacity-100"}
+                  ${showTransition && question.id !== 9 ? "hidden" : ""}
                 `}
                 data-testid={`question-${question.id}`}
               >
@@ -1194,49 +1195,60 @@ export default function Diagnostic() {
                             </div>
                           )}
 
-                          {/* Question 9: Summary */}
+                          {/* Question 9: Summary or Transition */}
                           {question.id === 9 && (
-                            <div className="text-center space-y-6">
-                              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-primary to-chart-2 mb-4 mx-auto">
-                                <Rocket className="h-10 w-10 text-white" />
-                              </div>
-                              <div className="max-w-2xl mx-auto space-y-4">
-                                <div className="p-6 bg-primary/5 rounded-xl border border-primary/20 space-y-3">
-                                  <div className="flex items-center justify-center gap-2 text-primary">
-                                    <CheckCircle2 className="h-5 w-5" />
-                                    <span className="font-semibold">Your Personalized Plan</span>
+                            <>
+                              {showTransition ? (
+                                <div className="-m-6 md:-m-8">
+                                  <TransitionScreen 
+                                    formData={formData} 
+                                    onComplete={handleTransitionComplete}
+                                  />
+                                </div>
+                              ) : (
+                                <div className="text-center space-y-6">
+                                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-primary to-chart-2 mb-4 mx-auto">
+                                    <Rocket className="h-10 w-10 text-white" />
                                   </div>
-                                  <div className="space-y-2 text-sm">
-                                    <p><strong>Certification:</strong> {formData.certification}</p>
-                                    <p><strong>Study approach:</strong> {formData.studyStructure === "ai-guided" ? "AI-guided learning path" : `Custom focus on ${formData.focusAreas.length} areas`}</p>
-                                    <p><strong>Time commitment:</strong> {formData.weeklyHours} hours per week</p>
-                                    <p><strong>Target:</strong> Exam ready in {getEstimatedWeeks()}</p>
+                                  <div className="max-w-2xl mx-auto space-y-4">
+                                    <div className="p-6 bg-primary/5 rounded-xl border border-primary/20 space-y-3">
+                                      <div className="flex items-center justify-center gap-2 text-primary">
+                                        <CheckCircle2 className="h-5 w-5" />
+                                        <span className="font-semibold">Your Personalized Plan</span>
+                                      </div>
+                                      <div className="space-y-2 text-sm">
+                                        <p><strong>Certification:</strong> {formData.certification}</p>
+                                        <p><strong>Study approach:</strong> {formData.studyStructure === "ai-guided" ? "AI-guided learning path" : `Custom focus on ${formData.focusAreas.length} areas`}</p>
+                                        <p><strong>Time commitment:</strong> {formData.weeklyHours} hours per week</p>
+                                        <p><strong>Target:</strong> Exam ready in {getEstimatedWeeks()}</p>
+                                      </div>
+                                    </div>
+                                    <p className="text-lg text-muted-foreground" data-testid="text-plan-summary">
+                                      We've created a personalized study plan tailored to your goals, schedule, and learning style.
+                                    </p>
+                                  </div>
+                                  <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
+                                    <Button
+                                      size="lg"
+                                      onClick={() => setLocation("/")}
+                                      className="rounded-full text-base px-8 h-14 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all"
+                                      data-testid="button-start-learning"
+                                    >
+                                      ✅ Start Learning Now
+                                    </Button>
+                                    <Button
+                                      size="lg"
+                                      variant="outline"
+                                      onClick={() => setLocation("/")}
+                                      className="rounded-full text-base px-8 h-14"
+                                      data-testid="button-view-dashboard"
+                                    >
+                                      📊 View Dashboard
+                                    </Button>
                                   </div>
                                 </div>
-                                <p className="text-lg text-muted-foreground" data-testid="text-plan-summary">
-                                  We've created a personalized study plan tailored to your goals, schedule, and learning style.
-                                </p>
-                              </div>
-                              <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
-                                <Button
-                                  size="lg"
-                                  onClick={() => setLocation("/")}
-                                  className="rounded-full text-base px-8 h-14 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all"
-                                  data-testid="button-start-learning"
-                                >
-                                  ✅ Start Learning Now
-                                </Button>
-                                <Button
-                                  size="lg"
-                                  variant="outline"
-                                  onClick={() => setLocation("/")}
-                                  className="rounded-full text-base px-8 h-14"
-                                  data-testid="button-view-dashboard"
-                                >
-                                  📊 View Dashboard
-                                </Button>
-                              </div>
-                            </div>
+                              )}
+                            </>
                           )}
                         </motion.div>
                       )}
@@ -1351,13 +1363,6 @@ export default function Diagnostic() {
       </main>
       
       <Footer />
-
-      {showTransition && (
-        <TransitionScreen 
-          formData={formData} 
-          onComplete={handleTransitionComplete}
-        />
-      )}
     </div>
   );
 }
