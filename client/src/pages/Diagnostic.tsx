@@ -401,6 +401,14 @@ export default function Diagnostic() {
   const handleGeneratePlan = () => {
     setShowConfirmationPanel(false);
     setShowTransition(true);
+    
+    // Activate question 9 to show the transition screen
+    setQuestions(prev => prev.map(q => {
+      if (q.id === 9) return { ...q, state: "active" as QuestionState };
+      return q;
+    }));
+    
+    setTimeout(() => scrollToQuestion(9), 100);
   };
 
   const handleTransitionComplete = () => {
