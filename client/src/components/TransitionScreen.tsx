@@ -200,18 +200,18 @@ export default function TransitionScreen({ formData, onComplete }: TransitionScr
 
   useEffect(() => {
     if (currentStep === 1) {
-      const timers = [0, 500, 1000, 1500];
+      const timers = [0, 1000, 2000, 3000];
       timers.forEach((delay, index) => {
         setTimeout(() => {
           setStep1Items(prev => [...prev, index]);
         }, delay);
       });
       
-      setTimeout(() => setCurrentStep(2), 3000);
+      setTimeout(() => setCurrentStep(2), 6000);
     }
     
     if (currentStep === 2) {
-      const stages = [0, 1000, 2000, 3000];
+      const stages = [0, 1500, 3000, 4500];
       stages.forEach((delay, index) => {
         setTimeout(() => {
           setStep2Stage(index + 1);
@@ -219,12 +219,12 @@ export default function TransitionScreen({ formData, onComplete }: TransitionScr
         }, delay);
       });
       
-      setTimeout(() => setStep2Complete(true), 3800);
-      setTimeout(() => setCurrentStep(3), 4000);
+      setTimeout(() => setStep2Complete(true), 6700);
+      setTimeout(() => setCurrentStep(3), 7000);
     }
     
     if (currentStep === 3) {
-      const duration = 1000;
+      const duration = 2000;
       const steps = 60;
       const interval = duration / steps;
       
@@ -251,45 +251,45 @@ export default function TransitionScreen({ formData, onComplete }: TransitionScr
         }
       }, interval);
       
-      setTimeout(() => setCurrentStep(4), 4000);
+      setTimeout(() => setCurrentStep(4), 7000);
       
       return () => clearInterval(timer);
     }
     
     if (currentStep === 4) {
-      const phases = [0, 600, 1200, 1800, 2400];
+      const phases = [0, 1000, 2000, 3000, 4000];
       phases.forEach((delay, index) => {
         setTimeout(() => {
           setStep4Phases(prev => [...prev, index]);
         }, delay);
       });
       
-      setTimeout(() => setCurrentStep(5), 3000);
+      setTimeout(() => setCurrentStep(5), 6000);
     }
     
     if (currentStep === 5) {
-      const timers = [0, 400, 800, 1200];
+      const timers = [0, 1000, 2000, 3000];
       timers.forEach((delay, index) => {
         setTimeout(() => {
           setStep5Items(prev => [...prev, index]);
         }, delay);
       });
       
-      setTimeout(() => setCurrentStep(6), 2000);
+      setTimeout(() => setCurrentStep(6), 5000);
     }
     
     if (currentStep === 6) {
       setTimeout(() => {
         onComplete();
-      }, 2000);
+      }, 4000);
     }
   }, [currentStep, certData, formData, onComplete]);
 
   const progressPercentage = ((currentStep - 1) / 6) * 100 + (1 / 6) * 100 * 0.5;
 
   return (
-    <div className="fixed inset-0 z-50 bg-background flex flex-col" data-testid="transition-screen">
-      <div className="max-w-4xl mx-auto w-full px-4 py-8 flex-1 flex flex-col justify-center">
+    <div className="w-full py-12 min-h-[600px] flex flex-col" data-testid="transition-screen">
+      <div className="max-w-4xl mx-auto w-full px-4 flex-1 flex flex-col justify-center">
         <div className="mb-8">
           <Progress value={progressPercentage} className="h-2" data-testid="progress-transition" />
           <p className="text-sm text-muted-foreground mt-2 text-center" data-testid="text-step-indicator">
