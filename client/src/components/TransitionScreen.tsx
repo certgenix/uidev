@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
-import { CheckCircle2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { CheckCircle2, Rocket } from "lucide-react";
 
 interface FormData {
   certification: string;
@@ -179,6 +181,7 @@ const getLearningStyleLabel = (learningStyle: string): string => {
 };
 
 export default function TransitionScreen({ formData, onComplete }: TransitionScreenProps) {
+  const [, setLocation] = useLocation();
   const [currentStep, setCurrentStep] = useState(1);
   const [step1Items, setStep1Items] = useState<number[]>([]);
   const [step2Progress, setStep2Progress] = useState(0);
@@ -278,11 +281,7 @@ export default function TransitionScreen({ formData, onComplete }: TransitionScr
       setTimeout(() => setCurrentStep(6), 5000);
     }
     
-    if (currentStep === 6) {
-      setTimeout(() => {
-        onComplete();
-      }, 4000);
-    }
+    // Step 6 stays visible - don't auto-complete anymore
   }, [currentStep, certData, formData, onComplete]);
 
   const progressPercentage = ((currentStep - 1) / 6) * 100 + (1 / 6) * 100 * 0.5;
@@ -581,24 +580,50 @@ export default function TransitionScreen({ formData, onComplete }: TransitionScr
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
-              className="text-center space-y-4"
+              className="text-center space-y-6"
               data-testid="step-6"
             >
-              <motion.div
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 1, repeat: Infinity }}
-                className="text-6xl mb-4"
-              >
-                ✨
-              </motion.div>
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-primary to-chart-2 mb-4 mx-auto">
+                <Rocket className="h-10 w-10 text-white" />
+              </div>
               
-              <h2 className="text-3xl md:text-4xl font-bold" data-testid="text-step6-header">
-                Your Personalized {formData.certification} Plan is Ready
-              </h2>
+              <div className="max-w-2xl mx-auto space-y-4">
+                <div className="p-6 bg-primary/5 rounded-xl border border-primary/20 space-y-3">
+                  <div className="flex items-center justify-center gap-2 text-primary">
+                    <CheckCircle2 className="h-5 w-5" />
+                    <span className="font-semibold">Your Personalized Plan</span>
+                  </div>
+                  <div className="space-y-2 text-sm">
+                    <p><strong>Certification:</strong> {formData.certification}</p>
+                    <p><strong>Study approach:</strong> {formData.studyStructure === "ai-guided" ? "AI-guided learning path" : `Custom focus on ${formData.focusAreas.length} areas`}</p>
+                    <p><strong>Time commitment:</strong> {formData.weeklyHours} hours per week</p>
+                    <p><strong>Target:</strong> Exam ready in {getWeeksFromHours(formData.weeklyHours).weeks} weeks</p>
+                  </div>
+                </div>
+                <p className="text-lg text-muted-foreground" data-testid="text-plan-summary">
+                  We've created a personalized study plan tailored to your goals, schedule, and learning style.
+                </p>
+              </div>
               
-              <p className="text-xl text-muted-foreground" data-testid="text-step6-subtext">
-                Let's review what we've built for you...
-              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
+                <Button
+                  size="lg"
+                  onClick={() => setLocation("/")}
+                  className="rounded-full text-base px-8 h-14 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all"
+                  data-testid="button-start-learning"
+                >
+                  ✅ Start Learning Now
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  onClick={() => setLocation("/")}
+                  className="rounded-full text-base px-8 h-14"
+                  data-testid="button-view-dashboard"
+                >
+                  📊 View Dashboard
+                </Button>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
