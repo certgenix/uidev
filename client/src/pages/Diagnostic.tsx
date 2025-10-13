@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import TransitionScreen from "@/components/TransitionScreen";
 
 const certifications = [
   { value: "CISSP®", label: "CISSP®" },
@@ -267,6 +268,7 @@ export default function Diagnostic() {
   const [encouragingText, setEncouragingText] = useState<string>("");
   const [showEncouraging, setShowEncouraging] = useState(false);
   const [showConfirmationPanel, setShowConfirmationPanel] = useState(false);
+  const [showTransition, setShowTransition] = useState(false);
   const questionRefs = useRef<{ [key: number]: HTMLDivElement | null }>({});
   const containerRef = useRef<HTMLDivElement>(null);
   const confirmationPanelRef = useRef<HTMLDivElement | null>(null);
@@ -397,16 +399,18 @@ export default function Diagnostic() {
   };
 
   const handleGeneratePlan = () => {
-    // Hide confirmation panel
     setShowConfirmationPanel(false);
+    setShowTransition(true);
+  };
+
+  const handleTransitionComplete = () => {
+    setShowTransition(false);
     
-    // Activate the summary question (Q9)
     setQuestions(prev => prev.map(q => {
       if (q.id === 9) return { ...q, state: "active" as QuestionState };
       return q;
     }));
     
-    // Scroll to summary
     setTimeout(() => scrollToQuestion(9), 100);
   };
 
@@ -1347,6 +1351,13 @@ export default function Diagnostic() {
       </main>
       
       <Footer />
+
+      {showTransition && (
+        <TransitionScreen 
+          formData={formData} 
+          onComplete={handleTransitionComplete}
+        />
+      )}
     </div>
   );
 }

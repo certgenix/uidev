@@ -1,0 +1,425 @@
+Task: Build Transparent Data-Driven Transition Screen
+Context: After user clicks on 'Generate my plan' button, show a multi-step loading/analysis screen before revealing their personalized study plan.
+Duration: 17-19 seconds total with 6 distinct steps
+
+STEP 1: Initial Analysis (3 seconds)
+Header text: "Analyzing Your Profile"
+Show 4 checkmark items appearing sequentially (500ms between each):
+
+"✅ [Certification Name] detected"
+"✅ [Knowledge Level] confirmed"
+"✅ [Learning Style] preferences captured"
+"✅ [Hours/week] availability noted"
+
+Visual behavior:
+
+Each item slides/fades in from left
+Use actual user responses dynamically inserted into brackets
+Previous items stay visible as new ones appear
+
+Example output:
+
+✅ CISSP Certification detected
+✅ Beginner knowledge level confirmed
+✅ Mixed learning style preferences captured
+✅ 3-5 hours weekly availability noted
+
+
+STEP 2: AI Pattern Matching (4 seconds)
+Header text: "Comparing with [random number between 850 to 1500] Successful Students"
+Show 4-stage progress bar with labels:
+
+"Matching certification..." → complete (1 second)
+"Matching knowledge level..." → complete (1 second)
+"Matching timeline..." → complete (1 second)
+"Identifying optimal path..." → in progress → complete (1 second)
+
+Visual behavior:
+Progress bar fills from left to right for each stage
+Each stage completes before next one starts
+Use checkmarks or color change to show completion
+
+Below progress bar (appears after all stages complete):
+"Found [number] students with similar profiles who passed on first attempt"
+Social proof numbers by certification:
+
+CISSP, PMP, Security+: 124 students
+CCSP, CISM, CISA: 87 students
+AWS, Network+: 156 students
+Unknown certification: 95 students
+
+
+STEP 3: Content Curation (4 seconds)
+Header text: "Selecting Your Study Materials"
+Show 4 counters incrementing from 0 to target numbers:
+
+📚 Study modules selected: 0 → [modules]
+🎥 Video lessons selected: 0 → [videos]
+💻 Practice questions selected: 0 → [questions]
+🔬 [activityLabel] selected: 0 → [activities]
+
+Visual behavior:
+
+Each counter animates over 1 second
+Counters should increment smoothly (not jump)
+All 4 counters animate simultaneously, not sequentially
+Use easing function for natural feel
+
+Below counters:
+"Prioritizing high-yield topics for [knowledge level] level"
+Certification-specific numbers:
+CISSP:
+modules = 47
+videos = 89
+questions = 4847
+activities = 23
+activityLabel = "Hands-on labs"
+
+PMP:
+modules = 38
+videos = 76
+questions = 4650
+activities = 15
+activityLabel = "Case studies"
+
+CCSP:
+modules = 52
+videos = 94
+questions = 3920
+activities = 38
+activityLabel = "Hands-on labs"
+
+CISM:
+modules = 36
+videos = 71
+questions = 2580
+activities = 22
+activityLabel = "Case studies"
+
+CISA:
+modules = 42
+videos = 68
+questions = 2715
+activities = 18
+activityLabel = "Audit scenarios"
+
+AWS Solutions Architect (or any AWS cert):
+modules = 54
+videos = 98
+questions = 4965
+activities = 42
+activityLabel = "Hands-on labs"
+
+CompTIA Security+:
+modules = 34
+videos = 82
+questions = 2750
+activities = 28
+activityLabel = "Hands-on labs"
+
+CompTIA Network+:
+modules = 32
+videos = 79
+questions = 2685
+activities = 31
+activityLabel = "Hands-on labs"
+
+Default (unknown certification):
+modules = 45
+videos = 85
+questions = 2800
+activities = 25
+activityLabel = "Practice exercises"
+
+
+STEP 4: Timeline Construction (3 seconds)
+Header text: "Building Your [X]-Week Timeline"
+Show 5 phase bars filling left-to-right sequentially:
+
+Week 1-3: Foundation Building
+Week 4-6: Core Concepts
+Week 7-9: Advanced Topics
+Week 10-11: Practice & Review
+Week 12: Final Prep
+
+Visual behavior:
+
+Each bar fills over ~600ms
+Bars fill one after another (sequential, not simultaneous)
+Use a progress bar visual that fills from 0% to 100%
+
+Below the bars:
+"Scheduling [X-Y] hours weekly across [learning style] formats"
+Week calculation logic:
+
+Based on user's "Weekly Time Commitment" answer (Question 7)
+1-3 hours per week → 16-18 weeks
+3-5 hours per week → 12-14 weeks
+6-10 hours per week → 8-10 weeks
+10+ hours per week → 6-8 weeks
+
+Adjust week ranges in the phase labels if timeline is different:
+
+If 16+ weeks: adjust phases to spread across longer timeline
+If 6-8 weeks: condense phases appropriately
+Keep it simple - you can adjust the final week number dynamically but keep phase labels generic
+
+
+STEP 5: Final Touches (2 seconds)
+Header text: "Finalizing Your Success Roadmap"
+Show 4 checkmark items appearing quickly (400ms between each):
+
+"✅ Study reminders configured for [timing preference] schedule"
+"✅ Progress tracking milestones set"
+"✅ Weakness detection algorithms activated"
+"✅ Celebration checkpoints scheduled"
+
+Visual behavior:
+
+Items appear faster than Step 1 (more rapid sequence)
+Each fades/slides in from left
+All items stay visible
+
+Dynamic insertions:
+
+[timing preference] = user's answer from Question 8
+
+If "Same time every day" → "daily"
+If "Weekends only" → "weekend"
+If "Flexible schedule" → "flexible"
+If "Short bursts throughout the day" → "micro-learning"
+
+
+
+
+STEP 6: Completion (1-2 seconds)
+Full screen takeover
+
+Large centered text:
+"✨ Your Personalized [Certification Name] Plan is Ready"
+Smaller text below:
+"Let's review what we've built for you..."
+Visual behavior:
+Gentle fade in
+Add subtle pulse or glow animation around the checkmark/sparkle
+Hold for 1-2 seconds
+Then smoothly transition to the personalized plan page
+
+
+🎯 Global Requirements
+Progress Indicator
+Progress bar: Horizontal bar showing 0-100% (updates by 16.67% per step)
+
+Visual Continuity
+Checkmarks:
+Use ✅ emoji or custom checkmark icon consistently
+Same style as encouraging text from questions
+
+Color scheme:
+Use same colors from diagnostic questions
+Maintain brand identity
+
+Typography:
+Headers should be larger and bold
+Body text should be readable (16px+ on mobile)
+Certification name should stand out
+
+
+Layout & Spacing
+Desktop:
+Center content vertically and horizontally
+Generous padding around content
+
+Mobile:
+
+Full width with side padding
+Stack everything vertically
+No horizontal scrolling
+Content should fit in viewport without scrolling
+
+
+Animation Requirements
+Timing:
+Each step should feel purposeful, not rushed
+Use easing functions (ease-in-out) for smooth motion
+No jarring transitions between steps
+
+Transitions between steps:
+Fade out current step header (300ms)
+Simultaneously fade in next step header (300ms)
+Content should transition smoothly
+
+Auto-scroll behavior:
+Don't make user scroll manually
+Keep active content in view
+Smooth scroll animation, not instant jump
+
+
+Dynamic Data Insertion
+Pull from user's answers to Questions 1-8:
+Question 1 → Certification Name:
+Use in: Step 1, Step 2 (lookup), Step 3 (lookup), Step 4, Step 6
+
+Question 2 → Knowledge Level:
+Use in: Step 1, Step 3 subtext
+Values: "beginner" / "intermediate" / "advanced"
+
+Question 3 → Learning Style:
+
+Use in: Step 1, Step 4 subtext
+Values: "reading" / "video" / "hands-on" / "mixed"
+
+Question 7 → Weekly Hours:
+
+Use in: Step 1, Step 4 (week calculation)
+Values: "1-3" / "3-5" / "6-10" / "10+"
+
+Question 8 → Timing Preference:
+
+Use in: Step 5
+Values: "daily" / "weekends" / "flexible" / "bursts"
+
+
+🔧 Technical Implementation Notes
+State Management
+Store these values when user completes Question 8:
+
+All 8 user responses
+Calculated timeline in weeks
+Content numbers (modules, videos, questions, activities, label)
+Social proof number used
+Timestamp when transition started
+
+Pass this data to the personalized plan page after Step 6 completes.
+
+Error Handling
+If user hasn't completed all 8 questions:
+
+Don't show transition screen
+Show error: "Please complete all questions to generate your plan"
+Return to incomplete question
+
+If certification lookup fails:
+
+Use default values
+Continue with transition (don't block user)
+
+If calculation fails (hours to weeks):
+
+Default to "12-week timeline"
+Default to "3-5 hours weekly"
+Continue with transition
+
+If network fails during transition:
+
+Complete transition anyway (it's mostly visual)
+Store data locally
+Attempt to save when connection restored
+
+
+Certification Name Matching
+When looking up certification-specific values:
+Exact matches:
+
+"CISSP" or "CISSP®"
+"PMP" or "PMP®"
+"CCSP" or "CCSP®"
+"CISM" or "CISM®"
+"CISA" or "CISA®"
+"CompTIA Security+" or "Security+"
+"CompTIA Network+" or "Network+"
+
+Partial matches:
+
+If contains "AWS" → use AWS numbers
+If contains "Security+" → use Security+ numbers
+If contains "Network+" → use Network+ numbers
+
+Case insensitive:
+
+Convert to uppercase before matching
+
+If no match:
+
+Use default values
+
+📱 Mobile-Specific Requirements
+Touch Targets
+
+All interactive elements: minimum 44x44px
+Ensure Continue button (Question 8) is easy to tap
+
+Viewport Considerations
+
+Don't let keyboard hide content
+Test on both portrait and landscape
+Ensure timer/progress indicator stays visible
+
+Performance
+
+Animations should be smooth (60fps)
+Avoid heavy animations on low-end devices
+Test on actual mobile devices, not just browser resize
+
+Text Readability
+
+Minimum 16px font size on mobile
+High contrast ratios (WCAG AA minimum)
+Avoid white text on light backgrounds
+
+
+✅ Testing Checklist
+Before marking complete, verify:
+
+ All 6 steps display in correct order
+ Total duration is 17-19 seconds
+ Dynamic data pulls from user's answers correctly
+ All 8 certifications show correct numbers
+ Default values work for unknown certifications
+ Step indicator updates correctly (1/6, 2/6, etc.)
+ Mobile layout doesn't require scrolling
+ Animations are smooth on mobile
+ Transition to plan page is seamless
+ No console errors during transition
+ Works in Chrome, Safari, Firefox
+ Text is readable without zooming
+ Loading states don't block UI
+ Back button doesn't break flow
+
+
+🎯 Priority Order for Building
+Phase 1: Basic Structure
+
+Create 6-step sequence with static placeholder text
+Add step indicator (1 of 6, 2 of 6, etc.)
+Add timing delays between steps
+Test basic flow works
+
+Phase 2: Dynamic Content
+5. Pull user responses from state
+6. Insert dynamic data into each step
+7. Add certification lookup logic
+8. Add week calculation logic
+Phase 3: Animations
+9. Add fade in/out transitions between steps
+10. Add counter animations (Step 3)
+11. Add progress bar animations (Step 2, Step 4)
+12. Add final completion animation (Step 6)
+Phase 4: Polish
+13. Test on mobile devices
+14. Adjust timing if feels too fast/slow
+15. Add error handling
+16. Test all 8 certifications
+17. Ensure smooth transition to plan page
+
+🚀 After Transition Completes
+When Step 6 finishes, transition to the Personalized Plan Page which should show:
+Hero section:
+
+"Your [X]-Week [Certification] Success Plan"
+Key stats summary from the transition
+
+Then registration gate:
+
+"Save your plan and start learning →"
+"Create free account to access your personalized roadmap"
