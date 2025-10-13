@@ -289,12 +289,14 @@ export default function TransitionScreen({ formData, onComplete }: TransitionScr
   return (
     <div className="w-full py-12 min-h-[600px] flex flex-col" data-testid="transition-screen">
       <div className="max-w-4xl mx-auto w-full px-4 flex-1 flex flex-col justify-center">
-        <div className="mb-8">
-          <Progress value={progressPercentage} className="h-2" data-testid="progress-transition" />
-          <p className="text-sm text-muted-foreground mt-2 text-center" data-testid="text-step-indicator">
-            Step {currentStep} of 6
-          </p>
-        </div>
+        {currentStep !== 6 && (
+          <div className="mb-8">
+            <Progress value={progressPercentage} className="h-2" data-testid="progress-transition" />
+            <p className="text-sm text-muted-foreground mt-2 text-center" data-testid="text-step-indicator">
+              Step {currentStep} of 6
+            </p>
+          </div>
+        )}
 
         <AnimatePresence mode="wait">
           {currentStep === 1 && (
