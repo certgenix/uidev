@@ -466,6 +466,10 @@ export default function Diagnostic() {
     } else if (formData.focusAreas.length > 0) {
       items.push({ icon: CheckCircle2, label: `${formData.focusAreas.length} focus areas` });
     }
+    if (formData.previousAttempts) {
+      const attempt = previousAttempts.find(p => p.value === formData.previousAttempts);
+      if (attempt) items.push({ icon: CheckCircle2, label: attempt.label });
+    }
     if (formData.examDate) {
       items.push({ icon: Calendar, label: `Exam: ${new Date(formData.examDate).toLocaleDateString()}` });
     } else if (formData.examTimeline) {
