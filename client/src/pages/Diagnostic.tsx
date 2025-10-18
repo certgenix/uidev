@@ -348,10 +348,18 @@ export default function Diagnostic() {
     // Step 2: Hold for 600ms, then update sidebar & progress bar
     setTimeout(() => {
       if (question.field) {
-        setFormData(prev => ({
-          ...prev,
-          [question.field!]: value
-        }));
+        setFormData(prev => {
+          const updatedData = {
+            ...prev,
+            [question.field!]: value
+          };
+          
+          if (questionId === 8) {
+            console.log('Diagnostic Form Data:', JSON.stringify(updatedData, null, 2));
+          }
+          
+          return updatedData;
+        });
       }
 
       // Step 3: After 300ms more, transition to next question or show confirmation
@@ -399,6 +407,8 @@ export default function Diagnostic() {
   };
 
   const handleGeneratePlan = () => {
+    console.log('Diagnostic Form Data:', JSON.stringify(formData, null, 2));
+    
     setShowConfirmationPanel(false);
     setShowTransition(true);
     
