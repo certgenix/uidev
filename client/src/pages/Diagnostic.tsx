@@ -269,6 +269,8 @@ export default function Diagnostic() {
   const [showEncouraging, setShowEncouraging] = useState(false);
   const [showConfirmationPanel, setShowConfirmationPanel] = useState(false);
   const [showTransition, setShowTransition] = useState(false);
+  const [isGeneratingPlan, setIsGeneratingPlan] = useState(false);
+  const [planGenerationError, setPlanGenerationError] = useState<string>("");
   const questionRefs = useRef<{ [key: number]: HTMLDivElement | null }>({});
   const containerRef = useRef<HTMLDivElement>(null);
   const confirmationPanelRef = useRef<HTMLDivElement | null>(null);
@@ -333,7 +335,7 @@ export default function Diagnostic() {
     return "";
   };
 
-  const callFirebaseFunction = async (data: FormData) => {
+  const callFirebaseFunction = async (data: FormData): Promise<any> => {
     const FIREBASE_FUNCTION_URL = 'https://generateprepplan-qn5uv54q4a-uc.a.run.app';
     const TIMEOUT_MS = 300000;
     
@@ -364,21 +366,24 @@ export default function Diagnostic() {
           statusText: response.statusText,
           body: errorText
         });
-        return;
+        throw new Error(`API error: ${response.status} - ${errorText}`);
       }
       
       const responseData = await response.json();
       console.log('Firebase function success response:', JSON.stringify(responseData, null, 2));
+      return responseData;
       
     } catch (error: any) {
       if (error.name === 'AbortError') {
         console.error('Firebase function request timeout');
+        throw new Error('Request timed out after 5 minutes. Please try again.');
       } else {
         console.error('Firebase function frontend error:', {
           message: error.message,
           name: error.name,
           stack: error.stack
         });
+        throw error;
       }
     }
   };
@@ -457,11 +462,13 @@ export default function Diagnostic() {
     setTimeout(() => scrollToQuestion(questionId), 100);
   };
 
-  const handleGeneratePlan = () => {
+  const handleGeneratePlan = async () => {
     console.log('Diagnostic Form Data:', JSON.stringify(formData, null, 2));
     
     setShowConfirmationPanel(false);
     setShowTransition(true);
+    setIsGeneratingPlan(true);
+    setPlanGenerationError("");
     
     // Activate question 9 to show the transition screen
     setQuestions(prev => prev.map(q => {
@@ -470,6 +477,31 @@ export default function Diagnostic() {
     }));
     
     setTimeout(() => scrollToQuestion(9), 100);
+    
+    // Call Firebase function
+    try {
+      const response = await callFirebaseFunction(formData);
+      
+      if (response && response.success) {
+        // Store the plan data in localStorage
+        localStorage.setItem('studyPlanData', JSON.stringify(response));
+        
+        // Show success state
+        setIsGeneratingPlan(false);
+        
+        // Wait for user to see success state, then navigate
+        setTimeout(() => {
+          setLocation('/study-plan-results');
+        }, 2000);
+      } else {
+        setPlanGenerationError('Failed to generate study plan. Please try again.');
+        setIsGeneratingPlan(false);
+      }
+    } catch (error: any) {
+      console.error('Error generating plan:', error);
+      setPlanGenerationError(error.message || 'An error occurred while generating your plan. Please try again.');
+      setIsGeneratingPlan(false);
+    }
   };
 
   const handleTransitionComplete = () => {
@@ -1276,6 +1308,9 @@ export default function Diagnostic() {
                                   <TransitionScreen 
                                     formData={formData} 
                                     onComplete={handleTransitionComplete}
+                                    isGeneratingPlan={isGeneratingPlan}
+                                    planGenerationError={planGenerationError}
+                                    onRetry={handleGeneratePlan}
                                   />
                                 </div>
                               ) : (

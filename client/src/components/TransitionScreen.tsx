@@ -22,6 +22,9 @@ interface FormData {
 interface TransitionScreenProps {
   formData: FormData;
   onComplete: () => void;
+  isGeneratingPlan?: boolean;
+  planGenerationError?: string;
+  onRetry?: () => void;
 }
 
 interface CertificationData {
@@ -180,7 +183,7 @@ const getLearningStyleLabel = (learningStyle: string): string => {
   }
 };
 
-export default function TransitionScreen({ formData, onComplete }: TransitionScreenProps) {
+export default function TransitionScreen({ formData, onComplete, isGeneratingPlan = false, planGenerationError = "", onRetry }: TransitionScreenProps) {
   const [, setLocation] = useLocation();
   const [currentStep, setCurrentStep] = useState(1);
   const [step1Items, setStep1Items] = useState<number[]>([]);
@@ -585,47 +588,88 @@ export default function TransitionScreen({ formData, onComplete }: TransitionScr
               className="text-center space-y-6"
               data-testid="step-6"
             >
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-primary to-chart-2 mb-4 mx-auto">
-                <Rocket className="h-10 w-10 text-white" />
-              </div>
-              
-              <div className="max-w-2xl mx-auto space-y-4">
-                <div className="p-6 bg-primary/5 rounded-xl border border-primary/20 space-y-3">
-                  <div className="flex items-center justify-center gap-2 text-primary">
-                    <CheckCircle2 className="h-5 w-5" />
-                    <span className="font-semibold">Your Personalized Plan</span>
+              {isGeneratingPlan ? (
+                <>
+                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-primary to-chart-2 mb-4 mx-auto animate-pulse">
+                    <Rocket className="h-10 w-10 text-white" />
                   </div>
-                  <div className="space-y-2 text-sm">
-                    <p><strong>Certification:</strong> {formData.certification}</p>
-                    <p><strong>Study approach:</strong> {formData.studyStructure === "ai-guided" ? "AI-guided learning path" : `Custom focus on ${formData.focusAreas.length} areas`}</p>
-                    <p><strong>Time commitment:</strong> {formData.weeklyHours} hours per week</p>
-                    <p><strong>Target:</strong> Exam ready in {getWeeksFromHours(formData.weeklyHours).weeks} weeks</p>
+                  
+                  <h2 className="text-3xl md:text-4xl font-bold" data-testid="text-generating">
+                    Generating Your Study Plan...
+                  </h2>
+                  
+                  <p className="text-muted-foreground max-w-md mx-auto" data-testid="text-generating-subtitle">
+                    Our AI is creating your personalized study plan. This may take up to 5 minutes.
+                  </p>
+                  
+                  <div className="max-w-md mx-auto">
+                    <Progress value={undefined} className="h-2" data-testid="progress-generating" />
                   </div>
-                </div>
-                <p className="text-lg text-muted-foreground" data-testid="text-plan-summary">
-                  We've created a personalized study plan tailored to your goals, schedule, and learning style.
-                </p>
-              </div>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
-                <Button
-                  size="lg"
-                  onClick={() => setLocation("/")}
-                  className="rounded-full text-base px-8 h-14 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all"
-                  data-testid="button-start-learning"
-                >
-                  ✅ Start Learning Now
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  onClick={() => setLocation("/")}
-                  className="rounded-full text-base px-8 h-14"
-                  data-testid="button-view-dashboard"
-                >
-                  📊 View Dashboard
-                </Button>
-              </div>
+                </>
+              ) : planGenerationError ? (
+                <>
+                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-red-100 dark:bg-red-900/30 mb-4 mx-auto">
+                    <span className="text-4xl">⚠️</span>
+                  </div>
+                  
+                  <h2 className="text-3xl md:text-4xl font-bold text-red-600 dark:text-red-400" data-testid="text-error">
+                    Oops! Something Went Wrong
+                  </h2>
+                  
+                  <p className="text-muted-foreground max-w-md mx-auto" data-testid="text-error-message">
+                    {planGenerationError}
+                  </p>
+                  
+                  <Button onClick={onRetry} size="lg" className="mt-4" data-testid="button-retry">
+                    Try Again
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-primary to-chart-2 mb-4 mx-auto">
+                    <Rocket className="h-10 w-10 text-white" />
+                  </div>
+                  
+                  <div className="max-w-2xl mx-auto space-y-4">
+                    <div className="p-6 bg-primary/5 rounded-xl border border-primary/20 space-y-3">
+                      <div className="flex items-center justify-center gap-2 text-primary">
+                        <CheckCircle2 className="h-5 w-5" />
+                        <span className="font-semibold">Your Personalized Plan</span>
+                      </div>
+                      <div className="space-y-2 text-sm">
+                        <p><strong>Certification:</strong> {formData.certification}</p>
+                        <p><strong>Study approach:</strong> {formData.studyStructure === "ai-guided" ? "AI-guided learning path" : `Custom focus on ${formData.focusAreas.length} areas`}</p>
+                        <p><strong>Time commitment:</strong> {formData.weeklyHours} hours per week</p>
+                        <p><strong>Target:</strong> Exam ready in {getWeeksFromHours(formData.weeklyHours).weeks} weeks</p>
+                      </div>
+                    </div>
+                    
+                    <p className="text-lg text-muted-foreground" data-testid="text-plan-summary">
+                      We've created a personalized study plan tailored to your goals, schedule, and learning style.
+                    </p>
+                  </div>
+                  
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
+                    <Button
+                      size="lg"
+                      onClick={() => setLocation("/")}
+                      className="rounded-full text-base px-8 h-14 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all"
+                      data-testid="button-start-learning"
+                    >
+                      ✅ Start Learning Now
+                    </Button>
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      onClick={() => setLocation("/")}
+                      className="rounded-full text-base px-8 h-14"
+                      data-testid="button-view-dashboard"
+                    >
+                      📊 View Dashboard
+                    </Button>
+                  </div>
+                </>
+              )}
             </motion.div>
           )}
         </AnimatePresence>

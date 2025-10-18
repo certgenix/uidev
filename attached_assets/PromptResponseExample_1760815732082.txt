@@ -1,0 +1,1817 @@
+{
+  "success": true,
+  "certification": "CISSP®",
+  "planObject": {
+    "certification": "CISSP®",
+    "knowledgeLevel": "beginner",
+    "totalWeeks": 24,
+    "weeklyHours": "3-5",
+    "personalization": {
+      "weakAreas": [],
+      "focusStrategy": "This plan prioritizes foundational understanding and a gradual progression through all CISSP domains, dedicating ample time for reading, note-taking, and review to build a strong knowledge base for a beginner."
+    },
+    "weeks": [
+      {
+        "weekNumber": 1,
+        "domain": "Domain 1: Security and Risk Management",
+        "domainId": "domain_1",
+        "theme": "Building Your Security Foundation: Core Principles & Risk Introduction",
+        "priority": "critical",
+        "topics": [
+          {
+            "name": "CISSP Exam Overview & Mindset",
+            "keyPoints": [
+              "Understand the adaptive nature of the exam and its focus on managerial decision-making.",
+              "Familiarize yourself with the 8 domains and their weighting."
+            ],
+            "estimatedTime": 30
+          },
+          {
+            "name": "Security Governance Principles",
+            "keyPoints": [
+              "Define security governance and its importance.",
+              "Understand the role of organizational policies, standards, procedures, and guidelines.",
+              "Explore the concept of due care and due diligence."
+            ],
+            "estimatedTime": 90
+          },
+          {
+            "name": "Risk Management Fundamentals",
+            "keyPoints": [
+              "Introduce core risk concepts: asset, threat, vulnerability, risk.",
+              "Understand quantitative vs. qualitative risk analysis basics.",
+              "Identify risk treatment strategies: accept, avoid, mitigate, transfer."
+            ],
+            "estimatedTime": 90
+          }
+        ],
+        "dailySchedule": [
+          {
+            "day": "Saturday",
+            "time": "9:00 AM - 11:30 AM",
+            "activity": "Read and take notes on the CISSP exam overview and the first section of your primary study guide covering security governance principles (e.g., policy, standards, due care/diligence). Focus on defining key terms and understanding their hierarchy. Create a glossary of new terms.",
+            "type": "reading",
+            "duration": 150
+          },
+          {
+            "day": "Sunday",
+            "time": "1:00 PM - 3:00 PM",
+            "activity": "Read and take notes on the introductory concepts of risk management (asset, threat, vulnerability, risk, quantitative/qualitative basics). Summarize the four risk treatment strategies. Review Saturday's notes.",
+            "type": "reading",
+            "duration": 120
+          },
+          {
+            "day": "Weekdays",
+            "time": "Optional",
+            "activity": "Optional: Light reading/review of notes from the weekend. No new content.",
+            "type": "reading",
+            "duration": 0
+          }
+        ],
+        "learningObjectives": [
+          "Articulate the importance of security governance and its components.",
+          "Define fundamental risk management terminology and strategies.",
+          "Differentiate between policies, standards, procedures, and guidelines."
+        ],
+        "examTips": [
+          "CISSP is about 'what should be done' from a senior manager's perspective, not always 'how to do it.'",
+          "Master the difference between policies, standards, procedures – it's a common exam point.",
+          "Start building your personal glossary of security terms from day one."
+        ],
+        "selfAssessment": [
+          "☐ Can I explain what 'due care' and 'due diligence' mean in a security context?",
+          "☐ Can I list and define the four main risk treatment strategies?",
+          "☐ Do I understand the hierarchy of security documentation (policy, standard, procedure, guideline)?"
+        ],
+        "totalTime": 270
+      },
+      {
+        "weekNumber": 2,
+        "domain": "Domain 1: Security and Risk Management",
+        "domainId": "domain_1",
+        "theme": "Deepening Risk & Compliance: Legal, Ethical, and Business Continuity Basics",
+        "priority": "high",
+        "topics": [
+          {
+            "name": "Risk Management Lifecycle & Methodologies",
+            "keyPoints": [
+              "Understand the iterative process of risk management (identify, analyze, evaluate, treat, monitor).",
+              "Explore common risk frameworks (e.g., ISO 27005, NIST RMF - basic understanding)."
+            ],
+            "estimatedTime": 75
+          },
+          {
+            "name": "Legal, Regulatory, and Compliance Issues",
+            "keyPoints": [
+              "Differentiate between law, ethics, and compliance.",
+              "Understand key privacy regulations (e.g., GDPR, CCPA - basic awareness).",
+              "Discuss intellectual property concepts (copyrights, trademarks, patents, trade secrets)."
+            ],
+            "estimatedTime": 90
+          },
+          {
+            "name": "Business Continuity & Disaster Recovery Planning (Introduction)",
+            "keyPoints": [
+              "Introduce the purpose and components of BCP and DRP.",
+              "Understand key terms: RTO, RPO, MTD, MTTR, WRT.",
+              "Recognize the importance of BIA (Business Impact Analysis)."
+            ],
+            "estimatedTime": 75
+          }
+        ],
+        "dailySchedule": [
+          {
+            "day": "Saturday",
+            "time": "9:00 AM - 12:00 PM",
+            "activity": "Read and take notes on the full risk management lifecycle, including various methodologies and frameworks. Then, delve into legal and regulatory issues, focusing on the differences between legal and ethical concerns and intellectual property types. Create summary notes on each concept.",
+            "type": "reading",
+            "duration": 180
+          },
+          {
+            "day": "Sunday",
+            "time": "1:00 PM - 2:30 PM",
+            "activity": "Read and take notes on the introduction to Business Continuity Planning (BCP) and Disaster Recovery Planning (DRP). Focus on understanding RTO, RPO, and the concept of Business Impact Analysis (BIA). Consolidate all notes from Domain 1 so far and review.",
+            "type": "reading",
+            "duration": 90
+          },
+          {
+            "day": "Weekdays",
+            "time": "Optional",
+            "activity": "Optional: Review your comprehensive notes for Domain 1. Try to explain concepts aloud to solidify understanding.",
+            "type": "reading",
+            "duration": 0
+          }
+        ],
+        "learningObjectives": [
+          "Explain the stages of the risk management lifecycle.",
+          "Identify key legal and regulatory concepts relevant to information security.",
+          "Define fundamental BCP/DRP terms and their significance."
+        ],
+        "examTips": [
+          "For BCP/DRP, focus on the 'why' and 'what' (managerial perspective) rather than the 'how' (technical details).",
+          "Understand the difference between confidentiality, integrity, and availability (CIA triad) and how they relate to risk.",
+          "Practice applying ethical principles to security scenarios – the CISSP exam has a strong ethical component."
+        ],
+        "selfAssessment": [
+          "☐ Can I outline the steps in a typical risk management lifecycle?",
+          "☐ Do I know the difference between a copyright and a patent?",
+          "☐ Can I define RTO, RPO, MTD, and explain what a BIA achieves?"
+        ],
+        "totalTime": 270
+      },
+      {
+        "weekNumber": 3,
+        "domain": "Domain 1: Security and Risk Management / Domain 2: Asset Security",
+        "domainId": "domain_1_and_2",
+        "theme": "Governance in Practice & Protecting Our Assets",
+        "priority": "high",
+        "topics": [
+          {
+            "name": "Security Policy Development & Implementation (Cont. from D1)",
+            "keyPoints": [
+              "Understand the security policy development lifecycle.",
+              "Explore security awareness, training, and education programs.",
+              "Discuss personnel security policies (hiring, termination, roles)."
+            ],
+            "estimatedTime": 90
+          },
+          {
+            "name": "Asset Identification & Classification (D2 Intro)",
+            "keyPoints": [
+              "Define 'asset' in an information security context.",
+              "Understand the importance of asset classification (e.g., Top Secret, Confidential, Public).",
+              "Identify data owners, custodians, and users and their responsibilities."
+            ],
+            "estimatedTime": 90
+          },
+          {
+            "name": "Data Lifecycle & Data Handling (D2 Part 1)",
+            "keyPoints": [
+              "Outline the stages of the data lifecycle (creation, storage, use, sharing, archive, destruction).",
+              "Discuss data protection methods throughout the lifecycle (e.g., encryption, DLP).",
+              "Understand data remanence and secure sanitization techniques."
+            ],
+            "estimatedTime": 60
+          }
+        ],
+        "dailySchedule": [
+          {
+            "day": "Saturday",
+            "time": "9:00 AM - 12:00 PM",
+            "activity": "Begin by finishing any remaining D1 topics on security policy development, awareness, and personnel security. Then, transition to Domain 2 by reading and taking detailed notes on asset identification, classification, and the roles of data owners, custodians, and users. Focus on the 'why' behind classification.",
+            "type": "reading",
+            "duration": 180
+          },
+          {
+            "day": "Sunday",
+            "time": "1:00 PM - 2:30 PM",
+            "activity": "Read and take notes on the data lifecycle stages and appropriate data handling practices, including secure destruction methods. Create a visual representation of the data lifecycle. Review all notes for D1 and D2 so far.",
+            "type": "reading",
+            "duration": 90
+          },
+          {
+            "day": "Weekdays",
+            "time": "Optional",
+            "activity": "Optional: Re-read your notes on asset classification and data lifecycle. Think of examples of each stage.",
+            "type": "reading",
+            "duration": 0
+          }
+        ],
+        "learningObjectives": [
+          "Describe the components of a comprehensive security awareness program.",
+          "Explain the importance of asset classification and assign responsibilities to data roles.",
+          "Outline the data lifecycle and associated data protection methods."
+        ],
+        "examTips": [
+          "The roles (owner, custodian, user) are distinct and frequently tested. Know their primary responsibilities.",
+          "Data classification is a *managerial* decision, not a technical one.",
+          "Understand the difference between clearing, purging, and destruction for data sanitization."
+        ],
+        "selfAssessment": [
+          "☐ Can I differentiate between a data owner, data custodian, and data user?",
+          "☐ Can I list the stages of the data lifecycle?",
+          "☐ Do I know at least two methods for securely destroying data?"
+        ],
+        "totalTime": 270
+      },
+      {
+        "weekNumber": 4,
+        "domain": "Domain 2: Asset Security",
+        "domainId": "domain_2",
+        "theme": "Safeguarding Data: Privacy, Controls, and Retention",
+        "priority": "high",
+        "topics": [
+          {
+            "name": "Data Privacy & Protection",
+            "keyPoints": [
+              "Understand privacy principles (e.g., PII, PHI).",
+              "Explore data privacy regulations (e.g., HIPAA, GDPR, CCPA from a privacy perspective).",
+              "Discuss privacy-enhancing technologies and privacy by design."
+            ],
+            "estimatedTime": 90
+          },
+          {
+            "name": "Security Controls for Data (Technical & Administrative)",
+            "keyPoints": [
+              "Differentiate between administrative, technical, and physical controls.",
+              "Understand various technical controls like encryption, DLP, FIM.",
+              "Explore administrative controls for data handling."
+            ],
+            "estimatedTime": 75
+          },
+          {
+            "name": "Data Retention & Destruction Policies",
+            "keyPoints": [
+              "Understand the importance of data retention policies for legal and business needs.",
+              "Discuss secure data destruction methods in detail (physical, logical).",
+              "Identify the implications of improper data disposal."
+            ],
+            "estimatedTime": 75
+          }
+        ],
+        "dailySchedule": [
+          {
+            "day": "Saturday",
+            "time": "9:00 AM - 12:30 PM",
+            "activity": "Read and take detailed notes on data privacy concepts, including PII/PHI, relevant regulations, and privacy-enhancing technologies. Then, read about various security controls (administrative, technical, physical) specifically as they apply to protecting data. Focus on examples for each.",
+            "type": "reading",
+            "duration": 210
+          },
+          {
+            "day": "Sunday",
+            "time": "1:00 PM - 2:30 PM",
+            "activity": "Read and take notes on data retention policies and secure data destruction methods. Emphasize the legal and business drivers behind these policies. Review all notes for Domain 2. Create a one-page summary for this domain.",
+            "type": "reading",
+            "duration": 90
+          },
+          {
+            "day": "Weekdays",
+            "time": "Optional",
+            "activity": "Optional: Review your summary sheet for Domain 2. Test yourself on the different types of controls.",
+            "type": "reading",
+            "duration": 0
+          }
+        ],
+        "learningObjectives": [
+          "Explain key privacy concepts and relevant regulations.",
+          "Categorize and provide examples of different security controls for data.",
+          "Discuss the significance of data retention and secure destruction policies."
+        ],
+        "examTips": [
+          "Privacy is a huge component of modern security. Understand the 'why' behind privacy regulations.",
+          "Always think about the 'least privilege' and 'need-to-know' principles when considering data access.",
+          "Be aware that simply 'deleting' a file does not constitute secure destruction."
+        ],
+        "selfAssessment": [
+          "☐ Can I explain the difference between PII and PHI?",
+          "☐ Can I give an example of an administrative, technical, and physical control for data protection?",
+          "☐ Do I understand why data retention policies are necessary?"
+        ],
+        "totalTime": 300
+      },
+      {
+        "weekNumber": 5,
+        "domain": "Domain 3: Security Architecture and Engineering",
+        "domainId": "domain_3",
+        "theme": "Foundations of Secure Design: Models, Concepts, and Capabilities",
+        "priority": "critical",
+        "topics": [
+          {
+            "name": "Security Engineering Principles & Architectures",
+            "keyPoints": [
+              "Understand the core concepts of security engineering (e.g., secure by design, defense-in-depth).",
+              "Explore enterprise security architecture frameworks (e.g., TOGAF, SABSA - basic awareness).",
+              "Discuss trusted computing base (TCB) and security kernels."
+            ],
+            "estimatedTime": 90
+          },
+          {
+            "name": "Security Models (Bell-LaPadula, Biba, Clark-Wilson)",
+            "keyPoints": [
+              "Differentiate between confidentiality (Bell-LaPadula) and integrity (Biba, Clark-Wilson) models.",
+              "Understand the rules and applications of each model.",
+              "Recognize the concept of a reference monitor."
+            ],
+            "estimatedTime": 90
+          },
+          {
+            "name": "Security Capabilities of Information Systems",
+            "keyPoints": [
+              "Explore security modes of operation (e.g., dedicated, system high, controlled, multilevel).",
+              "Understand memory management, process isolation, and virtual machine technologies.",
+              "Discuss secure operating system concepts (e.g., trusted path, trusted shell)."
+            ],
+            "estimatedTime": 90
+          }
+        ],
+        "dailySchedule": [
+          {
+            "day": "Saturday",
+            "time": "9:00 AM - 12:30 PM",
+            "activity": "Read and take detailed notes on security engineering principles and enterprise security architecture frameworks. Then, dive into the foundational security models like Bell-LaPadula and Biba. Focus on understanding the core rule for each (e.g., 'no read up' for Bell-LaPadula). Draw diagrams to illustrate.",
+            "type": "reading",
+            "duration": 210
+          },
+          {
+            "day": "Sunday",
+            "time": "1:00 PM - 2:30 PM",
+            "activity": "Read and take notes on the security capabilities of information systems, including memory protection, process isolation, and different security modes of operation. Review how these contribute to a secure computing environment. Create a comparative table for the security models.",
+            "type": "reading",
+            "duration": 90
+          },
+          {
+            "day": "Weekdays",
+            "time": "Optional",
+            "activity": "Optional: Review your notes on security models. Try to describe them without looking at your notes.",
+            "type": "reading",
+            "duration": 0
+          }
+        ],
+        "learningObjectives": [
+          "Explain core security engineering principles and concepts.",
+          "Differentiate between common security models (Bell-LaPadula, Biba) and their primary goals.",
+          "Describe key security capabilities of operating systems and virtual environments."
+        ],
+        "examTips": [
+          "Security models can be confusing. Focus on the core objective (confidentiality vs. integrity) and the 'no read/write up/down' rules for each.",
+          "Defense-in-depth is a critical concept – security at multiple layers.",
+          "Understand the difference between a secure OS and a trusted OS."
+        ],
+        "selfAssessment": [
+          "☐ Can I explain the difference between Bell-LaPadula and Biba models?",
+          "☐ Do I understand the concept of defense-in-depth?",
+          "☐ Can I define 'Trusted Computing Base' (TCB)?"
+        ],
+        "totalTime": 300
+      },
+      {
+        "weekNumber": 6,
+        "domain": "Domain 3: Security Architecture and Engineering",
+        "domainId": "domain_3",
+        "theme": "The Power of Crypto & Physical Security Defenses",
+        "priority": "high",
+        "topics": [
+          {
+            "name": "Cryptography Concepts",
+            "keyPoints": [
+              "Understand the goals of cryptography: confidentiality, integrity, authenticity, non-repudiation.",
+              "Differentiate between symmetric and asymmetric encryption.",
+              "Explore hashing, digital signatures, and Public Key Infrastructure (PKI) basics.",
+              "Understand key management principles."
+            ],
+            "estimatedTime": 120
+          },
+          {
+            "name": "Site & Facility Security",
+            "keyPoints": [
+              "Identify physical security threats (natural, man-made, environmental).",
+              "Discuss physical security controls (fences, locks, lighting, CCTV, alarms).",
+              "Understand environmental controls (HVAC, fire suppression, power)."
+            ],
+            "estimatedTime": 90
+          },
+          {
+            "name": "Hardware Security",
+            "keyPoints": [
+              "Explore hardware security modules (HSMs) and Trusted Platform Modules (TPMs).",
+              "Understand endpoint protection technologies (e.g., anti-malware, host intrusion prevention).",
+              "Discuss firmware security and supply chain vulnerabilities."
+            ],
+            "estimatedTime": 45
+          }
+        ],
+        "dailySchedule": [
+          {
+            "day": "Saturday",
+            "time": "9:00 AM - 1:00 PM",
+            "activity": "Dedicate a significant block to reading and taking notes on cryptography. Focus on the core concepts: symmetric vs. asymmetric, hashing, digital signatures, and PKI. Don't get bogged down in complex math, but understand the principles and applications. Create a table comparing symmetric and asymmetric crypto.",
+            "type": "reading",
+            "duration": 240
+          },
+          {
+            "day": "Sunday",
+            "time": "1:00 PM - 2:45 PM",
+            "activity": "Read and take notes on site and facility security, covering physical security controls and environmental considerations. Then, briefly cover hardware security modules (HSMs) and Trusted Platform Modules (TPMs). Review all notes for Domain 3 so far.",
+            "type": "reading",
+            "duration": 105
+          },
+          {
+            "day": "Weekdays",
+            "time": "Optional",
+            "activity": "Optional: Review your crypto notes. Try to explain PKI or digital signatures to yourself.",
+            "type": "reading",
+            "duration": 0
+          }
+        ],
+        "learningObjectives": [
+          "Articulate the fundamental concepts of cryptography and its applications.",
+          "Identify and describe various physical security controls for facilities and environments.",
+          "Explain the purpose and function of hardware security modules (HSMs) and TPMs."
+        ],
+        "examTips": [
+          "Cryptography is a heavily tested area; focus on 'what it does' and 'why it's used' rather than algorithmic details.",
+          "PKI is fundamental for secure communications – understand its components and trust model.",
+          "Physical security is often overlooked but critical; think like an attacker trying to gain physical access."
+        ],
+        "selfAssessment": [
+          "☐ Can I explain the difference between symmetric and asymmetric encryption?",
+          "☐ Do I understand the purpose of a digital signature?",
+          "☐ Can I list at least three physical security controls for a data center?"
+        ],
+        "totalTime": 345
+      },
+      {
+        "weekNumber": 7,
+        "domain": "Domain 3: Security Architecture and Engineering / Domain 4: Communication and Network Security",
+        "domainId": "domain_3_and_4",
+        "theme": "Securing Systems & Diving into Network Foundations",
+        "priority": "high",
+        "topics": [
+          {
+            "name": "Security Assessments & Design Review (D3 Wrap-up)",
+            "keyPoints": [
+              "Understand the importance of security assessments during the system lifecycle.",
+              "Discuss secure coding guidelines and development best practices.",
+              "Explore the security implications of virtualization and cloud computing."
+            ],
+            "estimatedTime": 75
+          },
+          {
+            "name": "Communication & Network Security Fundamentals (D4 Intro)",
+            "keyPoints": [
+              "Understand the OSI and TCP/IP models and their layers.",
+              "Identify common network topologies and components (routers, switches, firewalls).",
+              "Discuss the basics of secure network design principles."
+            ],
+            "estimatedTime": 105
+          },
+          {
+            "name": "Secure Network Components",
+            "keyPoints": [
+              "Explore the security features and roles of firewalls, IDS/IPS, and proxies.",
+              "Understand secure device management (e.g., hardening, patching, configuration management).",
+              "Discuss network access control (NAC) concepts."
+            ],
+            "estimatedTime": 75
+          }
+        ],
+        "dailySchedule": [
+          {
+            "day": "Saturday",
+            "time": "9:00 AM - 12:30 PM",
+            "activity": "Complete reading and note-taking on the remaining D3 topics: security assessments in system development, secure coding, and cloud/virtualization security considerations. Then, transition to Domain 4 by reading and taking notes on the OSI and TCP/IP models and network topology basics. Focus on understanding the function of each layer.",
+            "type": "reading",
+            "duration": 210
+          },
+          {
+            "day": "Sunday",
+            "time": "1:00 PM - 2:30 PM",
+            "activity": "Read and take notes on secure network components, focusing on the roles and security implications of firewalls, IDS/IPS, and proxies. Understand basic hardening principles for network devices. Review D3 and D4 notes, identifying connections.",
+            "type": "reading",
+            "duration": 90
+          },
+          {
+            "day": "Weekdays",
+            "time": "Optional",
+            "activity": "Optional: Draw the OSI and TCP/IP models from memory. Label the layers and key protocols.",
+            "type": "reading",
+            "duration": 0
+          }
+        ],
+        "learningObjectives": [
+          "Discuss security considerations for system development and cloud environments.",
+          "Describe the OSI and TCP/IP models and their relevance to network security.",
+          "Explain the security functions of common network components like firewalls and IDS/IPS."
+        ],
+        "examTips": [
+          "The OSI and TCP/IP models are foundational for network security. Know them cold.",
+          "Differentiate between an IDS (Intrusion Detection System) and an IPS (Intrusion Prevention System).",
+          "Cloud security is a shared responsibility – understand the different service models (IaaS, PaaS, SaaS) and who is responsible for what."
+        ],
+        "selfAssessment": [
+          "☐ Can I list the layers of the OSI model and explain what happens at each?",
+          "☐ Do I know the difference between an IDS and an IPS?",
+          "☐ Can I name at least two secure network design principles?"
+        ],
+        "totalTime": 300
+      },
+      {
+        "weekNumber": 8,
+        "domain": "Domain 4: Communication and Network Security",
+        "domainId": "domain_4",
+        "theme": "Securing Network Communications & Advanced Network Threats",
+        "priority": "high",
+        "topics": [
+          {
+            "name": "Secure Communication Channels",
+            "keyPoints": [
+              "Understand VPNs (site-to-site, remote access) and tunneling protocols (IPSec, SSL/TLS VPNs).",
+              "Explore secure protocols: DNSSEC, SSH, S/MIME, SRTP.",
+              "Discuss segmentation (VLANs, network segregation) and Zero Trust principles."
+            ],
+            "estimatedTime": 120
+          },
+          {
+            "name": "Network Attacks & Countermeasures",
+            "keyPoints": [
+              "Identify common network attacks (e.g., DoS/DDoS, sniffing, spoofing, man-in-the-middle).",
+              "Discuss countermeasures: secure configuration, traffic filtering, encryption, authentication.",
+              "Understand wireless security protocols (WPA2, WPA3) and common wireless attacks."
+            ],
+            "estimatedTime": 105
+          },
+          {
+            "name": "Converged Protocols & IoT Security",
+            "keyPoints": [
+              "Understand security considerations for VoIP and other converged protocols.",
+              "Discuss the unique security challenges of IoT and operational technology (OT) devices.",
+              "Explore cloud networking security implications."
+            ],
+            "estimatedTime": 45
+          }
+        ],
+        "dailySchedule": [
+          {
+            "day": "Saturday",
+            "time": "9:00 AM - 12:30 PM",
+            "activity": "Read and take detailed notes on secure communication channels, focusing on VPN types (IPSec, SSL/TLS) and secure protocols. Understand the purpose and application of each. Then, transition to identifying common network attacks and their corresponding countermeasures. Create a list of common attacks and defenses.",
+            "type": "reading",
+            "duration": 210
+          },
+          {
+            "day": "Sunday",
+            "time": "1:00 PM - 2:45 PM",
+            "activity": "Read and take notes on wireless security protocols and common wireless attacks. Conclude with converged protocols (VoIP) and the security challenges of IoT. Review all notes for Domain 4, consolidating key concepts and creating a one-page summary.",
+            "type": "reading",
+            "duration": 105
+          },
+          {
+            "day": "Weekdays",
+            "time": "Optional",
+            "activity": "Optional: Review your attack/countermeasure list. Can you explain how each attack works and how to mitigate it?",
+            "type": "reading",
+            "duration": 0
+          }
+        ],
+        "learningObjectives": [
+          "Describe various secure communication technologies and protocols.",
+          "Identify common network attacks and their appropriate countermeasures.",
+          "Explain security considerations for wireless networks, converged protocols, and IoT."
+        ],
+        "examTips": [
+          "Differentiate between symmetric and asymmetric VPNs, and their use cases.",
+          "Understand the difference between a DoS and DDoS attack.",
+          "Always choose the strongest encryption/protocol available for a given scenario, assuming compatibility."
+        ],
+        "selfAssessment": [
+          "☐ Can I explain how a VPN works and name two common protocols?",
+          "☐ Do I understand the difference between WPA2 and WPA3?",
+          "☐ Can I describe at least three common network attacks and how to defend against them?"
+        ],
+        "totalTime": 315
+      },
+      {
+        "weekNumber": 9,
+        "domain": "Domain 5: Identity and Access Management (IAM)",
+        "domainId": "domain_5",
+        "theme": "Controlling Access: The Core of Identity Management",
+        "priority": "critical",
+        "topics": [
+          {
+            "name": "Identity and Access Management Fundamentals",
+            "keyPoints": [
+              "Define Identity and Access Management (IAM) and its importance.",
+              "Understand the concepts of Identification, Authentication, Authorization, and Accounting (AAA).",
+              "Explore different identity types (person, device, service) and their management."
+            ],
+            "estimatedTime": 90
+          },
+          {
+            "name": "Authentication Methods",
+            "keyPoints": [
+              "Differentiate between single-factor, two-factor, and multi-factor authentication (MFA).",
+              "Understand different authentication factors (something you know, have, are).",
+              "Explore common authentication technologies (passwords, tokens, biometrics, certificates)."
+            ],
+            "estimatedTime": 105
+          },
+          {
+            "name": "Authorization Mechanisms",
+            "keyPoints": [
+              "Understand different authorization models: DAC, MAC, RBAC, ABAC.",
+              "Differentiate between implicit deny and explicit allow principles.",
+              "Discuss least privilege and separation of duties in authorization."
+            ],
+            "estimatedTime": 75
+          }
+        ],
+        "dailySchedule": [
+          {
+            "day": "Saturday",
+            "time": "9:00 AM - 12:30 PM",
+            "activity": "Read and take detailed notes on IAM fundamentals, focusing on the AAA concepts. Clearly define identification, authentication, authorization, and accounting. Then, read about various authentication methods and factors. Create a comparison table for different authentication technologies.",
+            "type": "reading",
+            "duration": 210
+          },
+          {
+            "day": "Sunday",
+            "time": "1:00 PM - 2:15 PM",
+            "activity": "Read and take notes on authorization mechanisms, covering DAC, MAC, RBAC, and ABAC. Focus on the core differences and use cases for each. Understand how least privilege and separation of duties apply here. Review all notes for Domain 5 so far.",
+            "type": "reading",
+            "duration": 75
+          },
+          {
+            "day": "Weekdays",
+            "time": "Optional",
+            "activity": "Optional: Create flashcards for each authentication and authorization model. Practice explaining AAA without notes.",
+            "type": "reading",
+            "duration": 0
+          }
+        ],
+        "learningObjectives": [
+          "Define the core concepts of IAM: Identification, Authentication, Authorization, and Accounting (AAA).",
+          "Compare and contrast various authentication methods and factors.",
+          "Explain different authorization models and their application."
+        ],
+        "examTips": [
+          "AAA is foundational for this domain; ensure you can clearly differentiate each part.",
+          "MFA is always a stronger control than single-factor authentication.",
+          "Least privilege and separation of duties are critical managerial concepts that will appear throughout the exam."
+        ],
+        "selfAssessment": [
+          "☐ Can I define Identification, Authentication, Authorization, and Accounting?",
+          "☐ Do I know the three authentication factors and can provide examples?",
+          "☐ Can I explain the difference between DAC, MAC, and RBAC?"
+        ],
+        "totalTime": 285
+      },
+      {
+        "weekNumber": 10,
+        "domain": "Domain 5: Identity and Access Management (IAM)",
+        "domainId": "domain_5",
+        "theme": "Advanced IAM: Provisioning, Directories, and Federation",
+        "priority": "high",
+        "topics": [
+          {
+            "name": "Identity Provisioning & Lifecycle Management",
+            "keyPoints": [
+              "Understand the processes for managing user identities throughout their lifecycle (onboarding, changes, offboarding).",
+              "Discuss just-in-time (JIT) provisioning and access reviews.",
+              "Explore the importance of account monitoring and auditing."
+            ],
+            "estimatedTime": 75
+          },
+          {
+            "name": "Identity and Directory Services",
+            "keyPoints": [
+              "Understand directory services (e.g., LDAP, Active Directory).",
+              "Explore identity synchronization and consolidation.",
+              "Discuss cloud identity services (IDaaS) and their benefits/risks."
+            ],
+            "estimatedTime": 90
+          },
+          {
+            "name": "Federated Identity & Access Management",
+            "keyPoints": [
+              "Define federated identity and single sign-on (SSO).",
+              "Understand common federation standards (SAML, OAuth, OpenID Connect).",
+              "Discuss the benefits and challenges of federation."
+            ],
+            "estimatedTime": 90
+          }
+        ],
+        "dailySchedule": [
+          {
+            "day": "Saturday",
+            "time": "9:00 AM - 12:30 PM",
+            "activity": "Read and take detailed notes on identity provisioning and lifecycle management, including onboarding, changes, and offboarding. Then, delve into identity and directory services, focusing on LDAP, Active Directory, and IDaaS. Understand how these facilitate identity management.",
+            "type": "reading",
+            "duration": 210
+          },
+          {
+            "day": "Sunday",
+            "time": "1:00 PM - 2:30 PM",
+            "activity": "Read and take notes on federated identity and Single Sign-On (SSO). Focus on understanding the common standards like SAML, OAuth, and OpenID Connect at a conceptual level. Review all notes for Domain 5, consolidating concepts and creating a domain summary.",
+            "type": "reading",
+            "duration": 90
+          },
+          {
+            "day": "Weekdays",
+            "time": "Optional",
+            "activity": "Optional: Research a bit more on Active Directory or LDAP to solidify your understanding of directory services.",
+            "type": "reading",
+            "duration": 0
+          }
+        ],
+        "learningObjectives": [
+          "Describe the identity lifecycle and associated management processes.",
+          "Explain the role of directory services and cloud identity in IAM.",
+          "Articulate the concepts of federated identity and single sign-on (SSO) and related standards."
+        ],
+        "examTips": [
+          "User lifecycle management is crucial for maintaining security; always consider how accounts are provisioned and deprovisioned.",
+          "Understand the difference between LDAP and Active Directory, and when each is typically used.",
+          "SAML, OAuth, and OpenID Connect enable SSO – focus on their purpose and high-level function, not deep technical details."
+        ],
+        "selfAssessment": [
+          "☐ Can I outline the stages of an identity's lifecycle?",
+          "☐ Do I understand what LDAP and Active Directory are used for?",
+          "☐ Can I explain the concept of Single Sign-On (SSO) and name two related standards?"
+        ],
+        "totalTime": 300
+      },
+      {
+        "weekNumber": 11,
+        "domain": "Domain 6: Security Assessment and Testing",
+        "domainId": "domain_6",
+        "theme": "Evaluating Defenses: Testing and Auditing Security",
+        "priority": "high",
+        "topics": [
+          {
+            "name": "Security Assessment and Testing Strategy (D6 Intro)",
+            "keyPoints": [
+              "Understand the purpose of security assessments and tests.",
+              "Differentiate between various types of assessments: vulnerability assessments, penetration tests, audits.",
+              "Discuss the roles and responsibilities in assessment activities."
+            ],
+            "estimatedTime": 75
+          },
+          {
+            "name": "Vulnerability Management & Assessments",
+            "keyPoints": [
+              "Understand the vulnerability management lifecycle (identify, assess, treat, verify).",
+              "Explore vulnerability scanning tools and their output.",
+              "Discuss the importance of patch management and configuration management."
+            ],
+            "estimatedTime": 90
+          },
+          {
+            "name": "Penetration Testing Concepts",
+            "keyPoints": [
+              "Differentiate between black-box, white-box, and grey-box testing.",
+              "Understand the stages of a penetration test (reconnaissance, scanning, exploitation, post-exploitation, reporting).",
+              "Discuss the legal and ethical considerations of penetration testing."
+            ],
+            "estimatedTime": 90
+          }
+        ],
+        "dailySchedule": [
+          {
+            "day": "Saturday",
+            "time": "9:00 AM - 12:30 PM",
+            "activity": "Read and take detailed notes on the overall strategy for security assessment and testing, distinguishing between vulnerability assessments, penetration tests, and audits. Then, delve into vulnerability management and assessments, focusing on the lifecycle and scanning tools. Create a flowchart for the vulnerability management process.",
+            "type": "reading",
+            "duration": 210
+          },
+          {
+            "day": "Sunday",
+            "time": "1:00 PM - 2:15 PM",
+            "activity": "Read and take notes on penetration testing concepts, understanding the different 'box' approaches and the stages of a pentest. Focus on the ethical and legal aspects. Review all notes for Domain 6 so far.",
+            "type": "reading",
+            "duration": 75
+          },
+          {
+            "day": "Weekdays",
+            "time": "Optional",
+            "activity": "Optional: Look up examples of vulnerability reports and penetration test reports to see what they contain.",
+            "type": "reading",
+            "duration": 0
+          }
+        ],
+        "learningObjectives": [
+          "Differentiate between vulnerability assessments, penetration tests, and security audits.",
+          "Describe the vulnerability management lifecycle.",
+          "Explain the different approaches and stages of penetration testing."
+        ],
+        "examTips": [
+          "Always get explicit permission before conducting any penetration testing activity.",
+          "Vulnerability scanning identifies potential weaknesses; penetration testing *exploits* those weaknesses.",
+          "Management should always decide on risk acceptance based on assessment results."
+        ],
+        "selfAssessment": [
+          "☐ Can I explain the difference between a vulnerability scan and a penetration test?",
+          "☐ Do I know the stages of a penetration test?",
+          "☐ Can I differentiate between black-box, white-box, and grey-box testing?"
+        ],
+        "totalTime": 285
+      },
+      {
+        "weekNumber": 12,
+        "domain": "Domain 6: Security Assessment and Testing",
+        "domainId": "domain_6",
+        "theme": "Audit, Monitoring, and Security Assessment Tools",
+        "priority": "medium",
+        "topics": [
+          {
+            "name": "Security Audits & Reviews",
+            "keyPoints": [
+              "Understand the purpose and types of security audits (internal, external, compliance).",
+              "Discuss audit methodologies and standards.",
+              "Explore log review, security information and event management (SIEM), and continuous monitoring."
+            ],
+            "estimatedTime": 90
+          },
+          {
+            "name": "Test Output & Remediation",
+            "keyPoints": [
+              "Understand how to interpret and prioritize findings from security assessments.",
+              "Discuss remediation strategies and verification processes.",
+              "Explore reporting security assessment results to management."
+            ],
+            "estimatedTime": 75
+          },
+          {
+            "name": "Software Testing & Code Review",
+            "keyPoints": [
+              "Understand different software testing techniques (e.g., static, dynamic, fuzzing).",
+              "Discuss the importance of code review for identifying vulnerabilities.",
+              "Explore security within the software development lifecycle (SDLC) from a testing perspective."
+            ],
+            "estimatedTime": 75
+          }
+        ],
+        "dailySchedule": [
+          {
+            "day": "Saturday",
+            "time": "9:00 AM - 12:00 PM",
+            "activity": "Read and take detailed notes on security audits and reviews, focusing on different types of audits and their methodologies. Then, delve into interpreting test output and strategies for remediation and reporting. Understand how findings are prioritized. Create a checklist for reporting assessment results.",
+            "type": "reading",
+            "duration": 180
+          },
+          {
+            "day": "Sunday",
+            "time": "1:00 PM - 2:15 PM",
+            "activity": "Read and take notes on software testing and code review techniques. Understand how security is integrated into the SDLC from a testing viewpoint. Review all notes for Domain 6. Create a one-page summary for the domain.",
+            "type": "reading",
+            "duration": 75
+          },
+          {
+            "day": "Weekdays",
+            "time": "Optional",
+            "activity": "Optional: Review your Domain 6 summary sheet. Think about how testing and auditing link back to risk management from Domain 1.",
+            "type": "reading",
+            "duration": 0
+          }
+        ],
+        "learningObjectives": [
+          "Describe various types of security audits and their methodologies.",
+          "Explain how to interpret security assessment findings and guide remediation efforts.",
+          "Discuss common software testing techniques and the role of code review in security."
+        ],
+        "examTips": [
+          "A security audit is an independent examination of controls, not a vulnerability scan.",
+          "Management reports should be clear, concise, and actionable, focusing on business impact.",
+          "Understanding the difference between static and dynamic analysis is important for software testing."
+        ],
+        "selfAssessment": [
+          "☐ Can I explain the purpose of a security audit?",
+          "☐ Do I understand how to prioritize findings from a security assessment?",
+          "☐ Can I differentiate between static and dynamic software testing?"
+        ],
+        "totalTime": 255
+      },
+      {
+        "weekNumber": 13,
+        "domain": "Domain 7: Security Operations",
+        "domainId": "domain_7",
+        "theme": "The Daily Grind: Incident Response & Forensics",
+        "priority": "critical",
+        "topics": [
+          {
+            "name": "Security Operations Fundamentals (D7 Intro)",
+            "keyPoints": [
+              "Understand the purpose and components of a Security Operations Center (SOC).",
+              "Discuss the importance of security logging and monitoring.",
+              "Explore operational security principles (e.g., defense-in-depth, least privilege, separation of duties in ops)."
+            ],
+            "estimatedTime": 75
+          },
+          {
+            "name": "Incident Management",
+            "keyPoints": [
+              "Understand the incident response (IR) lifecycle (preparation, detection/analysis, containment, eradication, recovery, post-incident activity).",
+              "Discuss roles and responsibilities in incident response.",
+              "Explore communication strategies during an incident."
+            ],
+            "estimatedTime": 105
+          },
+          {
+            "name": "Forensics & Digital Evidence",
+            "keyPoints": [
+              "Understand the principles of digital forensics (e.g., chain of custody, integrity of evidence).",
+              "Explore forensic investigation processes and tools (basic understanding).",
+              "Discuss legal and ethical considerations for collecting and preserving digital evidence."
+            ],
+            "estimatedTime": 90
+          }
+        ],
+        "dailySchedule": [
+          {
+            "day": "Saturday",
+            "time": "9:00 AM - 1:00 PM",
+            "activity": "Read and take detailed notes on Security Operations fundamentals, including SOC purpose and operational security principles. Then, delve into incident management, focusing on the IR lifecycle stages and roles. Create a flowchart for the incident response process.",
+            "type": "reading",
+            "duration": 240
+          },
+          {
+            "day": "Sunday",
+            "time": "1:00 PM - 2:45 PM",
+            "activity": "Read and take notes on digital forensics and evidence handling. Focus on the chain of custody and the integrity of evidence. Understand the legal and ethical implications. Review all notes for Domain 7 so far.",
+            "type": "reading",
+            "duration": 105
+          },
+          {
+            "day": "Weekdays",
+            "time": "Optional",
+            "activity": "Optional: Research a recent major security incident. How did the incident response process apply?",
+            "type": "reading",
+            "duration": 0
+          }
+        ],
+        "learningObjectives": [
+          "Describe the components of a Security Operations Center (SOC) and operational security principles.",
+          "Outline the incident response lifecycle and associated activities.",
+          "Explain the principles of digital forensics and chain of custody."
+        ],
+        "examTips": [
+          "The incident response lifecycle is a critical topic – know each stage and its purpose.",
+          "Chain of custody is paramount in forensics; any break can compromise evidence.",
+          "Always ensure management is informed and involved during critical incidents."
+        ],
+        "selfAssessment": [
+          "☐ Can I list the stages of the incident response lifecycle?",
+          "☐ Do I understand the concept of 'chain of custody' in forensics?",
+          "☐ Can I explain the purpose of a Security Operations Center (SOC)?"
+        ],
+        "totalTime": 345
+      },
+      {
+        "weekNumber": 14,
+        "domain": "Domain 7: Security Operations",
+        "domainId": "domain_7",
+        "theme": "Keeping Things Running: BCP/DR Operations & Physical Security",
+        "priority": "high",
+        "topics": [
+          {
+            "name": "Business Continuity & Disaster Recovery Operations",
+            "keyPoints": [
+              "Understand the operational aspects of BCP and DRP (activation, testing, maintenance).",
+              "Explore different recovery sites (hot, warm, cold) and their implications.",
+              "Discuss crisis communications and emergency response."
+            ],
+            "estimatedTime": 90
+          },
+          {
+            "name": "Physical Security Operations",
+            "keyPoints": [
+              "Review physical security controls from an operational perspective (access control, environmental controls).",
+              "Understand security guarding, patrols, and surveillance.",
+              "Discuss personnel safety and emergency procedures in a physical context."
+            ],
+            "estimatedTime": 75
+          },
+          {
+            "name": "Preventive Measures & Protection",
+            "keyPoints": [
+              "Understand the operational use of firewalls, IDS/IPS, anti-malware.",
+              "Explore data loss prevention (DLP) and security information and event management (SIEM) in ops.",
+              "Discuss secure configuration management and change management processes."
+            ],
+            "estimatedTime": 90
+          }
+        ],
+        "dailySchedule": [
+          {
+            "day": "Saturday",
+            "time": "9:00 AM - 12:30 PM",
+            "activity": "Read and take detailed notes on the operational aspects of Business Continuity and Disaster Recovery, including testing and different recovery site types. Then, delve into physical security operations, reviewing controls from an operational viewpoint and personnel safety. Create a comparison table for hot, warm, and cold sites.",
+            "type": "reading",
+            "duration": 210
+          },
+          {
+            "day": "Sunday",
+            "time": "1:00 PM - 2:15 PM",
+            "activity": "Read and take notes on preventive measures and protection tools used in security operations, such as DLP and SIEM. Understand secure configuration and change management. Review all notes for Domain 7.",
+            "type": "reading",
+            "duration": 75
+          },
+          {
+            "day": "Weekdays",
+            "time": "Optional",
+            "activity": "Optional: Consider how incident response, BCP, and DRP are interconnected. Review your notes on RTO/RPO from Domain 1.",
+            "type": "reading",
+            "duration": 0
+          }
+        ],
+        "learningObjectives": [
+          "Describe the operational aspects of BCP and DRP, including recovery site types.",
+          "Explain key physical security operational considerations and measures.",
+          "Discuss the role of preventative security measures and operational tools like SIEM and DLP."
+        ],
+        "examTips": [
+          "BCP/DRP is about organizational resilience. Focus on the business impact of disruptions.",
+          "Change management is critical to maintain system security and stability.",
+          "A SIEM aggregates and correlates security events, aiding in detection and analysis."
+        ],
+        "selfAssessment": [
+          "☐ Can I differentiate between a hot, warm, and cold site?",
+          "☐ Do I understand the purpose of change management in security operations?",
+          "☐ Can I explain how a SIEM helps in security monitoring?"
+        ],
+        "totalTime": 285
+      },
+      {
+        "weekNumber": 15,
+        "domain": "Domain 7: Security Operations / Domain 8: Software Development Security",
+        "domainId": "domain_7_and_8",
+        "theme": "Operational Oversight & Securing the Code",
+        "priority": "medium",
+        "topics": [
+          {
+            "name": "Investigation & Reporting (D7 Wrap-up)",
+            "keyPoints": [
+              "Understand different investigative techniques (administrative, criminal, civil, regulatory).",
+              "Discuss evidence collection, handling, and analysis.",
+              "Explore security reporting and communication to stakeholders."
+            ],
+            "estimatedTime": 60
+          },
+          {
+            "name": "Software Development Security Fundamentals (D8 Intro)",
+            "keyPoints": [
+              "Understand the Secure Software Development Life Cycle (SSDLC) and its stages.",
+              "Discuss the importance of secure coding principles and best practices.",
+              "Explore common software vulnerabilities (e.g., OWASP Top 10 - basic awareness)."
+            ],
+            "estimatedTime": 105
+          },
+          {
+            "name": "Security in Design & Implementation",
+            "keyPoints": [
+              "Understand secure design principles for software (e.g., secure by design, least privilege).",
+              "Discuss the role of security requirements and threat modeling.",
+              "Explore secure coding practices for input validation, error handling, and session management."
+            ],
+            "estimatedTime": 90
+          }
+        ],
+        "dailySchedule": [
+          {
+            "day": "Saturday",
+            "time": "9:00 AM - 12:30 PM",
+            "activity": "Complete reading and note-taking on the remaining D7 topics: investigative techniques, evidence handling, and security reporting. Then, transition to Domain 8 by reading and taking notes on Software Development Security fundamentals, including the SSDLC and an introduction to common vulnerabilities. Understand the importance of shifting left.",
+            "type": "reading",
+            "duration": 210
+          },
+          {
+            "day": "Sunday",
+            "time": "1:00 PM - 2:45 PM",
+            "activity": "Read and take notes on security in software design and implementation. Focus on secure design principles, threat modeling, and secure coding practices (input validation, error handling). Review notes for D7 and D8. Create an initial summary of SSDLC stages.",
+            "type": "reading",
+            "duration": 105
+          },
+          {
+            "day": "Weekdays",
+            "time": "Optional",
+            "activity": "Optional: Research the OWASP Top 10 to get a better feel for common web application vulnerabilities.",
+            "type": "reading",
+            "duration": 0
+          }
+        ],
+        "learningObjectives": [
+          "Differentiate between various investigative techniques and evidence handling processes.",
+          "Outline the Secure Software Development Life Cycle (SSDLC) and its security implications.",
+          "Explain secure design principles and coding practices for software development."
+        ],
+        "examTips": [
+          "In forensics, focus on the integrity and admissibility of evidence.",
+          "Shifting security 'left' (earlier in the SDLC) is a key concept for software security.",
+          "Input validation is a fundamental secure coding practice to prevent many attacks."
+        ],
+        "selfAssessment": [
+          "☐ Can I list the stages of the Secure Software Development Life Cycle (SSDLC)?",
+          "☐ Do I understand the purpose of threat modeling in software design?",
+          "☐ Can I explain the importance of input validation in secure coding?"
+        ],
+        "totalTime": 315
+      },
+      {
+        "weekNumber": 16,
+        "domain": "Domain 8: Software Development Security",
+        "domainId": "domain_8",
+        "theme": "Ensuring Secure Code: Testing, Deployment, and Environment Security",
+        "priority": "medium",
+        "topics": [
+          {
+            "name": "Software Security Testing & Assessment",
+            "keyPoints": [
+              "Review different software testing techniques for security (SAST, DAST, IAST, RAST).",
+              "Discuss the role of code reviews and security audits in software.",
+              "Explore bug bounty programs and penetration testing for applications."
+            ],
+            "estimatedTime": 75
+          },
+          {
+            "name": "Secure Deployment & Operations",
+            "keyPoints": [
+              "Understand secure deployment practices (e.g., secure configurations, patch management).",
+              "Discuss software supply chain security and third-party risk management.",
+              "Explore continuous integration/continuous delivery (CI/CD) security considerations."
+            ],
+            "estimatedTime": 90
+          },
+          {
+            "name": "Database Security & API Security",
+            "keyPoints": [
+              "Understand security controls for databases (access control, encryption, auditing).",
+              "Discuss the security implications of APIs (authentication, authorization, rate limiting).",
+              "Explore serverless and container security best practices (basic awareness)."
+            ],
+            "estimatedTime": 90
+          }
+        ],
+        "dailySchedule": [
+          {
+            "day": "Saturday",
+            "time": "9:00 AM - 12:30 PM",
+            "activity": "Read and take detailed notes on software security testing and assessment techniques, including SAST, DAST, and code reviews. Understand when each is applied. Then, delve into secure deployment and operations, focusing on supply chain security and CI/CD considerations. Create a table comparing SAST and DAST.",
+            "type": "reading",
+            "duration": 210
+          },
+          {
+            "day": "Sunday",
+            "time": "1:00 PM - 2:30 PM",
+            "activity": "Read and take notes on database security and API security, including common controls and best practices. Briefly cover serverless and container security. Review all notes for Domain 8. Create a comprehensive one-page summary for the entire domain.",
+            "type": "reading",
+            "duration": 90
+          },
+          {
+            "day": "Weekdays",
+            "time": "Optional",
+            "activity": "Optional: Revisit the OWASP Top 10 and consider which security testing methods would best detect those vulnerabilities.",
+            "type": "reading",
+            "duration": 0
+          }
+        ],
+        "learningObjectives": [
+          "Describe various software security testing techniques and their application.",
+          "Explain secure deployment practices and supply chain security considerations.",
+          "Discuss security controls for databases and APIs."
+        ],
+        "examTips": [
+          "Focus on the *purpose* and *placement* of SAST vs. DAST in the SDLC.",
+          "Supply chain security is a growing concern – understand the risks of third-party software components.",
+          "Databases are often targets; strong access control and encryption are paramount."
+        ],
+        "selfAssessment": [
+          "☐ Can I explain the difference between SAST and DAST?",
+          "☐ Do I understand the concept of software supply chain security?",
+          "☐ Can I name two security controls for databases?"
+        ],
+        "totalTime": 300
+      },
+      {
+        "weekNumber": 17,
+        "domain": "Review: Domains 1-4",
+        "domainId": "review_1_4",
+        "theme": "Consolidating Foundations: Governance, Assets, Architecture, & Networks",
+        "priority": "critical",
+        "topics": [
+          {
+            "name": "Integrated Review of Domain 1: Security and Risk Management",
+            "keyPoints": [
+              "Revisit governance, risk management processes, legal/ethical, BCP/DR basics."
+            ],
+            "estimatedTime": 90
+          },
+          {
+            "name": "Integrated Review of Domain 2: Asset Security",
+            "keyPoints": [
+              "Revisit asset classification, data lifecycle, privacy, data protection controls."
+            ],
+            "estimatedTime": 75
+          },
+          {
+            "name": "Integrated Review of Domain 3: Security Architecture and Engineering",
+            "keyPoints": [
+              "Revisit security models, cryptography, physical security, cloud/virtualization security."
+            ],
+            "estimatedTime": 90
+          },
+          {
+            "name": "Integrated Review of Domain 4: Communication and Network Security",
+            "keyPoints": [
+              "Revisit OSI/TCP-IP models, network components, secure protocols, network attacks."
+            ],
+            "estimatedTime": 75
+          }
+        ],
+        "dailySchedule": [
+          {
+            "day": "Saturday",
+            "time": "9:00 AM - 1:00 PM",
+            "activity": "Review your compiled notes and summaries for Domains 1 and 2. Focus on connecting concepts between these domains (e.g., how risk management informs asset classification). Attempt practice questions for these domains.",
+            "type": "reading",
+            "duration": 240
+          },
+          {
+            "day": "Sunday",
+            "time": "1:00 PM - 3:00 PM",
+            "activity": "Review your compiled notes and summaries for Domains 3 and 4. Pay attention to how architectural choices impact network security. Attempt practice questions for these domains. Identify any persistent weak areas across all four domains.",
+            "type": "reading",
+            "duration": 120
+          },
+          {
+            "day": "Weekdays",
+            "time": "Optional",
+            "activity": "Optional: Light reading of areas identified as slightly weaker from your weekend review. Re-read official definitions.",
+            "type": "reading",
+            "duration": 0
+          }
+        ],
+        "learningObjectives": [
+          "Consolidate understanding of Domains 1-4, identifying interdependencies.",
+          "Reinforce key concepts and terminology from foundational domains.",
+          "Identify personal weak areas within these initial domains for further study."
+        ],
+        "examTips": [
+          "The CISSP exam frequently presents scenarios that blend concepts from multiple domains. Practice making these connections.",
+          "Don't just re-read; actively test your recall using your notes or flashcards.",
+          "Focus on the 'why' behind controls and principles, not just memorizing facts."
+        ],
+        "selfAssessment": [
+          "☐ Can I articulate the relationship between risk management and security governance?",
+          "☐ Do I understand how data classification impacts security controls?",
+          "☐ Can I explain how cryptography secures network communications?"
+        ],
+        "totalTime": 360
+      },
+      {
+        "weekNumber": 18,
+        "domain": "Review: Domains 5-8",
+        "domainId": "review_5_8",
+        "theme": "Consolidating Operations: IAM, Testing, Operations, & Software",
+        "priority": "critical",
+        "topics": [
+          {
+            "name": "Integrated Review of Domain 5: Identity and Access Management",
+            "keyPoints": [
+              "Revisit AAA, authentication/authorization models, identity lifecycle, federation."
+            ],
+            "estimatedTime": 90
+          },
+          {
+            "name": "Integrated Review of Domain 6: Security Assessment and Testing",
+            "keyPoints": [
+              "Revisit vulnerability/penetration testing, audits, software testing."
+            ],
+            "estimatedTime": 75
+          },
+          {
+            "name": "Integrated Review of Domain 7: Security Operations",
+            "keyPoints": [
+              "Revisit incident response, forensics, BCP/DR operations, physical security operations."
+            ],
+            "estimatedTime": 90
+          },
+          {
+            "name": "Integrated Review of Domain 8: Software Development Security",
+            "keyPoints": [
+              "Revisit SSDLC, secure coding, software testing, database/API security."
+            ],
+            "estimatedTime": 75
+          }
+        ],
+        "dailySchedule": [
+          {
+            "day": "Saturday",
+            "time": "9:00 AM - 1:00 PM",
+            "activity": "Review your compiled notes and summaries for Domains 5 and 6. Focus on how access control (IAM) impacts testing strategies and vice-versa. Attempt practice questions for these domains.",
+            "type": "reading",
+            "duration": 240
+          },
+          {
+            "day": "Sunday",
+            "time": "1:00 PM - 3:00 PM",
+            "activity": "Review your compiled notes and summaries for Domains 7 and 8. Emphasize how operational security influences software development security. Attempt practice questions for these domains. Identify any persistent weak areas across these four domains.",
+            "type": "reading",
+            "duration": 120
+          },
+          {
+            "day": "Weekdays",
+            "time": "Optional",
+            "activity": "Optional: Light reading of areas identified as slightly weaker from your weekend review. Create a mental map of how the 8 domains interconnect.",
+            "type": "reading",
+            "duration": 0
+          }
+        ],
+        "learningObjectives": [
+          "Consolidate understanding of Domains 5-8, identifying interdependencies.",
+          "Reinforce key concepts and terminology from operational domains.",
+          "Identify personal weak areas within these domains for targeted study."
+        ],
+        "examTips": [
+          "IAM is a central control mechanism that permeates many other domains. Understand its integration points.",
+          "Think about the flow from incident detection (Ops) to forensic analysis (Ops) and how it informs future prevention (Architecture/Engineering, Software Dev).",
+          "Practice applying the 'senior manager' mindset – what decision would they make given the information?"
+        ],
+        "selfAssessment": [
+          "☐ Can I explain how IAM impacts overall security operations?",
+          "☐ Do I understand the relationship between security assessments and remediation efforts?",
+          "☐ Can I articulate how secure software development contributes to operational security?"
+        ],
+        "totalTime": 360
+      },
+      {
+        "weekNumber": 19,
+        "domain": "Cross-Domain Review & Exam Mindset",
+        "domainId": "cross_domain",
+        "theme": "Connecting the Dots & Thinking Like a CISSP",
+        "priority": "critical",
+        "topics": [
+          {
+            "name": "Cross-Domain Concept Integration",
+            "keyPoints": [
+              "Review how all 8 domains interconnect and influence each other (e.g., how risk management (D1) impacts asset security (D2) and security architecture (D3)).",
+              "Focus on common themes: CIA triad, defense-in-depth, least privilege, separation of duties across domains."
+            ],
+            "estimatedTime": 120
+          },
+          {
+            "name": "Understanding the CISSP Mindset",
+            "keyPoints": [
+              "Practice 'thinking like a manager' and choosing the 'best' answer among several plausible options.",
+              "Understand the importance of the business context and risk tolerance in decision-making.",
+              "Review ethical considerations and the (ISC)² Code of Ethics."
+            ],
+            "estimatedTime": 90
+          },
+          {
+            "name": "Targeted Practice Questions",
+            "keyPoints": [
+              "Engage with official practice questions that cover multiple domains.",
+              "Analyze incorrect answers to understand the rationale behind the correct choice.",
+              "Identify remaining knowledge gaps across domains."
+            ],
+            "estimatedTime": 75
+          }
+        ],
+        "dailySchedule": [
+          {
+            "day": "Saturday",
+            "time": "9:00 AM - 1:00 PM",
+            "activity": "Read through your comprehensive notes and domain summaries, actively looking for connections between concepts from different domains. Create a mind map or diagram showing how domains interrelate. Focus on the core security principles that apply everywhere. Dedicate time to understanding the 'CISSP mindset' – how to approach scenario-based questions.",
+            "type": "reading",
+            "duration": 240
+          },
+          {
+            "day": "Sunday",
+            "time": "1:00 PM - 2:15 PM",
+            "activity": "Work through a set of mixed-domain practice questions (e.g., 30-50 questions). After completing, spend significant time reviewing *all* answers, especially the ones you got wrong or guessed on. Understand the reasoning. Make notes on areas to revisit.",
+            "type": "practice",
+            "duration": 75
+          },
+          {
+            "day": "Weekdays",
+            "time": "Optional",
+            "activity": "Optional: Review any specific topics identified as weak from your practice questions. Re-read the (ISC)² Code of Ethics.",
+            "type": "reading",
+            "duration": 0
+          }
+        ],
+        "learningObjectives": [
+          "Integrate knowledge from all 8 domains to address complex security scenarios.",
+          "Adopt the 'managerial' perspective required for CISSP exam questions.",
+          "Identify and address lingering knowledge gaps through targeted practice."
+        ],
+        "examTips": [
+          "The CISSP is not just about technical knowledge, but applying that knowledge in a business context.",
+          "When in doubt, think 'What is the most secure *and* business-appropriate solution?'",
+          "If you encounter a question you don't know, flag it and move on. Don't dwell too long."
+        ],
+        "selfAssessment": [
+          "☐ Can I articulate how a decision in one domain might affect others?",
+          "☐ Am I consistently trying to think with a managerial mindset when answering questions?",
+          "☐ Have I reviewed the (ISC)² Code of Ethics and understand its principles?"
+        ],
+        "totalTime": 315
+      },
+      {
+        "weekNumber": 20,
+        "domain": "Full Practice Test & Remediation",
+        "domainId": "practice_test_1",
+        "theme": "Your First Full Exam Simulation & Deep Dive Remediation",
+        "priority": "critical",
+        "topics": [
+          {
+            "name": "Full-Length Practice Exam Simulation",
+            "keyPoints": [
+              "Simulate exam conditions: 3-hour timer, no distractions, 100-150 questions.",
+              "Practice time management and endurance.",
+              "Gauge current readiness level across all domains."
+            ],
+            "estimatedTime": 180
+          },
+          {
+            "name": "Detailed Practice Exam Review",
+            "keyPoints": [
+              "Thoroughly analyze every incorrect answer, understanding why the correct answer is best.",
+              "Identify patterns in weak areas (specific domains, types of questions, concepts).",
+              "Document topics for targeted remediation."
+            ],
+            "estimatedTime": 120
+          },
+          {
+            "name": "Targeted Remediation Planning",
+            "keyPoints": [
+              "Based on the review, prioritize specific domains or topics needing further study.",
+              "Outline a plan for focused reading and note-taking for these areas."
+            ],
+            "estimatedTime": 30
+          }
+        ],
+        "dailySchedule": [
+          {
+            "day": "Saturday",
+            "time": "9:00 AM - 1:00 PM",
+            "activity": "Take a full-length, timed CISSP practice exam (100-150 questions, 3 hours). Treat this as the actual exam – no breaks, no looking up answers. This is a crucial assessment of your endurance and knowledge. Afterwards, take a short break.",
+            "type": "practice",
+            "duration": 240
+          },
+          {
+            "day": "Sunday",
+            "time": "1:00 PM - 3:30 PM",
+            "activity": "Immediately after a short break (or after the exam day if you prefer), conduct a detailed review of *all* your answers. For incorrect answers, go back to your study guide and notes to understand the correct concept. For correct answers you were unsure about, reinforce the knowledge. Identify 2-3 specific weak domains or topics to focus on next week.",
+            "type": "reading",
+            "duration": 150
+          },
+          {
+            "day": "Weekdays",
+            "time": "Optional",
+            "activity": "Optional: Begin light reading on the weak areas identified from your practice test. Review your study guide's glossary.",
+            "type": "reading",
+            "duration": 0
+          }
+        ],
+        "learningObjectives": [
+          "Evaluate current exam readiness under simulated conditions.",
+          "Identify specific knowledge gaps and areas requiring intensive review.",
+          "Develop a focused remediation plan for targeted improvement."
+        ],
+        "examTips": [
+          "Taking a full-length practice test is as much about endurance and time management as it is about knowledge.",
+          "Don't get discouraged by your score. The goal is to identify weaknesses, not to pass the practice exam.",
+          "Spend more time reviewing *why* you got an answer wrong than the answer itself."
+        ],
+        "selfAssessment": [
+          "☐ Did I complete the practice exam within the time limit?",
+          "☐ Have I identified my top 3 weakest domains/topics from the practice test?",
+          "☐ Do I have a plan to address these weaknesses in the coming weeks?"
+        ],
+        "totalTime": 390
+      },
+      {
+        "weekNumber": 21,
+        "domain": "Targeted Remediation & Concept Reinforcement",
+        "domainId": "remediation_1",
+        "theme": "Strengthening Weaknesses & Solidifying Understanding",
+        "priority": "high",
+        "topics": [
+          {
+            "name": "Deep Dive into Weak Area 1",
+            "keyPoints": [
+              "Intensive re-reading of study guide sections related to identified weak topics.",
+              "Focus on understanding foundational concepts and common pitfalls.",
+              "Create detailed summary notes and flashcards for tricky areas."
+            ],
+            "estimatedTime": 120
+          },
+          {
+            "name": "Deep Dive into Weak Area 2",
+            "keyPoints": [
+              "Repeat the process for a second identified weak area.",
+              "Engage with different explanations if available (e.g., from another resource if you have one).",
+              "Work through additional practice questions specifically for this domain/topic."
+            ],
+            "estimatedTime": 120
+          },
+          {
+            "name": "Integrated Review of Strengthened Areas",
+            "keyPoints": [
+              "Briefly revisit concepts that were previously weak but now feel stronger.",
+              "Try to connect these 'fixed' areas back to other domains."
+            ],
+            "estimatedTime": 60
+          }
+        ],
+        "dailySchedule": [
+          {
+            "day": "Saturday",
+            "time": "9:00 AM - 1:00 PM",
+            "activity": "Dedicate this session to a deep dive into your top identified weak area (e.g., Cryptography, BCP/DR). Re-read the relevant chapters in your primary study guide, consult any alternative resources you have, and create new, focused notes or detailed mind maps. Answer practice questions specific to this topic.",
+            "type": "reading",
+            "duration": 240
+          },
+          {
+            "day": "Sunday",
+            "time": "1:00 PM - 3:00 PM",
+            "activity": "Focus on your second identified weak area. Repeat the intensive reading, note-taking, and targeted practice questions. By the end of this session, you should feel more confident in these previously challenging areas. Review the progress made this weekend.",
+            "type": "reading",
+            "duration": 120
+          },
+          {
+            "day": "Weekdays",
+            "time": "Optional",
+            "activity": "Optional: Create flashcards for key terms or complex processes in your remediated topics. Read these throughout the week.",
+            "type": "reading",
+            "duration": 0
+          }
+        ],
+        "learningObjectives": [
+          "Significantly improve understanding and recall of identified weak areas.",
+          "Reinforce challenging concepts through varied reading and targeted practice.",
+          "Build confidence in previously difficult domains."
+        ],
+        "examTips": [
+          "Don't just re-read, actively *engage* with the material: summarize, explain aloud, draw diagrams.",
+          "If one explanation isn't clicking, seek out another source (another textbook, a good article).",
+          "Don't be afraid to admit what you don't know and spend the time to truly learn it now."
+        ],
+        "selfAssessment": [
+          "☐ Do I feel a significant improvement in my understanding of Weak Area 1?",
+          "☐ Do I feel a significant improvement in my understanding of Weak Area 2?",
+          "☐ Can I correctly answer practice questions related to these remediated topics?"
+        ],
+        "totalTime": 360
+      },
+      {
+        "weekNumber": 22,
+        "domain": "Second Full Practice Test & Final Tune-Up",
+        "domainId": "practice_test_2",
+        "theme": "Assessing Progress & Sharpening Your Edge",
+        "priority": "high",
+        "topics": [
+          {
+            "name": "Second Full-Length Practice Exam",
+            "keyPoints": [
+              "Take another timed, full-length practice exam to assess progress after remediation.",
+              "Focus on maintaining endurance, time management, and applying the CISSP mindset.",
+              "Look for improvement in previously weak areas."
+            ],
+            "estimatedTime": 180
+          },
+          {
+            "name": "Final Weakness Identification & Review",
+            "keyPoints": [
+              "Analyze the results of the second practice test.",
+              "Identify any remaining critical weak areas or new blind spots.",
+              "Conduct a quick, high-level review of all 8 domains based on practice test insights."
+            ],
+            "estimatedTime": 90
+          },
+          {
+            "name": "Review of High-Yield Topics & Mnemonics",
+            "keyPoints": [
+              "Focus on commonly tested concepts, mnemonics, and definitions.",
+              "Review your personal notes and summaries one last time for critical information."
+            ],
+            "estimatedTime": 60
+          }
+        ],
+        "dailySchedule": [
+          {
+            "day": "Saturday",
+            "time": "9:00 AM - 1:00 PM",
+            "activity": "Take your second full-length, timed CISSP practice exam. This is a critical check-in to see how much you've improved. Afterwards, take a short break before starting the review.",
+            "type": "practice",
+            "duration": 240
+          },
+          {
+            "day": "Sunday",
+            "time": "1:00 PM - 3:30 PM",
+            "activity": "Perform a detailed review of your second practice exam. Focus on understanding the rationale for every answer. Identify any *remaining* critical weak points. Spend some time reviewing high-yield topics, mnemonics, and any 'cheat sheets' you've created. This is about sharpening your overall knowledge.",
+            "type": "reading",
+            "duration": 150
+          },
+          {
+            "day": "Weekdays",
+            "time": "Optional",
+            "activity": "Optional: Very light review of flashcards or your overall domain summaries. Prioritize rest and stress reduction.",
+            "type": "reading",
+            "duration": 0
+          }
+        ],
+        "learningObjectives": [
+          "Confirm significant improvement in overall knowledge and exam readiness.",
+          "Identify any last-minute critical knowledge gaps for quick review.",
+          "Boost confidence for the actual exam through a strong practice performance."
+        ],
+        "examTips": [
+          "Your score on this second test should ideally be significantly higher. If not, consider rescheduling your exam or doing another week of intense remediation.",
+          "Pay close attention to time management during this test. Can you finish comfortably?",
+          "Don't cram. Focus on understanding, not just memorizing. The CISSP is about application."
+        ],
+        "selfAssessment": [
+          "☐ Did my score on the second practice test show improvement?",
+          "☐ Do I feel confident in my time management during a long exam?",
+          "☐ Have I identified the absolute final topics that need a quick refresh before the exam?"
+        ],
+        "totalTime": 390
+      },
+      {
+        "weekNumber": 23,
+        "domain": "Final Knowledge Consolidation & Quick Review",
+        "domainId": "final_review",
+        "theme": "Last Push: Consolidating Everything & Mental Preparation",
+        "priority": "critical",
+        "topics": [
+          {
+            "name": "High-Level Review of All 8 Domains",
+            "keyPoints": [
+              "Quickly skim through all domain summaries and your personal study guide.",
+              "Focus on understanding the overarching principles and interconnections.",
+              "Do *not* deep dive into new content; reinforce what you already know."
+            ],
+            "estimatedTime": 120
+          },
+          {
+            "name": "Review Key Definitions & Mnemonics",
+            "keyPoints": [
+              "Go over your glossary of terms and any mnemonics or memory aids you've created.",
+              "Practice explaining core concepts in your own words.",
+              "Ensure you understand the (ISC)² Code of Ethics."
+            ],
+            "estimatedTime": 90
+          },
+          {
+            "name": "Light Practice Questions & Exam Strategy",
+            "keyPoints": [
+              "Attempt a small set of mixed-domain practice questions (10-20) to stay sharp.",
+              "Rehearse your exam strategy: how to approach questions, time allocation, elimination techniques.",
+              "Mentally prepare for the adaptive nature of the exam."
+            ],
+            "estimatedTime": 60
+          }
+        ],
+        "dailySchedule": [
+          {
+            "day": "Saturday",
+            "time": "9:00 AM - 12:00 PM",
+            "activity": "Perform a high-level, rapid review of all 8 domains using your own condensed notes and summaries. Focus on the big picture, core concepts, and interconnections. Do not get bogged down in details. Review your glossary of terms and any mnemonics.",
+            "type": "reading",
+            "duration": 180
+          },
+          {
+            "day": "Sunday",
+            "time": "1:00 PM - 2:30 PM",
+            "activity": "Work through a small set of practice questions (20-30) to keep your mind active, but do not obsess over the score. Focus on applying the CISSP mindset. Spend time reviewing exam strategy, visualization of exam day, and managing stress. Prioritize light review and rest.",
+            "type": "practice",
+            "duration": 90
+          },
+          {
+            "day": "Weekdays",
+            "time": "Optional",
+            "activity": "Optional: Very light, casual review of key definitions and high-level concepts. Avoid intense study. Focus on rest, nutrition, and light exercise.",
+            "type": "reading",
+            "duration": 0
+          }
+        ],
+        "learningObjectives": [
+          "Achieve a holistic, high-level understanding of all CISSP domains and their interrelations.",
+          "Reinforce critical definitions and exam strategies.",
+          "Mentally prepare for the actual exam, fostering a confident mindset."
+        ],
+        "examTips": [
+          "In the final week, less is more. Don't cram new information; consolidate what you already know.",
+          "Trust your preparation. You've put in the hours.",
+          "Ensure you know the logistics of exam day: location, required ID, break policies."
+        ],
+        "selfAssessment": [
+          "☐ Can I mentally walk through each domain and recall its key topics?",
+          "☐ Do I feel confident in my understanding of fundamental CISSP principles?",
+          "☐ Am I mentally prepared and calm about the upcoming exam?"
+        ],
+        "totalTime": 270
+      },
+      {
+        "weekNumber": 24,
+        "domain": "Exam Readiness & Strategy",
+        "domainId": "exam_readiness",
+        "theme": "Final Prep: Exam Day Logistics & Mindset",
+        "priority": "critical",
+        "topics": [
+          {
+            "name": "Last Minute Knowledge Refresh",
+            "keyPoints": [
+              "Quickly review your personal notes, especially mnemonics, formulas, and most challenging areas.",
+              "Do this in short bursts, avoiding burnout."
+            ],
+            "estimatedTime": 60
+          },
+          {
+            "name": "Exam Day Logistics & Strategy",
+            "keyPoints": [
+              "Confirm exam location, time, required identification.",
+              "Plan your route, parking, and arrival time.",
+              "Develop a plan for breaks and managing energy during the exam.",
+              "Review strategies for question interpretation and answer selection."
+            ],
+            "estimatedTime": 90
+          },
+          {
+            "name": "Mental Preparation & Relaxation",
+            "keyPoints": [
+              "Engage in stress-reducing activities (light exercise, meditation, hobbies).",
+              "Ensure adequate sleep and nutrition.",
+              "Visualize success and maintain a positive mindset."
+            ],
+            "estimatedTime": 60
+          }
+        ],
+        "dailySchedule": [
+          {
+            "day": "Saturday",
+            "time": "9:00 AM - 11:00 AM",
+            "activity": "Conduct a very light, high-level review of your absolute 'must-know' items (e.g., flashcards of acronyms, core definitions, key security models). Confirm all exam logistics: exact time, location, ID requirements, and plan your journey.",
+            "type": "reading",
+            "duration": 120
+          },
+          {
+            "day": "Sunday",
+            "time": "Optional",
+            "activity": "Optional: Engage in light review (1 hour maximum) of any remaining anxiety-inducing topics. Otherwise, focus on relaxation, light activities, and ensuring you are well-rested and mentally prepared for the upcoming exam week. Eat well, hydrate, and get good sleep.",
+            "type": "reading",
+            "duration": 60
+          },
+          {
+            "day": "Weekdays",
+            "time": "Exam Day!",
+            "activity": "Get a good night's sleep. Eat a healthy breakfast. Arrive early at the testing center. Take deep breaths. Read each question carefully, apply the CISSP mindset, and trust your preparation. You've got this!",
+            "type": "other",
+            "duration": 0
+          }
+        ],
+        "learningObjectives": [
+          "Finalize all logistical preparations for the CISSP exam.",
+          "Achieve a calm, confident, and prepared mental state for optimal performance.",
+          "Successfully navigate the exam experience and apply learned strategies."
+        ],
+        "examTips": [
+          "Do NOT cram the day before the exam. Your brain needs rest to perform its best.",
+          "Trust your gut, but double-check your initial answer for keywords or misinterpretations.",
+          "If you encounter a difficult question, flag it and move on. Don't let it derail your focus."
+        ],
+        "selfAssessment": [
+          "☐ Have I double-checked all exam logistics?",
+          "☐ Am I well-rested and free from excessive stress?",
+          "☐ Do I feel confident in my ability to apply the CISSP mindset on exam day?"
+        ],
+        "totalTime": 180
+      }
+    ],
+    "summary": {
+      "approach": "This 24-week plan is designed for a beginner, emphasizing a slow, deliberate pace for deep understanding. It prioritizes extensive reading, detailed note-taking, and consistent review, with all primary study activities concentrated on weekends. The plan dedicates significant time to foundational concepts, cross-domain integration, and multiple full-length practice tests to ensure comprehensive preparation and a confident 'managerial' mindset.",
+      "examReadiness": "Target Exam Date: Approximately 6 months from the start date (after Week 24)."
+    }
+  }
+}
