@@ -335,7 +335,7 @@ export default function Diagnostic() {
 
   const callFirebaseFunction = async (data: FormData) => {
     const FIREBASE_FUNCTION_URL = 'https://generateprepplan-qn5uv54q4a-uc.a.run.app';
-    const TIMEOUT_MS = 30000;
+    const TIMEOUT_MS = 300000;
     
     try {
       console.log('Calling Firebase function with data:', JSON.stringify(data, null, 2));
