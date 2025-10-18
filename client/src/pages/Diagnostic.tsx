@@ -261,7 +261,7 @@ export default function Diagnostic() {
     { id: 6, state: "unanswered", title: "When's your target exam date?", type: "single", field: "examTimeline", helpText: "💡 Don't worry if you haven't scheduled yet - you can adjust this anytime\n💡 Most CISSP candidates study for 2-4 months" },
     { id: 7, state: "unanswered", title: "How much time can you commit weekly?", subtitle: "Consider your current schedule, work, and other commitments.", type: "single", field: "weeklyHours", helpText: "💡 Even 3 hours a week is enough — our AI will adapt to your schedule.\n💡 Studies show consistent, smaller sessions lead to better retention than cramming." },
     { id: 8, state: "unanswered", title: "Final question! You're almost there...", subtitle: "When do you prefer to study?", type: "single", field: "studyTimes", helpText: "💡 This helps us send you study reminders at the right time" },
-    { id: 9, state: "unanswered", title: "Here's Your Personalized Study Plan 🚀", type: "summary" }
+    { id: 9, state: "unanswered", title: "", type: "summary" }
   ]);
 
   const [selectedValue, setSelectedValue] = useState<any>(null);
@@ -486,13 +486,8 @@ export default function Diagnostic() {
         // Store the plan data in localStorage
         localStorage.setItem('studyPlanData', JSON.stringify(response));
         
-        // Show success state
-        setIsGeneratingPlan(false);
-        
-        // Wait for user to see success state, then navigate
-        setTimeout(() => {
-          setLocation('/study-plan-results');
-        }, 2000);
+        // Navigate directly to study plan results without showing success state
+        setLocation('/study-plan-results');
       } else {
         setPlanGenerationError('Failed to generate study plan. Please try again.');
         setIsGeneratingPlan(false);

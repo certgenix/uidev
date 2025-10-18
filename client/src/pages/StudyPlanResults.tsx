@@ -116,13 +116,14 @@ export default function StudyPlanResults() {
     const foundationEnd = Math.ceil(totalWeeks * 0.2);
     const coreEnd = Math.ceil(totalWeeks * 0.5);
     const advancedEnd = Math.ceil(totalWeeks * 0.8);
+    const practiceEnd = totalWeeks >= advancedEnd + 3 ? totalWeeks - 2 : totalWeeks;
     
     return {
       foundation: { start: 1, end: foundationEnd, label: "Foundation Building" },
       core: { start: foundationEnd + 1, end: coreEnd, label: "Core Concepts" },
       advanced: { start: coreEnd + 1, end: advancedEnd, label: "Advanced Topics" },
-      practice: { start: advancedEnd + 1, end: totalWeeks, label: "Practice & Review" },
-      final: totalWeeks < advancedEnd + 3 ? null : { start: totalWeeks - 1, end: totalWeeks, label: "Final Prep" }
+      practice: { start: advancedEnd + 1, end: practiceEnd, label: "Practice & Review" },
+      final: totalWeeks >= advancedEnd + 3 ? { start: practiceEnd + 1, end: totalWeeks, label: "Final Prep" } : null
     };
   };
 

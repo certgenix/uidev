@@ -194,6 +194,7 @@ export default function TransitionScreen({ formData, onComplete, isGeneratingPla
   const [step4Phases, setStep4Phases] = useState<number[]>([]);
   const [step5Items, setStep5Items] = useState<number[]>([]);
   const [randomStudents, setRandomStudents] = useState(0);
+  const [generatingProgress, setGeneratingProgress] = useState(0);
 
   const certData = getCertificationData(formData.certification);
   const { weeks, minWeeks, maxWeeks } = getWeeksFromHours(formData.weeklyHours);
@@ -286,6 +287,28 @@ export default function TransitionScreen({ formData, onComplete, isGeneratingPla
     
     // Step 6 stays visible - don't auto-complete anymore
   }, [currentStep, certData, formData, onComplete]);
+
+  useEffect(() => {
+    if (isGeneratingPlan && currentStep === 6) {
+      setGeneratingProgress(0);
+      const duration = 120000;
+      const steps = 120;
+      const interval = duration / steps;
+      
+      let currentCount = 0;
+      const timer = setInterval(() => {
+        currentCount++;
+        const progress = Math.min((currentCount / steps) * 90, 90);
+        setGeneratingProgress(progress);
+        
+        if (currentCount >= steps) {
+          clearInterval(timer);
+        }
+      }, interval);
+      
+      return () => clearInterval(timer);
+    }
+  }, [isGeneratingPlan, currentStep]);
 
   const progressPercentage = ((currentStep - 1) / 6) * 100 + (1 / 6) * 100 * 0.5;
 
@@ -603,7 +626,7 @@ export default function TransitionScreen({ formData, onComplete, isGeneratingPla
                   </p>
                   
                   <div className="max-w-md mx-auto">
-                    <Progress value={undefined} className="h-2" data-testid="progress-generating" />
+                    <Progress value={generatingProgress} className="h-2" data-testid="progress-generating" />
                   </div>
                 </>
               ) : planGenerationError ? (
