@@ -269,9 +269,6 @@ export default function Diagnostic() {
   const [showEncouraging, setShowEncouraging] = useState(false);
   const [showConfirmationPanel, setShowConfirmationPanel] = useState(false);
   const [showTransition, setShowTransition] = useState(false);
-  const [firebaseLoading, setFirebaseLoading] = useState(false);
-  const [firebaseResponse, setFirebaseResponse] = useState<any>(null);
-  const [firebaseError, setFirebaseError] = useState<string | null>(null);
   const questionRefs = useRef<{ [key: number]: HTMLDivElement | null }>({});
   const containerRef = useRef<HTMLDivElement>(null);
   const confirmationPanelRef = useRef<HTMLDivElement | null>(null);
@@ -340,10 +337,6 @@ export default function Diagnostic() {
     const FIREBASE_FUNCTION_URL = 'https://generateprepplan-qn5uv54q4a-uc.a.run.app';
     const TIMEOUT_MS = 300000;
     
-    setFirebaseLoading(true);
-    setFirebaseError(null);
-    setFirebaseResponse(null);
-    
     try {
       console.log('Calling Firebase function with data:', JSON.stringify(data, null, 2));
       
@@ -366,35 +359,27 @@ export default function Diagnostic() {
       
       if (!response.ok) {
         const errorText = await response.text();
-        const errorMessage = `Error ${response.status}: ${response.statusText}`;
         console.error('Firebase function error response:', {
           status: response.status,
           statusText: response.statusText,
           body: errorText
         });
-        setFirebaseError(errorMessage);
-        setFirebaseLoading(false);
         return;
       }
       
       const responseData = await response.json();
       console.log('Firebase function success response:', JSON.stringify(responseData, null, 2));
-      setFirebaseResponse(responseData);
-      setFirebaseLoading(false);
       
     } catch (error: any) {
       if (error.name === 'AbortError') {
         console.error('Firebase function request timeout');
-        setFirebaseError('Request timeout - Please try again');
       } else {
         console.error('Firebase function frontend error:', {
           message: error.message,
           name: error.name,
           stack: error.stack
         });
-        setFirebaseError(`Error: ${error.message}`);
       }
-      setFirebaseLoading(false);
     }
   };
 
@@ -421,6 +406,7 @@ export default function Diagnostic() {
           
           if (questionId === 8) {
             console.log('Diagnostic Form Data:', JSON.stringify(updatedData, null, 2));
+            callFirebaseFunction(updatedData);
           }
           
           return updatedData;
@@ -476,9 +462,6 @@ export default function Diagnostic() {
     
     setShowConfirmationPanel(false);
     setShowTransition(true);
-    
-    // Start Firebase call
-    callFirebaseFunction(formData);
     
     // Activate question 9 to show the transition screen
     setQuestions(prev => prev.map(q => {
@@ -1294,90 +1277,6 @@ export default function Diagnostic() {
                                     formData={formData} 
                                     onComplete={handleTransitionComplete}
                                   />
-                                </div>
-                              ) : firebaseLoading ? (
-                                <div className="text-center space-y-6">
-                                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-primary to-chart-2 mb-4 mx-auto animate-pulse">
-                                    <Sparkles className="h-10 w-10 text-white animate-spin" />
-                                  </div>
-                                  <div className="max-w-2xl mx-auto space-y-4">
-                                    <h3 className="text-2xl font-bold">Generating Your AI-Powered Study Plan...</h3>
-                                    <p className="text-lg text-muted-foreground">
-                                      Our AI is analyzing your responses and creating a personalized learning path. This usually takes 2-3 minutes.
-                                    </p>
-                                    <div className="flex flex-col items-center gap-4 py-6">
-                                      <div className="w-full max-w-md bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
-                                        <motion.div
-                                          className="h-full bg-gradient-to-r from-primary to-chart-2"
-                                          animate={{
-                                            x: ["-100%", "100%"]
-                                          }}
-                                          transition={{
-                                            duration: 2,
-                                            repeat: Infinity,
-                                            ease: "linear"
-                                          }}
-                                        />
-                                      </div>
-                                      <p className="text-sm text-muted-foreground">Please wait...</p>
-                                    </div>
-                                  </div>
-                                </div>
-                              ) : firebaseError ? (
-                                <div className="text-center space-y-6">
-                                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-red-100 dark:bg-red-900/20 mb-4 mx-auto">
-                                    <span className="text-4xl">⚠️</span>
-                                  </div>
-                                  <div className="max-w-2xl mx-auto space-y-4">
-                                    <h3 className="text-2xl font-bold text-red-600 dark:text-red-400">Error Generating Plan</h3>
-                                    <p className="text-lg text-muted-foreground">{firebaseError}</p>
-                                    <Button
-                                      size="lg"
-                                      onClick={() => callFirebaseFunction(formData)}
-                                      className="rounded-full text-base px-8 h-14"
-                                    >
-                                      Try Again
-                                    </Button>
-                                  </div>
-                                </div>
-                              ) : firebaseResponse ? (
-                                <div className="text-center space-y-6">
-                                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-primary to-chart-2 mb-4 mx-auto">
-                                    <Rocket className="h-10 w-10 text-white" />
-                                  </div>
-                                  <div className="max-w-2xl mx-auto space-y-4">
-                                    <div className="p-6 bg-primary/5 rounded-xl border border-primary/20 space-y-3 text-left">
-                                      <div className="flex items-center justify-center gap-2 text-primary mb-4">
-                                        <CheckCircle2 className="h-5 w-5" />
-                                        <span className="font-semibold">AI-Generated Study Plan</span>
-                                      </div>
-                                      <pre className="text-sm whitespace-pre-wrap break-words bg-gray-50 dark:bg-gray-900 p-4 rounded-lg overflow-auto max-h-96">
-                                        {JSON.stringify(firebaseResponse, null, 2)}
-                                      </pre>
-                                    </div>
-                                    <p className="text-lg text-muted-foreground" data-testid="text-plan-summary">
-                                      Your personalized study plan has been generated based on your goals, schedule, and learning style.
-                                    </p>
-                                  </div>
-                                  <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
-                                    <Button
-                                      size="lg"
-                                      onClick={() => setLocation("/")}
-                                      className="rounded-full text-base px-8 h-14 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all"
-                                      data-testid="button-start-learning"
-                                    >
-                                      ✅ Start Learning Now
-                                    </Button>
-                                    <Button
-                                      size="lg"
-                                      variant="outline"
-                                      onClick={() => setLocation("/")}
-                                      className="rounded-full text-base px-8 h-14"
-                                      data-testid="button-view-dashboard"
-                                    >
-                                      📊 View Dashboard
-                                    </Button>
-                                  </div>
                                 </div>
                               ) : (
                                 <div className="text-center space-y-6">
