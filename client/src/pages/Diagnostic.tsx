@@ -421,7 +421,6 @@ export default function Diagnostic() {
           
           if (questionId === 8) {
             console.log('Diagnostic Form Data:', JSON.stringify(updatedData, null, 2));
-            callFirebaseFunction(updatedData);
           }
           
           return updatedData;
@@ -477,6 +476,9 @@ export default function Diagnostic() {
     
     setShowConfirmationPanel(false);
     setShowTransition(true);
+    
+    // Start Firebase call
+    callFirebaseFunction(formData);
     
     // Activate question 9 to show the transition screen
     setQuestions(prev => prev.map(q => {
