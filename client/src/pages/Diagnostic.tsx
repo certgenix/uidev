@@ -333,6 +333,56 @@ export default function Diagnostic() {
     return "";
   };
 
+  const callFirebaseFunction = async (data: FormData) => {
+    const FIREBASE_FUNCTION_URL = 'https://generateprepplan-qn5uv54q4a-uc.a.run.app';
+    const TIMEOUT_MS = 30000;
+    
+    try {
+      console.log('Calling Firebase function with data:', JSON.stringify(data, null, 2));
+      
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => {
+        controller.abort();
+        console.error('Firebase function call timeout after', TIMEOUT_MS, 'ms');
+      }, TIMEOUT_MS);
+      
+      const response = await fetch(FIREBASE_FUNCTION_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+        signal: controller.signal,
+      });
+      
+      clearTimeout(timeoutId);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Firebase function error response:', {
+          status: response.status,
+          statusText: response.statusText,
+          body: errorText
+        });
+        return;
+      }
+      
+      const responseData = await response.json();
+      console.log('Firebase function success response:', JSON.stringify(responseData, null, 2));
+      
+    } catch (error: any) {
+      if (error.name === 'AbortError') {
+        console.error('Firebase function request timeout');
+      } else {
+        console.error('Firebase function frontend error:', {
+          message: error.message,
+          name: error.name,
+          stack: error.stack
+        });
+      }
+    }
+  };
+
   const handleAnswer = (questionId: number, value: any) => {
     const question = questions.find(q => q.id === questionId);
     if (!question) return;
@@ -356,6 +406,7 @@ export default function Diagnostic() {
           
           if (questionId === 8) {
             console.log('Diagnostic Form Data:', JSON.stringify(updatedData, null, 2));
+            callFirebaseFunction(updatedData);
           }
           
           return updatedData;
