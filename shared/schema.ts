@@ -91,3 +91,49 @@ export const insertSessionSchema = createInsertSchema(sessions).omit({
 
 export type InsertSession = z.infer<typeof insertSessionSchema>;
 export type Session = typeof sessions.$inferSelect;
+
+export const weekProgress = pgTable("week_progress", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull(),
+  weekNumber: integer("week_number").notNull(),
+  status: text("status").notNull().default("locked"),
+  startedAt: timestamp("started_at"),
+  completedAt: timestamp("completed_at"),
+  completedTopics: integer("completed_topics").notNull().default(0),
+  totalTopics: integer("total_topics").notNull().default(0),
+  timeSpent: integer("time_spent").notNull().default(0),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const insertWeekProgressSchema = createInsertSchema(weekProgress).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export type InsertWeekProgress = z.infer<typeof insertWeekProgressSchema>;
+export type WeekProgress = typeof weekProgress.$inferSelect;
+
+export const dayProgress = pgTable("day_progress", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  weekProgressId: varchar("week_progress_id").notNull(),
+  dayIndex: integer("day_index").notNull(),
+  dayName: text("day_name").notNull(),
+  status: text("status").notNull().default("locked"),
+  unlockedAt: timestamp("unlocked_at"),
+  completedAt: timestamp("completed_at"),
+  completedActivities: jsonb("completed_activities").notNull().default(sql`'[]'::jsonb`),
+  timeSpent: integer("time_spent").notNull().default(0),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const insertDayProgressSchema = createInsertSchema(dayProgress).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export type InsertDayProgress = z.infer<typeof insertDayProgressSchema>;
+export type DayProgress = typeof dayProgress.$inferSelect;

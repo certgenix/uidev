@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
+import { useMutation } from "@tanstack/react-query";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { BookOpen, Calendar, Clock, Target, CheckCircle2, Lightbulb, AlertCircle, ChevronRight } from "lucide-react";
+import { BookOpen, Calendar, Clock, Target, CheckCircle2, Lightbulb, AlertCircle, ChevronRight, Rocket } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
 interface Topic {
   name: string;
@@ -72,6 +75,33 @@ const priorityLabels = {
 export default function StudyPlanResults() {
   const [, setLocation] = useLocation();
   const [selectedWeek, setSelectedWeek] = useState<number>(1);
+  const { toast } = useToast();
+
+  const initializeProgressMutation = useMutation({
+    mutationFn: async (totalWeeks: number) => {
+      const response = await fetch('/api/progress/initialize', {
+        method: 'POST',
+        body: JSON.stringify({ userId: 'demo-user', totalWeeks }),
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (!response.ok) throw new Error('Failed to initialize progress');
+      return response.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "Study Plan Started!",
+        description: "Your progress is being tracked. Good luck!",
+      });
+      setLocation('/dashboard/all-weeks');
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to start study plan. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
 
   // Get the plan data from location state or localStorage
   const planData: StudyPlanResponse | null = (() => {
@@ -143,9 +173,19 @@ export default function StudyPlanResults() {
             </span>{" "}
             <span className="text-5xl">🎯</span>
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300">
+          <p className="text-lg text-gray-600 dark:text-gray-300 mb-4">
             {plan.totalWeeks}-Week Journey | {plan.weeklyHours} hours/week
           </p>
+          <Button
+            onClick={() => initializeProgressMutation.mutate(plan.totalWeeks)}
+            disabled={initializeProgressMutation.isPending}
+            size="lg"
+            className="bg-gradient-to-r from-primary to-chart-2 hover:from-primary/90 hover:to-chart-2/90"
+            data-testid="button-start-study-plan"
+          >
+            <Rocket className="w-5 h-5 mr-2" />
+            {initializeProgressMutation.isPending ? "Starting..." : "Start Your Study Plan"}
+          </Button>
         </div>
 
         {/* Plan Overview */}

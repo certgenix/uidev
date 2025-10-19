@@ -6,6 +6,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Home from "@/pages/Home";
 import Diagnostic from "@/pages/Diagnostic";
 import StudyPlanResults from "@/pages/StudyPlanResults";
+import AllWeeksDashboard from "@/pages/AllWeeksDashboard";
+import WeeklyDashboard from "@/pages/WeeklyDashboard";
+import DailyDashboard from "@/pages/DailyDashboard";
 import Simulator from "@/pages/Simulator";
 import ExamTaking from "@/pages/ExamTaking";
 import ExamResults from "@/pages/ExamResults";
@@ -17,6 +20,9 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/diagnostic" component={Diagnostic} />
       <Route path="/study-plan-results" component={StudyPlanResults} />
+      <Route path="/dashboard/all-weeks" component={AllWeeksDashboard} />
+      <Route path="/dashboard/week/:weekNumber" component={WeeklyDashboard} />
+      <Route path="/dashboard/week/:weekNumber/day/:dayIndex" component={DailyDashboard} />
       <Route path="/simulator" component={Simulator} />
       <Route path="/simulator/exam/:sessionId" component={ExamTaking} />
       <Route path="/simulator/results/:sessionId" component={ExamResults} />

@@ -279,6 +279,141 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Initialize user progress
+  app.post("/api/progress/initialize", async (req, res) => {
+    try {
+      const { userId, totalWeeks } = req.body;
+      await storage.initializeUserProgress(userId || "demo-user", totalWeeks);
+      res.json({ success: true });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+
+  // Get all week progress for user or specific week
+  app.get("/api/progress/weeks", async (req, res) => {
+    try {
+      const userId = req.query.userId as string || "demo-user";
+      const weekNumber = req.query.weekNumber ? parseInt(req.query.weekNumber as string) : undefined;
+      
+      const weekProgress = await storage.getWeekProgress(userId, weekNumber);
+      
+      const progressWithDays = await Promise.all(
+        weekProgress.map(async (wp) => {
+          const days = await storage.getDayProgress(wp.id);
+          return { ...wp, days };
+        })
+      );
+      
+      res.json(progressWithDays);
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+
+  // Get current progress (first available week and day)
+  app.get("/api/progress/current", async (req, res) => {
+    try {
+      const userId = req.query.userId as string || "demo-user";
+      const allProgress = await storage.getWeekProgress(userId);
+      
+      const currentWeek = allProgress.find(wp => wp.status === "available") || allProgress[0];
+      if (!currentWeek) {
+        return res.json({ currentWeek: null, currentDay: null });
+      }
+      
+      const days = await storage.getDayProgress(currentWeek.id);
+      const currentDay = days.find(d => d.status === "available") || days[0];
+      
+      res.json({ currentWeek, currentDay, days });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+
+  // Update week progress
+  app.patch("/api/progress/weeks/:weekNumber", async (req, res) => {
+    try {
+      const userId = req.body.userId || "demo-user";
+      const weekNumber = parseInt(req.params.weekNumber);
+      const updates = req.body.updates;
+      
+      const weekProgress = await storage.getWeekProgress(userId, weekNumber);
+      if (weekProgress.length === 0) {
+        return res.status(404).json({ message: "Week progress not found" });
+      }
+      
+      const updated = await storage.updateWeekProgress(weekProgress[0].id, updates);
+      
+      if (updated?.status === "completed") {
+        const nextWeek = await storage.getWeekProgress(userId, weekNumber + 1);
+        if (nextWeek.length > 0 && nextWeek[0].status === "locked") {
+          await storage.updateWeekProgress(nextWeek[0].id, { 
+            status: "available", 
+            startedAt: new Date() 
+          });
+          
+          const nextWeekDays = await storage.getDayProgress(nextWeek[0].id);
+          if (nextWeekDays.length > 0 && nextWeekDays[0].status === "locked") {
+            await storage.updateDayProgress(nextWeekDays[0].id, { 
+              status: "available", 
+              unlockedAt: new Date() 
+            });
+          }
+        }
+      }
+      
+      res.json(updated);
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+
+  // Update day progress
+  app.patch("/api/progress/weeks/:weekNumber/days/:dayIndex", async (req, res) => {
+    try {
+      const userId = req.body.userId || "demo-user";
+      const weekNumber = parseInt(req.params.weekNumber);
+      const dayIndex = parseInt(req.params.dayIndex);
+      const updates = req.body.updates;
+      
+      const weekProgress = await storage.getWeekProgress(userId, weekNumber);
+      if (weekProgress.length === 0) {
+        return res.status(404).json({ message: "Week progress not found" });
+      }
+      
+      const days = await storage.getDayProgress(weekProgress[0].id);
+      const day = days.find(d => d.dayIndex === dayIndex);
+      if (!day) {
+        return res.status(404).json({ message: "Day progress not found" });
+      }
+      
+      const updated = await storage.updateDayProgress(day.id, updates);
+      
+      if (updated?.status === "completed") {
+        const nextDay = days.find(d => d.dayIndex === dayIndex + 1);
+        if (nextDay && nextDay.status === "locked") {
+          await storage.updateDayProgress(nextDay.id, { 
+            status: "available", 
+            unlockedAt: new Date() 
+          });
+        } else if (dayIndex === 6) {
+          const allCompleted = days.every(d => d.status === "completed");
+          if (allCompleted) {
+            await storage.updateWeekProgress(weekProgress[0].id, { 
+              status: "completed", 
+              completedAt: new Date() 
+            });
+          }
+        }
+      }
+      
+      res.json(updated);
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+
   const httpServer = createServer(app);
 
   return httpServer;
