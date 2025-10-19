@@ -327,7 +327,7 @@ export default function DailyDashboard() {
           <Button
             onClick={handleCompleteDay}
             disabled={updateDayProgressMutation.isPending || currentDayProgress?.status === "completed"}
-            className="flex-1"
+            className="flex-1 bg-gradient-to-r from-primary to-chart-2 hover:from-primary/90 hover:to-chart-2/90"
             data-testid="button-complete-day"
           >
             {updateDayProgressMutation.isPending ? "Saving..." : 

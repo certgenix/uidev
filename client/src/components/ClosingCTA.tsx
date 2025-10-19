@@ -18,7 +18,7 @@ export default function ClosingCTA() {
           <Button
             size="default"
             variant="secondary"
-            className="rounded-full"
+            className="bg-gradient-to-r from-primary to-chart-2 hover:from-primary/90 hover:to-chart-2/90 rounded-full border-0"
             data-testid="button-closing-cta"
           >
             Join CertGenix Today — Learn. Certify. Apply.

@@ -328,6 +328,7 @@ export default function WeeklyDashboard() {
             <Button
               onClick={() => setLocation(`/dashboard/week/${weekNumber}/day/${currentDay.dayIndex}`)}
               size="lg"
+              className="bg-gradient-to-r from-primary to-chart-2 hover:from-primary/90 hover:to-chart-2/90"
               data-testid="button-start-today"
             >
               Start {currentDay.dayName}
@@ -345,6 +346,7 @@ export default function WeeklyDashboard() {
             <Button
               onClick={() => setLocation(`/dashboard/week/${weekNumber + 1}`)}
               size="lg"
+              className="bg-gradient-to-r from-primary to-chart-2 hover:from-primary/90 hover:to-chart-2/90"
               data-testid="button-next-week"
             >
               Continue to Next Week

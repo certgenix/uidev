@@ -59,7 +59,11 @@ export default function AllWeeksDashboard() {
           <p className="text-gray-600 dark:text-gray-300 mb-6">
             Please complete the diagnostic questionnaire first.
           </p>
-          <Button onClick={() => setLocation('/diagnostic')} data-testid="button-back-diagnostic">
+          <Button 
+            onClick={() => setLocation('/diagnostic')} 
+            className="bg-gradient-to-r from-primary to-chart-2 hover:from-primary/90 hover:to-chart-2/90"
+            data-testid="button-back-diagnostic"
+          >
             Back to Diagnostic
           </Button>
         </div>
@@ -221,7 +225,7 @@ export default function AllWeeksDashboard() {
                 </div>
 
                 <Button
-                  className="w-full"
+                  className={`w-full ${week.status !== "locked" ? "bg-gradient-to-r from-primary to-chart-2 hover:from-primary/90 hover:to-chart-2/90" : ""}`}
                   onClick={() => setLocation(`/dashboard/week/${week.weekNumber}`)}
                   disabled={week.status === "locked"}
                   data-testid={`button-view-week-${week.weekNumber}`}

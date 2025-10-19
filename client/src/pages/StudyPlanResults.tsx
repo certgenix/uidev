@@ -131,7 +131,11 @@ export default function StudyPlanResults() {
           <p className="text-gray-600 dark:text-gray-300 mb-6">
             We had trouble creating a study plan for you at this time, please try again.
           </p>
-          <Button onClick={() => setLocation('/diagnostic')} data-testid="button-try-again">
+          <Button 
+            onClick={() => setLocation('/diagnostic')} 
+            className="bg-gradient-to-r from-primary to-chart-2 hover:from-primary/90 hover:to-chart-2/90"
+            data-testid="button-try-again"
+          >
             Try Again
           </Button>
         </div>

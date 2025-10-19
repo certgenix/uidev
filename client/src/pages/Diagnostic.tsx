@@ -991,7 +991,7 @@ export default function Diagnostic() {
                                   {formData.focusAreas.length > 0 && (
                                     <Button
                                       onClick={() => handleAnswer(question.id, formData.studyStructure)}
-                                      className="w-full rounded-full mt-4"
+                                      className="w-full rounded-full mt-4 bg-gradient-to-r from-primary to-chart-2 hover:from-primary/90 hover:to-chart-2/90"
                                       data-testid="button-continue-focus"
                                     >
                                       Continue with {formData.focusAreas.length} area{formData.focusAreas.length > 1 ? 's' : ''}
@@ -1099,7 +1099,7 @@ export default function Diagnostic() {
                                   {formData.failedDomains.length > 0 && (
                                     <Button
                                       onClick={() => handleAnswer(question.id, formData.previousAttempts)}
-                                      className="w-full rounded-full mt-4"
+                                      className="w-full rounded-full mt-4 bg-gradient-to-r from-primary to-chart-2 hover:from-primary/90 hover:to-chart-2/90"
                                       data-testid="button-continue-failed"
                                     >
                                       Continue
@@ -1164,7 +1164,7 @@ export default function Diagnostic() {
                                       {formData.examDate && (
                                         <Button
                                           onClick={() => handleAnswer(question.id, formData.examTimeline)}
-                                          className="w-full rounded-full"
+                                          className="w-full rounded-full bg-gradient-to-r from-primary to-chart-2 hover:from-primary/90 hover:to-chart-2/90"
                                           data-testid="button-confirm-date"
                                         >
                                           Continue
@@ -1441,7 +1441,7 @@ export default function Diagnostic() {
                         size="lg"
                         onClick={handleGeneratePlan}
                         disabled={answeredCount < 8}
-                        className="rounded-full text-base px-10 h-14 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="bg-gradient-to-r from-primary to-chart-2 hover:from-primary/90 hover:to-chart-2/90 rounded-full text-base px-10 h-14 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                         data-testid="button-generate-plan"
                       >
                         Generate My Plan →

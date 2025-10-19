@@ -62,7 +62,7 @@ export default function Hero() {
               <Link href="/diagnostic">
                 <Button
                   size="lg"
-                  className="rounded-full text-base px-8 h-14 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all"
+                  className="bg-gradient-to-r from-primary to-chart-2 hover:from-primary/90 hover:to-chart-2/90 rounded-full text-base px-8 h-14 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all"
                   data-testid="button-hero-cta"
                 >
                   Start Your Personalized Prep Today
