@@ -139,8 +139,9 @@ export default function StudyPlanResults() {
           <h1 className="text-4xl font-bold mb-3" data-testid="text-plan-title">
             Your Personalized{" "}
             <span className="bg-gradient-to-r from-primary via-chart-2 to-primary bg-clip-text text-transparent">
-              {plan.certification} Study Plan 🎯
-            </span>
+              {plan.certification} Study Plan
+            </span>{" "}
+            <span className="text-5xl">🎯</span>
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-300">
             {plan.totalWeeks}-Week Journey | {plan.weeklyHours} hours/week
