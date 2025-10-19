@@ -136,8 +136,11 @@ export default function StudyPlanResults() {
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         {/* Header Section */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent" data-testid="text-plan-title">
-            Your Personalized {plan.certification} Study Plan 🎯
+          <h1 className="text-4xl font-bold mb-3" data-testid="text-plan-title">
+            Your Personalized{" "}
+            <span className="bg-gradient-to-r from-primary via-chart-2 to-primary bg-clip-text text-transparent">
+              {plan.certification} Study Plan 🎯
+            </span>
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-300">
             {plan.totalWeeks}-Week Journey | {plan.weeklyHours} hours/week
@@ -392,8 +395,12 @@ export default function StudyPlanResults() {
           <Button variant="outline" onClick={() => setLocation('/diagnostic')} data-testid="button-retake-diagnostic">
             Retake Diagnostic
           </Button>
-          <Button onClick={() => window.print()} data-testid="button-print-plan">
-            Print Plan
+          <Button 
+            onClick={() => setLocation('/')} 
+            className="shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all"
+            data-testid="button-start-week-1"
+          >
+            Start Week 1
           </Button>
         </div>
       </div>
