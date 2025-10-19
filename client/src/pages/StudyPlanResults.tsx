@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { useMutation } from "@tanstack/react-query";
 import { Card } from "@/components/ui/card";
@@ -75,6 +75,7 @@ const priorityLabels = {
 export default function StudyPlanResults() {
   const [, setLocation] = useLocation();
   const [selectedWeek, setSelectedWeek] = useState<number>(1);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { toast } = useToast();
 
   const initializeProgressMutation = useMutation({
@@ -118,18 +119,56 @@ export default function StudyPlanResults() {
     return null;
   })();
 
+  // Monitor loading state and data availability
+  useEffect(() => {
+    // If we have successful data with planObject, stop loading immediately
+    if (planData && planData.success && planData.planObject) {
+      setIsLoading(false);
+      return;
+    }
+    
+    // Set a timeout to stop showing loading state after 3 seconds
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+    
+    return () => clearTimeout(timer);
+  }, [planData]);
+
+  // Show loading state while waiting for cloud function
+  if (isLoading && planData && planData.success && !planData.planObject) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        <Header />
+        <div className="container mx-auto px-4 py-20 text-center">
+          <div className="w-16 h-16 mx-auto mb-4">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary"></div>
+          </div>
+          <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Generating Your Study Plan...</h1>
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
+            Our AI is creating a personalized study plan for you. This may take a moment.
+          </p>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  // Show error state if data is missing or invalid
   if (!planData || !planData.success || !planData.planObject) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Header />
         <div className="container mx-auto px-4 py-20 text-center">
           <AlertCircle className="w-16 h-16 mx-auto mb-4 text-red-500" />
-          <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">No Study Plan Found</h1>
+          <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+            Study Plan Generation Failed
+          </h1>
           <p className="text-gray-600 dark:text-gray-300 mb-6">
-            Please complete the diagnostic questionnaire first.
+            We had trouble creating a study plan for you at this time, please try again.
           </p>
-          <Button onClick={() => setLocation('/diagnostic')} data-testid="button-back-diagnostic">
-            Back to Diagnostic
+          <Button onClick={() => setLocation('/diagnostic')} data-testid="button-try-again">
+            Try Again
           </Button>
         </div>
         <Footer />
