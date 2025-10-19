@@ -127,10 +127,10 @@ export default function StudyPlanResults() {
       return;
     }
     
-    // Set a timeout to stop showing loading state after 3 seconds
+    // Set a timeout to stop showing loading state after 5 minutes (matching cloud function timeout)
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
+    }, 300000); // 5 minutes = 300000ms
     
     return () => clearTimeout(timer);
   }, [planData]);
