@@ -421,19 +421,10 @@ export default function Diagnostic() {
     // Step 2: Hold for 600ms, then update sidebar & progress bar
     setTimeout(() => {
       if (question.field) {
-        setFormData(prev => {
-          const updatedData = {
-            ...prev,
-            [question.field!]: value
-          };
-          
-          if (questionId === 8) {
-            console.log('Diagnostic Form Data:', JSON.stringify(updatedData, null, 2));
-            callFirebaseFunction(updatedData);
-          }
-          
-          return updatedData;
-        });
+        setFormData(prev => ({
+          ...prev,
+          [question.field!]: value
+        }));
       }
 
       // Step 3: After 300ms more, transition to next question or show confirmation
