@@ -391,6 +391,25 @@ export default function Diagnostic() {
     const question = questions.find(q => q.id === questionId);
     if (!question) return;
 
+    // For the welcome screen (question 0), move instantly without delays
+    if (questionId === 0) {
+      if (question.field) {
+        setFormData(prev => ({
+          ...prev,
+          [question.field!]: value
+        }));
+      }
+
+      setQuestions(prev => prev.map(q => {
+        if (q.id === questionId) return { ...q, state: "answered" as QuestionState };
+        if (q.id === questionId + 1) return { ...q, state: "active" as QuestionState };
+        return q;
+      }));
+
+      setTimeout(() => scrollToQuestion(questionId + 1), 100);
+      return;
+    }
+
     // Step 1: Instantly show selected state and encouraging text (0ms)
     setSelectedValue(value);
     const encouragement = getEncouragingText(questionId, value);
