@@ -126,7 +126,6 @@ const previousAttempts = [
 ];
 
 const examTimelines = [
-  { value: "scheduled", label: "I've already scheduled it", sublabel: "In 1-3 months", showDatePicker: true },
   { value: "3-6", label: "Soon", sublabel: "In 3-6 months", showDatePicker: false },
   { value: "6+", label: "Later this year", sublabel: "6+ months away", showDatePicker: false },
   { value: "deciding", label: "I'm still deciding", sublabel: "I'm exploring my options", showDatePicker: false }
