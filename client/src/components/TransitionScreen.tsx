@@ -618,11 +618,11 @@ export default function TransitionScreen({ formData, onComplete, isGeneratingPla
                   </div>
                   
                   <h2 className="text-3xl md:text-4xl font-bold" data-testid="text-generating">
-                    Generating Your Study Plan...
+                    Generating your {formData.certification} study plan...
                   </h2>
                   
                   <p className="text-muted-foreground max-w-md mx-auto" data-testid="text-generating-subtitle">
-                    Our AI is creating your personalized study plan. This may take up to 5 minutes.
+                    Our AI is creating your personalized {formData.certification} study plan. This may take up to 5 minutes.
                   </p>
                   
                   <div className="max-w-md mx-auto">
