@@ -115,6 +115,12 @@ export default function WeeklyDashboard() {
     return day?.status || "locked";
   };
 
+  const getDayName = (dayIndex: number) => {
+    if (!currentWeekProgress) return "";
+    const day = currentWeekProgress.days.find(d => d.dayIndex === dayIndex);
+    return day?.dayName || "";
+  };
+
   const getDayIcon = (status: string) => {
     switch (status) {
       case "completed":
@@ -211,6 +217,7 @@ export default function WeeklyDashboard() {
             <div className="space-y-4">
               {weekData.dailySchedule.map((schedule, index) => {
                 const status = getDayStatus(index);
+                const dayName = getDayName(index);
                 const isClickable = status === "available";
                 
                 return (
@@ -231,7 +238,7 @@ export default function WeeklyDashboard() {
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-2">
-                          <h3 className="font-semibold text-gray-900 dark:text-white">{schedule.day}</h3>
+                          <h3 className="font-semibold text-gray-900 dark:text-white">{dayName}</h3>
                           {schedule.duration > 0 && (
                             <span className="text-xs bg-primary/20 text-primary px-2 py-1 rounded">
                               {schedule.duration}m
