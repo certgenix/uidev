@@ -107,7 +107,19 @@ export default function WeeklyDashboard() {
 
   const completedDays = currentWeekProgress?.days.filter(d => d.status === "completed").length || 0;
   const weekProgressPct = currentWeekProgress?.days.length ? Math.round((completedDays / 7) * 100) : 0;
-  const currentDay = currentWeekProgress?.days.find(d => d.status === "available");
+  
+  // Get the scheduled day indices from the study plan
+  const scheduledDayIndices = weekData.dailySchedule.map((_, index) => index);
+  
+  // Find the next available day that is actually in the scheduled days
+  const currentDay = currentWeekProgress?.days.find(d => 
+    d.status === "available" && scheduledDayIndices.includes(d.dayIndex)
+  );
+  
+  // Check if all scheduled days are complete
+  const scheduledDays = currentWeekProgress?.days.filter(d => scheduledDayIndices.includes(d.dayIndex)) || [];
+  const allScheduledDaysComplete = scheduledDays.length > 0 && 
+    scheduledDays.every(d => d.status === "completed");
 
   const getDayStatus = (dayIndex: number) => {
     if (!currentWeekProgress) return "locked";
@@ -319,6 +331,23 @@ export default function WeeklyDashboard() {
               data-testid="button-start-today"
             >
               Start {currentDay.dayName}
+            </Button>
+          </div>
+        )}
+        
+        {!currentDay && allScheduledDaysComplete && (
+          <div className="bg-green-50 dark:bg-green-900/20 border-2 border-green-500 dark:border-green-700 rounded-lg p-6 text-center">
+            <CheckCircle2 className="w-12 h-12 mx-auto mb-3 text-green-500" />
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Week Complete!</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              Great job! You've completed all scheduled study days for this week.
+            </p>
+            <Button
+              onClick={() => setLocation(`/dashboard/week/${weekNumber + 1}`)}
+              size="lg"
+              data-testid="button-next-week"
+            >
+              Continue to Next Week
             </Button>
           </div>
         )}
