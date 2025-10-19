@@ -146,6 +146,26 @@ export default function StudyPlanResults() {
 
   const plan = planData.planObject;
   const currentWeek = plan.weeks.find(w => w.weekNumber === selectedWeek);
+  
+  // Check if current week has complete data
+  const isWeekDataComplete = (week: Week | undefined): boolean => {
+    if (!week) return false;
+    return !!(
+      week.topics &&
+      Array.isArray(week.topics) &&
+      week.topics.length > 0 &&
+      week.topics[0].keyPoints &&
+      Array.isArray(week.topics[0].keyPoints) &&
+      week.dailySchedule &&
+      Array.isArray(week.dailySchedule) &&
+      week.learningObjectives &&
+      Array.isArray(week.learningObjectives) &&
+      week.examTips &&
+      Array.isArray(week.examTips)
+    );
+  };
+  
+  const hasCompleteData = isWeekDataComplete(currentWeek);
 
   // Calculate progress phases
   const getPhaseRanges = () => {
@@ -308,7 +328,50 @@ export default function StudyPlanResults() {
 
           {/* Week Details */}
           <Card className="p-6 lg:col-span-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm max-h-[800px] overflow-y-auto">
-            {currentWeek && (
+            {currentWeek && !hasCompleteData && (
+              <div className="text-center py-12">
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-primary to-chart-2 mb-6 mx-auto">
+                  <Rocket className="h-10 w-10 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                  Week {currentWeek.weekNumber}: {currentWeek.theme || 'Preview Not Available'}
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-md mx-auto">
+                  Full details for this week are available when you sign up for your personalized study plan.
+                </p>
+                <div className="bg-primary/5 dark:bg-primary/10 rounded-lg p-6 max-w-md mx-auto border border-primary/20">
+                  <h4 className="font-semibold text-gray-900 dark:text-white mb-3">
+                    Sign up to unlock:
+                  </h4>
+                  <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300 text-left">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
+                      <span>Detailed topic breakdowns with key points</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
+                      <span>Daily study schedules</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
+                      <span>Learning objectives and exam tips</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
+                      <span>Progress tracking and assessments</span>
+                    </li>
+                  </ul>
+                  <Button 
+                    className="w-full mt-6 bg-gradient-to-r from-primary to-chart-2 hover:from-primary/90 hover:to-chart-2/90"
+                    onClick={() => setLocation('/')}
+                    data-testid="button-signup-unlock"
+                  >
+                    Sign Up to Unlock Full Access
+                  </Button>
+                </div>
+              </div>
+            )}
+            {currentWeek && hasCompleteData && (
               <div>
                 {/* Week Header */}
                 <div className="mb-6">
@@ -339,7 +402,7 @@ export default function StudyPlanResults() {
 
                   {/* Topics Tab */}
                   <TabsContent value="topics" className="space-y-4">
-                    {currentWeek.topics.map((topic, index) => (
+                    {currentWeek.topics?.map((topic, index) => (
                       <Card key={index} className="p-4 bg-gray-50 dark:bg-gray-700/50" data-testid={`card-topic-${index}`}>
                         <div className="flex items-start justify-between mb-3">
                           <h4 className="font-semibold text-gray-900 dark:text-white flex-1">
@@ -350,7 +413,7 @@ export default function StudyPlanResults() {
                           </span>
                         </div>
                         <ul className="space-y-2">
-                          {topic.keyPoints.map((point, idx) => (
+                          {topic.keyPoints?.map((point, idx) => (
                             <li key={idx} className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
                               <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
                               <span>{point}</span>
@@ -363,7 +426,7 @@ export default function StudyPlanResults() {
 
                   {/* Schedule Tab */}
                   <TabsContent value="schedule" className="space-y-3">
-                    {currentWeek.dailySchedule.map((schedule, index) => (
+                    {currentWeek.dailySchedule?.map((schedule, index) => (
                       <Card key={index} className="p-4 bg-gray-50 dark:bg-gray-700/50" data-testid={`card-schedule-${index}`}>
                         <div className="flex items-start gap-3">
                           <div className="bg-primary/10 p-2 rounded-lg">
@@ -397,7 +460,7 @@ export default function StudyPlanResults() {
                         Learning Objectives
                       </h4>
                       <ul className="space-y-2">
-                        {currentWeek.learningObjectives.map((objective, index) => (
+                        {currentWeek.learningObjectives?.map((objective, index) => (
                           <li key={index} className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300" data-testid={`text-objective-${index}`}>
                             <ChevronRight className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
                             <span>{objective}</span>
@@ -412,7 +475,7 @@ export default function StudyPlanResults() {
                         Self-Assessment Checklist
                       </h4>
                       <ul className="space-y-2">
-                        {currentWeek.selfAssessment.map((item, index) => (
+                        {currentWeek.selfAssessment?.map((item, index) => (
                           <li key={index} className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300" data-testid={`text-assessment-${index}`}>
                             <span>{item}</span>
                           </li>
@@ -423,7 +486,7 @@ export default function StudyPlanResults() {
 
                   {/* Tips Tab */}
                   <TabsContent value="tips" className="space-y-3">
-                    {currentWeek.examTips.map((tip, index) => (
+                    {currentWeek.examTips?.map((tip, index) => (
                       <Card key={index} className="p-4 bg-primary/5 dark:bg-primary/10 border border-primary/20" data-testid={`card-tip-${index}`}>
                         <div className="flex items-start gap-3">
                           <Lightbulb className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
