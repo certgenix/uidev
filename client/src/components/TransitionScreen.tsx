@@ -436,8 +436,6 @@ export default function TransitionScreen({ formData, onComplete, isGeneratingPla
                   </div>
                 </div>
                 
-                <Progress value={step2Progress} className="h-3" data-testid="progress-step2" />
-                
                 {step2Complete && (
                   <motion.p
                     initial={{ opacity: 0, y: 10 }}
