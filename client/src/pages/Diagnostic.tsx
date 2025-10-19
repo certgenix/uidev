@@ -495,7 +495,10 @@ export default function Diagnostic() {
         // Store the plan data in localStorage
         localStorage.setItem('studyPlanData', JSON.stringify(response));
         
-        // Navigate directly to study plan results without showing success state
+        // Clear generating state before navigation
+        setIsGeneratingPlan(false);
+        
+        // Navigate directly to study plan results
         setLocation('/study-plan-results');
       } else {
         setPlanGenerationError('Failed to generate study plan. Please try again.');
