@@ -24,6 +24,7 @@ interface DailySchedule {
   activity: string;
   type: string;
   duration: number;
+  topic: Topic;
 }
 
 interface Week {
@@ -32,7 +33,6 @@ interface Week {
   domainId: string;
   theme: string;
   priority: "critical" | "high" | "medium" | "low";
-  topics: Topic[];
   dailySchedule: DailySchedule[];
   learningObjectives: string[];
   examTips: string[];
@@ -151,13 +151,12 @@ export default function StudyPlanResults() {
   const isWeekDataComplete = (week: Week | undefined): boolean => {
     if (!week) return false;
     return !!(
-      week.topics &&
-      Array.isArray(week.topics) &&
-      week.topics.length > 0 &&
-      week.topics[0].keyPoints &&
-      Array.isArray(week.topics[0].keyPoints) &&
       week.dailySchedule &&
       Array.isArray(week.dailySchedule) &&
+      week.dailySchedule.length > 0 &&
+      week.dailySchedule[0].topic &&
+      week.dailySchedule[0].topic.keyPoints &&
+      Array.isArray(week.dailySchedule[0].topic.keyPoints) &&
       week.learningObjectives &&
       Array.isArray(week.learningObjectives) &&
       week.examTips &&
@@ -402,18 +401,18 @@ export default function StudyPlanResults() {
 
                   {/* Topics Tab */}
                   <TabsContent value="topics" className="space-y-4">
-                    {currentWeek.topics?.map((topic, index) => (
+                    {currentWeek.dailySchedule?.map((schedule, index) => (
                       <Card key={index} className="p-4 bg-gray-50 dark:bg-gray-700/50" data-testid={`card-topic-${index}`}>
                         <div className="flex items-start justify-between mb-3">
                           <h4 className="font-semibold text-gray-900 dark:text-white flex-1">
-                            {topic.name}
+                            {schedule.topic.name}
                           </h4>
                           <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded ml-2">
-                            {topic.estimatedTime}m
+                            {schedule.topic.estimatedTime}m
                           </span>
                         </div>
                         <ul className="space-y-2">
-                          {topic.keyPoints?.map((point, idx) => (
+                          {schedule.topic.keyPoints?.map((point, idx) => (
                             <li key={idx} className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
                               <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
                               <span>{point}</span>

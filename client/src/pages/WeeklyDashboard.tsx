@@ -31,18 +31,19 @@ interface WeekProgressWithDays {
   days: DayProgress[];
 }
 
+interface Topic {
+  name: string;
+  estimatedTime: number;
+  keyPoints: string[];
+}
+
 interface DailySchedule {
   day: string;
   time: string;
   activity: string;
   type: string;
   duration: number;
-}
-
-interface Topic {
-  name: string;
-  estimatedTime: number;
-  keyPoints: string[];
+  topic: Topic;
 }
 
 interface WeekData {
@@ -50,7 +51,6 @@ interface WeekData {
   domain: string;
   theme: string;
   priority: string;
-  topics: Topic[];
   dailySchedule: DailySchedule[];
   learningObjectives: string[];
   examTips: string[];
@@ -218,7 +218,7 @@ export default function WeeklyDashboard() {
               <BookOpen className="w-5 h-5 text-primary" />
             </div>
             <div className="text-3xl font-bold text-gray-900 dark:text-white" data-testid="text-topics">
-              {weekData.topics.length}
+              {weekData.dailySchedule.length}
             </div>
           </Card>
         </div>
@@ -294,18 +294,18 @@ export default function WeeklyDashboard() {
               </TabsContent>
 
               <TabsContent value="topics" className="space-y-4 mt-4">
-                {weekData.topics.map((topic, index) => (
+                {weekData.dailySchedule.map((schedule, index) => (
                   <Card key={index} className="p-4 bg-gray-50 dark:bg-gray-700/50" data-testid={`topic-${index}`}>
                     <div className="flex items-start justify-between mb-2">
                       <h4 className="font-semibold text-gray-900 dark:text-white flex-1">
-                        {topic.name}
+                        {schedule.topic.name}
                       </h4>
                       <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded ml-2">
-                        {topic.estimatedTime}m
+                        {schedule.topic.estimatedTime}m
                       </span>
                     </div>
                     <ul className="space-y-1">
-                      {topic.keyPoints.slice(0, 3).map((point, idx) => (
+                      {schedule.topic.keyPoints.slice(0, 3).map((point, idx) => (
                         <li key={idx} className="text-sm text-gray-700 dark:text-gray-300 flex items-start gap-2">
                           <span className="text-primary">•</span>
                           <span>{point}</span>

@@ -29,25 +29,25 @@ interface WeekProgressWithDays {
   days: DayProgress[];
 }
 
-interface DailySchedule {
-  day: string;
-  time: string;
-  activity: string;
-  type: string;
-  duration: number;
-}
-
 interface Topic {
   name: string;
   estimatedTime: number;
   keyPoints: string[];
 }
 
+interface DailySchedule {
+  day: string;
+  time: string;
+  activity: string;
+  type: string;
+  duration: number;
+  topic: Topic;
+}
+
 interface WeekData {
   weekNumber: number;
   domain: string;
   theme: string;
-  topics: Topic[];
   dailySchedule: DailySchedule[];
   learningObjectives: string[];
 }
@@ -126,11 +126,10 @@ export default function DailyDashboard() {
     );
   }
 
-  const tasks = weekData.topics.flatMap(topic => 
-    topic.keyPoints.map(point => ({ topic: topic.name, task: point }))
-  );
-
-  const todayTasks = tasks.slice(dayIndex * 3, (dayIndex + 1) * 3);
+  const todayTasks = dailySchedule.topic.keyPoints.map(point => ({ 
+    topic: dailySchedule.topic.name, 
+    task: point 
+  }));
 
   const handleToggleActivity = (activityId: string) => {
     const newCompleted = completedActivities.includes(activityId)
