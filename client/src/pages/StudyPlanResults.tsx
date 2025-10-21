@@ -511,7 +511,7 @@ export default function StudyPlanResults() {
             className="shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all"
             data-testid="button-start-week-1"
           >
-            Start Week 1
+            Start your study plan
           </Button>
         </div>
       </div>
