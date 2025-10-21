@@ -507,11 +507,14 @@ export default function StudyPlanResults() {
             Retake Diagnostic
           </Button>
           <Button 
-            onClick={() => setLocation('/')} 
-            className="shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all"
+            onClick={() => initializeProgressMutation.mutate(plan.totalWeeks)}
+            disabled={initializeProgressMutation.isPending}
+            size="lg"
+            className="bg-gradient-to-r from-primary to-chart-2 hover:from-primary/90 hover:to-chart-2/90"
             data-testid="button-start-week-1"
           >
-            Start your study plan
+            <Rocket className="w-5 h-5 mr-2" />
+            {initializeProgressMutation.isPending ? "Starting..." : "Start Your Study Plan"}
           </Button>
         </div>
       </div>
