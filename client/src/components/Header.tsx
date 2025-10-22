@@ -76,21 +76,6 @@ export default function Header() {
                   <NavigationMenuContent>
                     <div className="grid grid-cols-2 gap-8 p-8 w-[780px] shadow-xl border border-border/50 bg-background rounded-lg" data-testid="megamenu-certifications">
                       <div className="space-y-6">
-                        <div className="pb-4 border-b">
-                          <Link href="/certifications">
-                            <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-primary/5 cursor-pointer group transition-all duration-200 ease-in-out hover:translate-x-1 bg-primary/[0.02]" data-testid="link-browse-all-certifications">
-                              <div className="p-1.5 rounded-md bg-primary/10 group-hover:bg-primary/20 transition-all duration-200">
-                                <Grid3x3 className="h-5 w-5 text-primary" />
-                              </div>
-                              <div className="flex-1">
-                                <div className="font-semibold text-base group-hover:text-primary transition-colors duration-200">Browse All Certifications</div>
-                                <p className="text-sm text-muted-foreground leading-relaxed">View complete certification catalog</p>
-                              </div>
-                              <ArrowRight className="h-4 w-4 text-primary opacity-0 group-hover:opacity-100 transition-all duration-200 -translate-x-2 group-hover:translate-x-0" />
-                            </div>
-                          </Link>
-                        </div>
-
                         <div className="space-y-4">
                           <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground/70 mb-4">Information Security</h3>
                           <ul className="space-y-2">
@@ -209,6 +194,21 @@ export default function Header() {
                       </div>
 
                       <div className="space-y-6 bg-accent/30 rounded-lg p-6 border-l-4 border-primary">
+                        <div className="pb-4 border-b border-border/50">
+                          <Link href="/certifications">
+                            <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-background/60 cursor-pointer group transition-all duration-200 ease-in-out bg-background/40" data-testid="link-browse-all-certifications">
+                              <div className="p-1.5 rounded-md bg-primary/10 group-hover:bg-primary/20 transition-all duration-200">
+                                <Grid3x3 className="h-5 w-5 text-primary" />
+                              </div>
+                              <div className="flex-1">
+                                <div className="font-semibold text-base group-hover:text-primary transition-colors duration-200">Browse All Certifications</div>
+                                <p className="text-sm text-muted-foreground leading-relaxed">View complete certification catalog</p>
+                              </div>
+                              <ArrowRight className="h-4 w-4 text-primary opacity-0 group-hover:opacity-100 transition-all duration-200 -translate-x-2 group-hover:translate-x-0" />
+                            </div>
+                          </Link>
+                        </div>
+
                         <div className="space-y-4">
                           <h3 className="text-sm font-bold text-foreground mb-4 flex items-center gap-2">
                             <Target className="h-5 w-5 text-primary" />
