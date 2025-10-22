@@ -82,9 +82,7 @@ export default function Header() {
                             <li>
                               <Link href="/cert/cism">
                                 <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-accent/50 cursor-pointer group transition-all duration-200 ease-in-out hover:translate-x-1" data-testid="link-cert-cism">
-                                  <div className="p-1.5 rounded-md bg-primary/10 group-hover:bg-primary/20 transition-all duration-200">
-                                    <Shield className="h-5 w-5 text-primary" />
-                                  </div>
+                                  <Shield className="h-5 w-5 text-primary shrink-0" />
                                   <div className="flex-1">
                                     <div className="font-semibold text-base group-hover:text-primary transition-colors duration-200">CISM</div>
                                     <p className="text-sm text-muted-foreground leading-relaxed">Information Security Manager</p>
@@ -96,9 +94,7 @@ export default function Header() {
                             <li>
                               <Link href="/cert/cissp">
                                 <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-accent/50 cursor-pointer group transition-all duration-200 ease-in-out hover:translate-x-1" data-testid="link-cert-cissp">
-                                  <div className="p-1.5 rounded-md bg-primary/10 group-hover:bg-primary/20 transition-all duration-200">
-                                    <Shield className="h-5 w-5 text-primary" />
-                                  </div>
+                                  <Shield className="h-5 w-5 text-primary shrink-0" />
                                   <div className="flex-1">
                                     <div className="font-semibold text-base group-hover:text-primary transition-colors duration-200">CISSP</div>
                                     <p className="text-sm text-muted-foreground leading-relaxed">Security Professional</p>
@@ -110,9 +106,7 @@ export default function Header() {
                             <li>
                               <Link href="/cert/ccsp">
                                 <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-accent/50 cursor-pointer group transition-all duration-200 ease-in-out hover:translate-x-1" data-testid="link-cert-ccsp">
-                                  <div className="p-1.5 rounded-md bg-primary/10 group-hover:bg-primary/20 transition-all duration-200">
-                                    <Shield className="h-5 w-5 text-primary" />
-                                  </div>
+                                  <Shield className="h-5 w-5 text-primary shrink-0" />
                                   <div className="flex-1">
                                     <div className="font-semibold text-base group-hover:text-primary transition-colors duration-200">CCSP</div>
                                     <p className="text-sm text-muted-foreground leading-relaxed">Cloud Security</p>
@@ -130,9 +124,7 @@ export default function Header() {
                             <li>
                               <Link href="/cert/cisa">
                                 <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-accent/50 cursor-pointer group transition-all duration-200 ease-in-out hover:translate-x-1" data-testid="link-cert-cisa">
-                                  <div className="p-1.5 rounded-md bg-primary/10 group-hover:bg-primary/20 transition-all duration-200">
-                                    <FileCheck className="h-5 w-5 text-primary" />
-                                  </div>
+                                  <FileCheck className="h-5 w-5 text-primary shrink-0" />
                                   <div className="flex-1">
                                     <div className="font-semibold text-base group-hover:text-primary transition-colors duration-200">CISA</div>
                                     <p className="text-sm text-muted-foreground leading-relaxed">Information Systems Auditor</p>
@@ -144,9 +136,7 @@ export default function Header() {
                             <li>
                               <Link href="/cert/cgeit">
                                 <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-accent/50 cursor-pointer group transition-all duration-200 ease-in-out hover:translate-x-1" data-testid="link-cert-cgeit">
-                                  <div className="p-1.5 rounded-md bg-primary/10 group-hover:bg-primary/20 transition-all duration-200">
-                                    <FileCheck className="h-5 w-5 text-primary" />
-                                  </div>
+                                  <FileCheck className="h-5 w-5 text-primary shrink-0" />
                                   <div className="flex-1">
                                     <div className="font-semibold text-base group-hover:text-primary transition-colors duration-200">CGEIT</div>
                                     <p className="text-sm text-muted-foreground leading-relaxed">IT Governance</p>
@@ -164,9 +154,7 @@ export default function Header() {
                             <li>
                               <Link href="/cert/pmp">
                                 <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-accent/50 cursor-pointer group transition-all duration-200 ease-in-out hover:translate-x-1" data-testid="link-cert-pmp">
-                                  <div className="p-1.5 rounded-md bg-primary/10 group-hover:bg-primary/20 transition-all duration-200">
-                                    <Folder className="h-5 w-5 text-primary" />
-                                  </div>
+                                  <Folder className="h-5 w-5 text-primary shrink-0" />
                                   <div className="flex-1">
                                     <div className="font-semibold text-base group-hover:text-primary transition-colors duration-200">PMP</div>
                                     <p className="text-sm text-muted-foreground leading-relaxed">Project Management Professional</p>
@@ -178,9 +166,7 @@ export default function Header() {
                             <li>
                               <Link href="/cert/capm">
                                 <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-accent/50 cursor-pointer group transition-all duration-200 ease-in-out hover:translate-x-1" data-testid="link-cert-capm">
-                                  <div className="p-1.5 rounded-md bg-primary/10 group-hover:bg-primary/20 transition-all duration-200">
-                                    <Folder className="h-5 w-5 text-primary" />
-                                  </div>
+                                  <Folder className="h-5 w-5 text-primary shrink-0" />
                                   <div className="flex-1">
                                     <div className="font-semibold text-base group-hover:text-primary transition-colors duration-200">CAPM</div>
                                     <p className="text-sm text-muted-foreground leading-relaxed">Associate Project Manager</p>
