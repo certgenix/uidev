@@ -136,20 +136,6 @@ export default function Header() {
                                 </div>
                               </Link>
                             </li>
-                            <li>
-                              <Link href="/cert/crisc">
-                                <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-accent/50 cursor-pointer group transition-all duration-200 ease-in-out hover:translate-x-1" data-testid="link-cert-crisc">
-                                  <div className="p-1.5 rounded-md bg-primary/10 group-hover:bg-primary/20 transition-all duration-200">
-                                    <Shield className="h-5 w-5 text-primary" />
-                                  </div>
-                                  <div className="flex-1">
-                                    <div className="font-semibold text-base group-hover:text-primary transition-colors duration-200">CRISC</div>
-                                    <p className="text-sm text-muted-foreground leading-relaxed">Risk & Information Systems Control</p>
-                                  </div>
-                                  <ArrowRight className="h-4 w-4 text-primary opacity-0 group-hover:opacity-100 transition-all duration-200 -translate-x-2 group-hover:translate-x-0" />
-                                </div>
-                              </Link>
-                            </li>
                           </ul>
                         </div>
 
