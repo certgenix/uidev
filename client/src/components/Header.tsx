@@ -74,40 +74,46 @@ export default function Header() {
                     Certifications
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <div className="grid grid-cols-2 gap-6 p-6 w-[700px]" data-testid="megamenu-certifications">
-                      <div className="space-y-5">
-                        <div>
-                          <h3 className="text-sm font-semibold text-muted-foreground mb-3">Information Security Certifications</h3>
-                          <ul className="space-y-2">
+                    <div className="grid grid-cols-2 gap-8 p-8 w-[780px]" data-testid="megamenu-certifications">
+                      <div className="space-y-6">
+                        <div className="space-y-4">
+                          <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground/70 mb-4">Information Security</h3>
+                          <ul className="space-y-1">
                             <li>
                               <Link href="/cert/cism">
-                                <div className="flex items-start gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-cert-cism">
-                                  <Shield className="h-4 w-4 mt-0.5 text-primary" />
-                                  <div>
-                                    <div className="text-sm font-medium group-hover:text-primary transition-colors">CISM</div>
-                                    <p className="text-xs text-muted-foreground">Information Security Manager</p>
+                                <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-accent/50 cursor-pointer group transition-all" data-testid="link-cert-cism">
+                                  <div className="p-1.5 rounded-md bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                                    <Shield className="h-5 w-5 text-primary" />
+                                  </div>
+                                  <div className="flex-1">
+                                    <div className="font-semibold text-base group-hover:text-primary transition-colors">CISM</div>
+                                    <p className="text-sm text-muted-foreground leading-relaxed">Information Security Manager</p>
                                   </div>
                                 </div>
                               </Link>
                             </li>
                             <li>
                               <Link href="/cert/cissp">
-                                <div className="flex items-start gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-cert-cissp">
-                                  <Shield className="h-4 w-4 mt-0.5 text-primary" />
-                                  <div>
-                                    <div className="text-sm font-medium group-hover:text-primary transition-colors">CISSP</div>
-                                    <p className="text-xs text-muted-foreground">Security Professional</p>
+                                <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-accent/50 cursor-pointer group transition-all" data-testid="link-cert-cissp">
+                                  <div className="p-1.5 rounded-md bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                                    <Shield className="h-5 w-5 text-primary" />
+                                  </div>
+                                  <div className="flex-1">
+                                    <div className="font-semibold text-base group-hover:text-primary transition-colors">CISSP</div>
+                                    <p className="text-sm text-muted-foreground leading-relaxed">Security Professional</p>
                                   </div>
                                 </div>
                               </Link>
                             </li>
                             <li>
                               <Link href="/cert/ccsp">
-                                <div className="flex items-start gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-cert-ccsp">
-                                  <Shield className="h-4 w-4 mt-0.5 text-primary" />
-                                  <div>
-                                    <div className="text-sm font-medium group-hover:text-primary transition-colors">CCSP</div>
-                                    <p className="text-xs text-muted-foreground">Cloud Security</p>
+                                <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-accent/50 cursor-pointer group transition-all" data-testid="link-cert-ccsp">
+                                  <div className="p-1.5 rounded-md bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                                    <Shield className="h-5 w-5 text-primary" />
+                                  </div>
+                                  <div className="flex-1">
+                                    <div className="font-semibold text-base group-hover:text-primary transition-colors">CCSP</div>
+                                    <p className="text-sm text-muted-foreground leading-relaxed">Cloud Security</p>
                                   </div>
                                 </div>
                               </Link>
@@ -115,27 +121,31 @@ export default function Header() {
                           </ul>
                         </div>
 
-                        <div>
-                          <h3 className="text-sm font-semibold text-muted-foreground mb-3">IT Audit & Governance</h3>
-                          <ul className="space-y-2">
+                        <div className="space-y-4 pt-2 border-t">
+                          <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground/70 mb-4">IT Audit & Governance</h3>
+                          <ul className="space-y-1">
                             <li>
                               <Link href="/cert/cisa">
-                                <div className="flex items-start gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-cert-cisa">
-                                  <FileCheck className="h-4 w-4 mt-0.5 text-primary" />
-                                  <div>
-                                    <div className="text-sm font-medium group-hover:text-primary transition-colors">CISA</div>
-                                    <p className="text-xs text-muted-foreground">Information Systems Auditor</p>
+                                <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-accent/50 cursor-pointer group transition-all" data-testid="link-cert-cisa">
+                                  <div className="p-1.5 rounded-md bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                                    <FileCheck className="h-5 w-5 text-primary" />
+                                  </div>
+                                  <div className="flex-1">
+                                    <div className="font-semibold text-base group-hover:text-primary transition-colors">CISA</div>
+                                    <p className="text-sm text-muted-foreground leading-relaxed">Information Systems Auditor</p>
                                   </div>
                                 </div>
                               </Link>
                             </li>
                             <li>
                               <Link href="/cert/cgeit">
-                                <div className="flex items-start gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-cert-cgeit">
-                                  <FileCheck className="h-4 w-4 mt-0.5 text-primary" />
-                                  <div>
-                                    <div className="text-sm font-medium group-hover:text-primary transition-colors">CGEIT</div>
-                                    <p className="text-xs text-muted-foreground">IT Governance</p>
+                                <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-accent/50 cursor-pointer group transition-all" data-testid="link-cert-cgeit">
+                                  <div className="p-1.5 rounded-md bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                                    <FileCheck className="h-5 w-5 text-primary" />
+                                  </div>
+                                  <div className="flex-1">
+                                    <div className="font-semibold text-base group-hover:text-primary transition-colors">CGEIT</div>
+                                    <p className="text-sm text-muted-foreground leading-relaxed">IT Governance</p>
                                   </div>
                                 </div>
                               </Link>
@@ -143,27 +153,31 @@ export default function Header() {
                           </ul>
                         </div>
 
-                        <div>
-                          <h3 className="text-sm font-semibold text-muted-foreground mb-3">Project Management</h3>
-                          <ul className="space-y-2">
+                        <div className="space-y-4 pt-2 border-t">
+                          <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground/70 mb-4">Project Management</h3>
+                          <ul className="space-y-1">
                             <li>
                               <Link href="/cert/pmp">
-                                <div className="flex items-start gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-cert-pmp">
-                                  <Folder className="h-4 w-4 mt-0.5 text-primary" />
-                                  <div>
-                                    <div className="text-sm font-medium group-hover:text-primary transition-colors">PMP</div>
-                                    <p className="text-xs text-muted-foreground">Project Management Professional</p>
+                                <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-accent/50 cursor-pointer group transition-all" data-testid="link-cert-pmp">
+                                  <div className="p-1.5 rounded-md bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                                    <Folder className="h-5 w-5 text-primary" />
+                                  </div>
+                                  <div className="flex-1">
+                                    <div className="font-semibold text-base group-hover:text-primary transition-colors">PMP</div>
+                                    <p className="text-sm text-muted-foreground leading-relaxed">Project Management Professional</p>
                                   </div>
                                 </div>
                               </Link>
                             </li>
                             <li>
                               <Link href="/cert/capm">
-                                <div className="flex items-start gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-cert-capm">
-                                  <Folder className="h-4 w-4 mt-0.5 text-primary" />
-                                  <div>
-                                    <div className="text-sm font-medium group-hover:text-primary transition-colors">CAPM</div>
-                                    <p className="text-xs text-muted-foreground">Associate Project Manager</p>
+                                <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-accent/50 cursor-pointer group transition-all" data-testid="link-cert-capm">
+                                  <div className="p-1.5 rounded-md bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                                    <Folder className="h-5 w-5 text-primary" />
+                                  </div>
+                                  <div className="flex-1">
+                                    <div className="font-semibold text-base group-hover:text-primary transition-colors">CAPM</div>
+                                    <p className="text-sm text-muted-foreground leading-relaxed">Associate Project Manager</p>
                                   </div>
                                 </div>
                               </Link>
@@ -172,77 +186,83 @@ export default function Header() {
                         </div>
                       </div>
 
-                      <div className="space-y-5 border-l pl-6">
-                        <div>
-                          <h3 className="text-sm font-semibold mb-3">Need Help Deciding?</h3>
-                          <ul className="space-y-2">
+                      <div className="space-y-6 bg-accent/30 rounded-lg p-6 border-l-4 border-primary">
+                        <div className="space-y-4">
+                          <h3 className="text-sm font-bold text-foreground mb-4 flex items-center gap-2">
+                            <Target className="h-5 w-5 text-primary" />
+                            Need Help Deciding?
+                          </h3>
+                          <ul className="space-y-1">
                             <li>
                               <Link href="/which-certification">
-                                <div className="flex items-center gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-which-certification">
-                                  <Target className="h-4 w-4 text-primary" />
-                                  <span className="text-sm group-hover:text-primary transition-colors">Which Certification Is Right for Me?</span>
+                                <div className="flex items-center gap-3 p-2.5 rounded-md hover:bg-background/60 cursor-pointer group transition-all" data-testid="link-which-certification">
+                                  <span className="text-sm font-medium group-hover:text-primary transition-colors">Which Certification Is Right for Me?</span>
+                                  <ArrowRight className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity ml-auto text-primary" />
                                 </div>
                               </Link>
                             </li>
                             <li>
                               <Link href="/compare/cism-vs-cissp">
-                                <div className="flex items-center gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-compare-cism-cissp">
-                                  <Search className="h-4 w-4 text-primary" />
-                                  <span className="text-sm group-hover:text-primary transition-colors">Compare CISM vs CISSP</span>
+                                <div className="flex items-center gap-3 p-2.5 rounded-md hover:bg-background/60 cursor-pointer group transition-all" data-testid="link-compare-cism-cissp">
+                                  <span className="text-sm font-medium group-hover:text-primary transition-colors">Compare CISM vs CISSP</span>
+                                  <ArrowRight className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity ml-auto text-primary" />
                                 </div>
                               </Link>
                             </li>
                             <li>
                               <Link href="/compare/pmp-vs-capm">
-                                <div className="flex items-center gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-compare-pmp-capm">
-                                  <BarChart3 className="h-4 w-4 text-primary" />
-                                  <span className="text-sm group-hover:text-primary transition-colors">Compare PMP vs CAPM</span>
+                                <div className="flex items-center gap-3 p-2.5 rounded-md hover:bg-background/60 cursor-pointer group transition-all" data-testid="link-compare-pmp-capm">
+                                  <span className="text-sm font-medium group-hover:text-primary transition-colors">Compare PMP vs CAPM</span>
+                                  <ArrowRight className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity ml-auto text-primary" />
                                 </div>
                               </Link>
                             </li>
                             <li>
                               <Link href="/certifications/isaca">
-                                <div className="flex items-center gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-isaca-certifications">
-                                  <BookOpen className="h-4 w-4 text-primary" />
-                                  <span className="text-sm group-hover:text-primary transition-colors">View All ISACA Certifications</span>
+                                <div className="flex items-center gap-3 p-2.5 rounded-md hover:bg-background/60 cursor-pointer group transition-all" data-testid="link-isaca-certifications">
+                                  <span className="text-sm font-medium group-hover:text-primary transition-colors">View All ISACA Certifications</span>
+                                  <ArrowRight className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity ml-auto text-primary" />
                                 </div>
                               </Link>
                             </li>
                             <li>
                               <Link href="/certifications/by-goal">
-                                <div className="flex items-center gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-certifications-by-goal">
-                                  <Briefcase className="h-4 w-4 text-primary" />
-                                  <span className="text-sm group-hover:text-primary transition-colors">Certifications by Career Goal</span>
+                                <div className="flex items-center gap-3 p-2.5 rounded-md hover:bg-background/60 cursor-pointer group transition-all" data-testid="link-certifications-by-goal">
+                                  <span className="text-sm font-medium group-hover:text-primary transition-colors">Certifications by Career Goal</span>
+                                  <ArrowRight className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity ml-auto text-primary" />
                                 </div>
                               </Link>
                             </li>
                           </ul>
                         </div>
 
-                        <div>
-                          <h3 className="text-sm font-semibold mb-3">Popular Career Paths</h3>
-                          <ul className="space-y-2">
+                        <div className="space-y-4 pt-4 border-t border-border/50">
+                          <h3 className="text-sm font-bold text-foreground mb-4 flex items-center gap-2">
+                            <Briefcase className="h-5 w-5 text-primary" />
+                            Popular Career Paths
+                          </h3>
+                          <ul className="space-y-1">
                             <li>
                               <Link href="/career/security-manager">
-                                <div className="flex items-center gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-career-security-manager">
-                                  <ArrowRight className="h-4 w-4 text-primary" />
-                                  <span className="text-sm group-hover:text-primary transition-colors">Security Manager Track</span>
+                                <div className="flex items-center gap-3 p-2.5 rounded-md hover:bg-background/60 cursor-pointer group transition-all" data-testid="link-career-security-manager">
+                                  <span className="text-sm font-medium group-hover:text-primary transition-colors">Security Manager Track</span>
+                                  <ArrowRight className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity ml-auto text-primary" />
                                 </div>
                               </Link>
                             </li>
                             <li>
                               <Link href="/career/ciso">
-                                <div className="flex items-center gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-career-ciso">
-                                  <ArrowRight className="h-4 w-4 text-primary" />
-                                  <span className="text-sm group-hover:text-primary transition-colors">CISO Career Path</span>
+                                <div className="flex items-center gap-3 p-2.5 rounded-md hover:bg-background/60 cursor-pointer group transition-all" data-testid="link-career-ciso">
+                                  <span className="text-sm font-medium group-hover:text-primary transition-colors">CISO Career Path</span>
+                                  <ArrowRight className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity ml-auto text-primary" />
                                 </div>
                               </Link>
                             </li>
                             <li>
                               <Link href="/career/it-auditor">
-                                <div className="flex items-center gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-career-it-auditor">
-                                  <ArrowRight className="h-4 w-4 text-primary" />
-                                  <span className="text-sm group-hover:text-primary transition-colors">IT Auditor Track</span>
+                                <div className="flex items-center gap-3 p-2.5 rounded-md hover:bg-background/60 cursor-pointer group transition-all" data-testid="link-career-it-auditor">
+                                  <span className="text-sm font-medium group-hover:text-primary transition-colors">IT Auditor Track</span>
+                                  <ArrowRight className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity ml-auto text-primary" />
                                 </div>
                               </Link>
                             </li>
