@@ -10,7 +10,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, Target, Search, BarChart3, BookOpen, Briefcase, ArrowRight, Shield, FileCheck, Folder } from "lucide-react";
 import { useState } from "react";
 import { Link } from "wouter";
 import logoImage from "@assets/Gemini_logo 11_1759728209053.png";
@@ -67,9 +67,193 @@ export default function Header() {
             <a href="#how-it-works" className="text-sm font-medium text-foreground hover-elevate px-3 py-2 rounded-md" data-testid="link-how-it-works">
               How It Works
             </a>
-            <a href="#certifications" className="text-sm font-medium text-foreground hover-elevate px-3 py-2 rounded-md" data-testid="link-certifications">
-              Certifications
-            </a>
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="text-sm font-medium" data-testid="menu-certifications">
+                    Certifications
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <div className="grid grid-cols-2 gap-6 p-6 w-[700px]" data-testid="megamenu-certifications">
+                      <div className="space-y-5">
+                        <div>
+                          <h3 className="text-sm font-semibold text-muted-foreground mb-3">Information Security Certifications</h3>
+                          <ul className="space-y-2">
+                            <li>
+                              <Link href="/cert/cism">
+                                <div className="flex items-start gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-cert-cism">
+                                  <Shield className="h-4 w-4 mt-0.5 text-primary" />
+                                  <div>
+                                    <div className="text-sm font-medium group-hover:text-primary transition-colors">CISM</div>
+                                    <p className="text-xs text-muted-foreground">Information Security Manager</p>
+                                  </div>
+                                </div>
+                              </Link>
+                            </li>
+                            <li>
+                              <Link href="/cert/cissp">
+                                <div className="flex items-start gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-cert-cissp">
+                                  <Shield className="h-4 w-4 mt-0.5 text-primary" />
+                                  <div>
+                                    <div className="text-sm font-medium group-hover:text-primary transition-colors">CISSP</div>
+                                    <p className="text-xs text-muted-foreground">Security Professional</p>
+                                  </div>
+                                </div>
+                              </Link>
+                            </li>
+                            <li>
+                              <Link href="/cert/ccsp">
+                                <div className="flex items-start gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-cert-ccsp">
+                                  <Shield className="h-4 w-4 mt-0.5 text-primary" />
+                                  <div>
+                                    <div className="text-sm font-medium group-hover:text-primary transition-colors">CCSP</div>
+                                    <p className="text-xs text-muted-foreground">Cloud Security</p>
+                                  </div>
+                                </div>
+                              </Link>
+                            </li>
+                          </ul>
+                        </div>
+
+                        <div>
+                          <h3 className="text-sm font-semibold text-muted-foreground mb-3">IT Audit & Governance</h3>
+                          <ul className="space-y-2">
+                            <li>
+                              <Link href="/cert/cisa">
+                                <div className="flex items-start gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-cert-cisa">
+                                  <FileCheck className="h-4 w-4 mt-0.5 text-primary" />
+                                  <div>
+                                    <div className="text-sm font-medium group-hover:text-primary transition-colors">CISA</div>
+                                    <p className="text-xs text-muted-foreground">Information Systems Auditor</p>
+                                  </div>
+                                </div>
+                              </Link>
+                            </li>
+                            <li>
+                              <Link href="/cert/cgeit">
+                                <div className="flex items-start gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-cert-cgeit">
+                                  <FileCheck className="h-4 w-4 mt-0.5 text-primary" />
+                                  <div>
+                                    <div className="text-sm font-medium group-hover:text-primary transition-colors">CGEIT</div>
+                                    <p className="text-xs text-muted-foreground">IT Governance</p>
+                                  </div>
+                                </div>
+                              </Link>
+                            </li>
+                          </ul>
+                        </div>
+
+                        <div>
+                          <h3 className="text-sm font-semibold text-muted-foreground mb-3">Project Management</h3>
+                          <ul className="space-y-2">
+                            <li>
+                              <Link href="/cert/pmp">
+                                <div className="flex items-start gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-cert-pmp">
+                                  <Folder className="h-4 w-4 mt-0.5 text-primary" />
+                                  <div>
+                                    <div className="text-sm font-medium group-hover:text-primary transition-colors">PMP</div>
+                                    <p className="text-xs text-muted-foreground">Project Management Professional</p>
+                                  </div>
+                                </div>
+                              </Link>
+                            </li>
+                            <li>
+                              <Link href="/cert/capm">
+                                <div className="flex items-start gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-cert-capm">
+                                  <Folder className="h-4 w-4 mt-0.5 text-primary" />
+                                  <div>
+                                    <div className="text-sm font-medium group-hover:text-primary transition-colors">CAPM</div>
+                                    <p className="text-xs text-muted-foreground">Associate Project Manager</p>
+                                  </div>
+                                </div>
+                              </Link>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+
+                      <div className="space-y-5 border-l pl-6">
+                        <div>
+                          <h3 className="text-sm font-semibold mb-3">Need Help Deciding?</h3>
+                          <ul className="space-y-2">
+                            <li>
+                              <Link href="/which-certification">
+                                <div className="flex items-center gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-which-certification">
+                                  <Target className="h-4 w-4 text-primary" />
+                                  <span className="text-sm group-hover:text-primary transition-colors">Which Certification Is Right for Me?</span>
+                                </div>
+                              </Link>
+                            </li>
+                            <li>
+                              <Link href="/compare/cism-vs-cissp">
+                                <div className="flex items-center gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-compare-cism-cissp">
+                                  <Search className="h-4 w-4 text-primary" />
+                                  <span className="text-sm group-hover:text-primary transition-colors">Compare CISM vs CISSP</span>
+                                </div>
+                              </Link>
+                            </li>
+                            <li>
+                              <Link href="/compare/pmp-vs-capm">
+                                <div className="flex items-center gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-compare-pmp-capm">
+                                  <BarChart3 className="h-4 w-4 text-primary" />
+                                  <span className="text-sm group-hover:text-primary transition-colors">Compare PMP vs CAPM</span>
+                                </div>
+                              </Link>
+                            </li>
+                            <li>
+                              <Link href="/certifications/isaca">
+                                <div className="flex items-center gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-isaca-certifications">
+                                  <BookOpen className="h-4 w-4 text-primary" />
+                                  <span className="text-sm group-hover:text-primary transition-colors">View All ISACA Certifications</span>
+                                </div>
+                              </Link>
+                            </li>
+                            <li>
+                              <Link href="/certifications/by-goal">
+                                <div className="flex items-center gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-certifications-by-goal">
+                                  <Briefcase className="h-4 w-4 text-primary" />
+                                  <span className="text-sm group-hover:text-primary transition-colors">Certifications by Career Goal</span>
+                                </div>
+                              </Link>
+                            </li>
+                          </ul>
+                        </div>
+
+                        <div>
+                          <h3 className="text-sm font-semibold mb-3">Popular Career Paths</h3>
+                          <ul className="space-y-2">
+                            <li>
+                              <Link href="/career/security-manager">
+                                <div className="flex items-center gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-career-security-manager">
+                                  <ArrowRight className="h-4 w-4 text-primary" />
+                                  <span className="text-sm group-hover:text-primary transition-colors">Security Manager Track</span>
+                                </div>
+                              </Link>
+                            </li>
+                            <li>
+                              <Link href="/career/ciso">
+                                <div className="flex items-center gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-career-ciso">
+                                  <ArrowRight className="h-4 w-4 text-primary" />
+                                  <span className="text-sm group-hover:text-primary transition-colors">CISO Career Path</span>
+                                </div>
+                              </Link>
+                            </li>
+                            <li>
+                              <Link href="/career/it-auditor">
+                                <div className="flex items-center gap-2 p-2 rounded-md hover:bg-accent cursor-pointer group transition-colors" data-testid="link-career-it-auditor">
+                                  <ArrowRight className="h-4 w-4 text-primary" />
+                                  <span className="text-sm group-hover:text-primary transition-colors">IT Auditor Track</span>
+                                </div>
+                              </Link>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
             <a href="#about-us" className="text-sm font-medium text-foreground hover-elevate px-3 py-2 rounded-md" data-testid="link-about-us">
               About Us
             </a>

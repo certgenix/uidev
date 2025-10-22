@@ -1,0 +1,35 @@
+2-Column Mega Menu Layout
+
+Left Column: Individual Certifications
+
+Information Security Certifications
+
+CISM - Information Security Manager
+CISSP - Security Professional
+CCSP - Cloud Security
+
+
+IT Audit & Governance
+
+CISA - Information Systems Auditor
+CGEIT - IT Governance
+
+Project Management
+
+PMP - Project Management Professional
+CAPM - Associate Project Manager
+
+Right Column: Decision Support
+Need Help Deciding?
+
+🎯 Which Certification Is Right for Me?
+🔍 Compare CISM vs CISSP
+📊 Compare PMP vs CAPM
+📚 View All ISACA Certifications
+💼 Certifications by Career Goal
+
+Popular Career Paths
+
+→ Security Manager Track
+→ CISO Career Path
+→ IT Auditor Track
