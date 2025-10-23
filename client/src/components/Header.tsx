@@ -10,24 +10,98 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { Menu, X, ChevronDown, Target, Search, BarChart3, BookOpen, Briefcase, ArrowRight, Shield, FileCheck, Folder, Grid3x3 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Menu, X, ChevronDown, Target, Search, BarChart3, BookOpen, Briefcase, ArrowRight, Shield, FileCheck, Folder, Grid3x3, User, LogOut } from "lucide-react";
 import { useState } from "react";
 import { Link } from "wouter";
 import logoImage from "@assets/Gemini_logo 11_1759728209053.png";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
   const [signupOpen, setSignupOpen] = useState(false);
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+  const [signupFirstName, setSignupFirstName] = useState("");
+  const [signupLastName, setSignupLastName] = useState("");
+  const [signupEmail, setSignupEmail] = useState("");
+  const [signupPassword, setSignupPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const { user, login, signup, logout } = useAuth();
+  const { toast } = useToast();
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle login logic here
+    setIsLoading(true);
+    try {
+      await login(loginEmail, loginPassword);
+      toast({
+        title: "Success",
+        description: "You've successfully logged in!",
+      });
+      setLoginOpen(false);
+      setLoginEmail("");
+      setLoginPassword("");
+    } catch (error: any) {
+      toast({
+        title: "Login Failed",
+        description: error.message || "Invalid email or password",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleSignup = (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle signup logic here
+    setIsLoading(true);
+    try {
+      await signup(signupEmail, signupPassword, signupFirstName, signupLastName);
+      toast({
+        title: "Success",
+        description: "Your account has been created!",
+      });
+      setSignupOpen(false);
+      setSignupFirstName("");
+      setSignupLastName("");
+      setSignupEmail("");
+      setSignupPassword("");
+    } catch (error: any) {
+      toast({
+        title: "Signup Failed",
+        description: error.message || "Failed to create account",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      toast({
+        title: "Logged Out",
+        description: "You've been successfully logged out",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: "Failed to log out",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -288,16 +362,47 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <Dialog open={loginOpen} onOpenChange={setLoginOpen}>
-              <DialogTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="hidden md:inline-flex rounded-full"
-                  data-testid="button-login"
-                >
-                  Login
-                </Button>
-              </DialogTrigger>
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="hidden md:inline-flex rounded-full gap-2"
+                    data-testid="button-user-menu"
+                  >
+                    <User className="h-4 w-4" />
+                    {user.displayName || user.email}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem data-testid="menu-item-profile">
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={handleLogout}
+                    data-testid="menu-item-logout"
+                  >
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Log out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <>
+                <Dialog open={loginOpen} onOpenChange={setLoginOpen}>
+                  <DialogTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      className="hidden md:inline-flex rounded-full"
+                      data-testid="button-login"
+                    >
+                      Login
+                    </Button>
+                  </DialogTrigger>
               <DialogContent className="sm:max-w-md">
                 <DialogHeader>
                   <DialogTitle>Login to CertGenix</DialogTitle>
@@ -309,6 +414,8 @@ export default function Header() {
                       id="email"
                       type="email"
                       placeholder="your@email.com"
+                      value={loginEmail}
+                      onChange={(e) => setLoginEmail(e.target.value)}
                       required
                       data-testid="input-login-email"
                     />
@@ -330,6 +437,8 @@ export default function Header() {
                       id="password"
                       type="password"
                       placeholder="••••••••"
+                      value={loginPassword}
+                      onChange={(e) => setLoginPassword(e.target.value)}
                       required
                       data-testid="input-login-password"
                     />
@@ -337,9 +446,10 @@ export default function Header() {
                   <Button
                     type="submit"
                     className="w-full rounded-full"
+                    disabled={isLoading}
                     data-testid="button-login-submit"
                   >
-                    Login
+                    {isLoading ? "Logging in..." : "Login"}
                   </Button>
                   <p className="text-sm text-center text-muted-foreground">
                     Don't have an account?{" "}
@@ -358,16 +468,16 @@ export default function Header() {
               </DialogContent>
             </Dialog>
             
-            <Dialog open={signupOpen} onOpenChange={setSignupOpen}>
-              <DialogTrigger asChild>
-                <Button
-                  variant="default"
-                  className="hidden md:inline-flex rounded-full"
-                  data-testid="button-signup"
-                >
-                  Sign up
-                </Button>
-              </DialogTrigger>
+                <Dialog open={signupOpen} onOpenChange={setSignupOpen}>
+                  <DialogTrigger asChild>
+                    <Button
+                      variant="default"
+                      className="hidden md:inline-flex rounded-full"
+                      data-testid="button-signup"
+                    >
+                      Sign up
+                    </Button>
+                  </DialogTrigger>
               <DialogContent className="sm:max-w-md">
                 <DialogHeader>
                   <DialogTitle>Sign up for CertGenix</DialogTitle>
@@ -379,6 +489,8 @@ export default function Header() {
                       id="firstName"
                       type="text"
                       placeholder="John"
+                      value={signupFirstName}
+                      onChange={(e) => setSignupFirstName(e.target.value)}
                       required
                       data-testid="input-signup-firstname"
                     />
@@ -389,6 +501,8 @@ export default function Header() {
                       id="lastName"
                       type="text"
                       placeholder="Doe"
+                      value={signupLastName}
+                      onChange={(e) => setSignupLastName(e.target.value)}
                       required
                       data-testid="input-signup-lastname"
                     />
@@ -399,16 +513,32 @@ export default function Header() {
                       id="signupEmail"
                       type="email"
                       placeholder="your@email.com"
+                      value={signupEmail}
+                      onChange={(e) => setSignupEmail(e.target.value)}
                       required
                       data-testid="input-signup-email"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="signupPassword">Password</Label>
+                    <Input
+                      id="signupPassword"
+                      type="password"
+                      placeholder="••••••••"
+                      value={signupPassword}
+                      onChange={(e) => setSignupPassword(e.target.value)}
+                      required
+                      minLength={6}
+                      data-testid="input-signup-password"
                     />
                   </div>
                   <Button
                     type="submit"
                     className="w-full rounded-full"
+                    disabled={isLoading}
                     data-testid="button-signup-submit"
                   >
-                    Sign up
+                    {isLoading ? "Creating account..." : "Sign up"}
                   </Button>
                   <p className="text-sm text-center text-muted-foreground">
                     Already have an account?{" "}
@@ -425,7 +555,9 @@ export default function Header() {
                   </p>
                 </form>
               </DialogContent>
-            </Dialog>
+                </Dialog>
+              </>
+            )}
 
             <Button
               variant="ghost"
