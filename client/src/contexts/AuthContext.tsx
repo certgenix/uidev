@@ -48,16 +48,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await updateProfile(userCredential.user, {
       displayName: `${firstName} ${lastName}`
     });
+    console.log('✅ User registered successfully! Firebase UID:', userCredential.user.uid);
     setUser(userCredential.user);
   };
 
   const login = async (email: string, password: string) => {
-    await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    console.log('✅ User logged in successfully! Firebase UID:', userCredential.user.uid);
   };
 
   const loginWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
+    const result = await signInWithPopup(auth, provider);
+    console.log('✅ User logged in with Google successfully! Firebase UID:', result.user.uid);
   };
 
   const logout = async () => {
