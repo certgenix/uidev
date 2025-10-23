@@ -11,6 +11,7 @@ import { Progress } from "@/components/ui/progress";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import TransitionScreen from "@/components/TransitionScreen";
+import { getOrCreateSessionId } from "@/lib/session";
 
 const certifications = [
   { value: "CISSP®", label: "CISSP®" },
@@ -339,7 +340,13 @@ export default function Diagnostic() {
     const TIMEOUT_MS = 300000;
     
     try {
-      console.log('Calling Firebase function with data:', JSON.stringify(data, null, 2));
+      const sessionId = getOrCreateSessionId();
+      const requestData = {
+        ...data,
+        sessionId
+      };
+      
+      console.log('Calling Firebase function with data:', JSON.stringify(requestData, null, 2));
       
       const controller = new AbortController();
       const timeoutId = setTimeout(() => {
@@ -352,7 +359,7 @@ export default function Diagnostic() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(requestData),
         signal: controller.signal,
       });
       
