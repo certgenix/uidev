@@ -1,5 +1,5 @@
-import { initializeApp, getApps } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import { initializeApp, getApps, FirebaseApp } from 'firebase/app';
+import { getAuth, Auth } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || '',
@@ -10,8 +10,8 @@ const firebaseConfig = {
 };
 
 // Only initialize Firebase if API key is provided
-let app;
-let auth;
+let app: FirebaseApp | undefined;
+let auth: Auth | undefined;
 
 if (firebaseConfig.apiKey && firebaseConfig.projectId) {
   app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
