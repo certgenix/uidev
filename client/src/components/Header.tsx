@@ -490,23 +490,14 @@ export default function Header() {
               </DialogContent>
             </Dialog>
             
-                <SignupDialog
-                  open={signupOpen}
-                  onOpenChange={setSignupOpen}
-                  onSwitchToLogin={() => {
-                    setSignupOpen(false);
-                    setLoginOpen(true);
-                  }}
-                  trigger={
-                    <Button
-                      variant="default"
-                      className="hidden md:inline-flex rounded-full"
-                      data-testid="button-signup"
-                    >
-                      Sign up
-                    </Button>
-                  }
-                />
+                <Button
+                  variant="default"
+                  className="hidden md:inline-flex rounded-full"
+                  onClick={() => setSignupOpen(true)}
+                  data-testid="button-signup"
+                >
+                  Sign up
+                </Button>
               </>
             )}
 
@@ -571,29 +562,31 @@ export default function Header() {
                     </Button>
                   </DialogTrigger>
                 </Dialog>
-                <SignupDialog
-                  open={signupOpen}
-                  onOpenChange={setSignupOpen}
-                  onSwitchToLogin={() => {
-                    setSignupOpen(false);
-                    setLoginOpen(true);
+                <Button
+                  variant="default"
+                  className="flex-1 rounded-full"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    setSignupOpen(true);
                   }}
-                  trigger={
-                    <Button
-                      variant="default"
-                      className="flex-1 rounded-full"
-                      onClick={() => setMobileMenuOpen(false)}
-                      data-testid="button-mobile-signup"
-                    >
-                      Sign up
-                    </Button>
-                  }
-                />
+                  data-testid="button-mobile-signup"
+                >
+                  Sign up
+                </Button>
               </div>
             </nav>
           </div>
         )}
       </div>
+
+      <SignupDialog
+        open={signupOpen}
+        onOpenChange={setSignupOpen}
+        onSwitchToLogin={() => {
+          setSignupOpen(false);
+          setLoginOpen(true);
+        }}
+      />
     </header>
   );
 }
