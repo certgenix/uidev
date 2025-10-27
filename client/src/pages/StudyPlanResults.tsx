@@ -9,6 +9,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { BookOpen, Calendar, Clock, Target, CheckCircle2, Lightbulb, AlertCircle, ChevronRight, Rocket } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { SignupDialog } from "@/components/SignupDialog";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
@@ -75,6 +76,7 @@ const priorityLabels = {
 export default function StudyPlanResults() {
   const [, setLocation] = useLocation();
   const [selectedWeek, setSelectedWeek] = useState<number>(1);
+  const [signupOpen, setSignupOpen] = useState(false);
   const { toast } = useToast();
 
   const initializeProgressMutation = useMutation({
@@ -203,14 +205,13 @@ export default function StudyPlanResults() {
             {plan.totalWeeks}-Week Journey | {plan.weeklyHours} hours/week
           </p>
           <Button
-            onClick={() => initializeProgressMutation.mutate(plan.totalWeeks)}
-            disabled={initializeProgressMutation.isPending}
+            onClick={() => setSignupOpen(true)}
             size="lg"
             className="bg-gradient-to-r from-primary to-chart-2 hover:from-primary/90 hover:to-chart-2/90"
             data-testid="button-start-study-plan"
           >
             <Rocket className="w-5 h-5 mr-2" />
-            {initializeProgressMutation.isPending ? "Starting..." : "Start Your Study Plan"}
+            Start Your Study Plan
           </Button>
         </div>
 
@@ -506,17 +507,21 @@ export default function StudyPlanResults() {
             Retake Diagnostic
           </Button>
           <Button 
-            onClick={() => initializeProgressMutation.mutate(plan.totalWeeks)}
-            disabled={initializeProgressMutation.isPending}
+            onClick={() => setSignupOpen(true)}
             size="lg"
             className="bg-gradient-to-r from-primary to-chart-2 hover:from-primary/90 hover:to-chart-2/90"
             data-testid="button-start-week-1"
           >
             <Rocket className="w-5 h-5 mr-2" />
-            {initializeProgressMutation.isPending ? "Starting..." : "Start Your Study Plan"}
+            Start Your Study Plan
           </Button>
         </div>
       </div>
+
+      <SignupDialog
+        open={signupOpen}
+        onOpenChange={setSignupOpen}
+      />
 
       <Footer />
     </div>
