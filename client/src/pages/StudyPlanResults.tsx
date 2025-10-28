@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { useMutation } from "@tanstack/react-query";
 import { Card } from "@/components/ui/card";
@@ -6,12 +6,14 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { BookOpen, Calendar, Clock, Target, CheckCircle2, Lightbulb, AlertCircle, ChevronRight, Rocket } from "lucide-react";
+import { BookOpen, Calendar, Clock, Target, CheckCircle2, Lightbulb, AlertCircle, ChevronRight, Rocket, Lock } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { SignupDialog } from "@/components/SignupDialog";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
+import { getOrCreateSessionId } from "@/lib/session";
 
 interface Topic {
   name: string;
@@ -78,6 +80,56 @@ export default function StudyPlanResults() {
   const [selectedWeek, setSelectedWeek] = useState<number>(1);
   const [signupOpen, setSignupOpen] = useState(false);
   const { toast } = useToast();
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (!user && selectedWeek > 4) {
+      setSelectedWeek(1);
+    }
+  }, [user, selectedWeek]);
+
+  useEffect(() => {
+    const registerUserWithFirebase = async () => {
+      if (user && user.email && user.displayName) {
+        try {
+          const sessionId = getOrCreateSessionId();
+          const requestBody = {
+            sessionId: sessionId,
+            uid: user.uid,
+            email: user.email,
+            name: user.displayName
+          };
+
+          console.log('Calling registerUser Firebase function with data:', requestBody);
+
+          const response = await fetch('https://registeruser-qn5uv54q4a-uc.a.run.app/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+          });
+
+          if (!response.ok) {
+            const errorText = await response.text();
+            console.error('registerUser function error response:', {
+              status: response.status,
+              statusText: response.statusText,
+              body: errorText
+            });
+            return;
+          }
+
+          const responseData = await response.json();
+          console.log('registerUser function success response:', responseData);
+        } catch (error: any) {
+          console.error('registerUser function error:', error);
+        }
+      }
+    };
+
+    registerUserWithFirebase();
+  }, [user]);
 
   const initializeProgressMutation = useMutation({
     mutationFn: async (totalWeeks: number) => {
@@ -205,7 +257,13 @@ export default function StudyPlanResults() {
             {plan.totalWeeks}-Week Journey | {plan.weeklyHours} hours/week
           </p>
           <Button
-            onClick={() => setSignupOpen(true)}
+            onClick={() => {
+              if (user) {
+                initializeProgressMutation.mutate(plan.totalWeeks);
+              } else {
+                setSignupOpen(true);
+              }
+            }}
             size="lg"
             className="bg-gradient-to-r from-primary to-chart-2 hover:from-primary/90 hover:to-chart-2/90"
             data-testid="button-start-study-plan"
@@ -297,7 +355,7 @@ export default function StudyPlanResults() {
               Weeks
             </h2>
             <div className="space-y-2">
-              {plan.weeks.map((week) => (
+              {plan.weeks.slice(0, user ? plan.weeks.length : 4).map((week) => (
                 <button
                   key={week.weekNumber}
                   onClick={() => setSelectedWeek(week.weekNumber)}
@@ -323,6 +381,30 @@ export default function StudyPlanResults() {
                   </div>
                 </button>
               ))}
+              
+              {!user && plan.weeks.length > 4 && (
+                <Card className="p-4 bg-gradient-to-br from-primary/10 to-chart-2/10 border-2 border-primary/30" data-testid="card-signup-prompt">
+                  <div className="text-center">
+                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-primary to-chart-2 mb-3 mx-auto">
+                      <Lock className="h-6 w-6 text-white" />
+                    </div>
+                    <h3 className="font-bold text-gray-900 dark:text-white mb-2">
+                      {plan.weeks.length - 4} More Weeks Locked
+                    </h3>
+                    <p className="text-xs text-gray-600 dark:text-gray-300 mb-3">
+                      Sign up to unlock your complete {plan.totalWeeks}-week study plan
+                    </p>
+                    <Button 
+                      className="w-full bg-gradient-to-r from-primary to-chart-2 hover:from-primary/90 hover:to-chart-2/90"
+                      size="sm"
+                      onClick={() => setSignupOpen(true)}
+                      data-testid="button-unlock-weeks"
+                    >
+                      Sign Up to Unlock
+                    </Button>
+                  </div>
+                </Card>
+              )}
             </div>
           </Card>
 
@@ -507,7 +589,13 @@ export default function StudyPlanResults() {
             Retake Diagnostic
           </Button>
           <Button 
-            onClick={() => setSignupOpen(true)}
+            onClick={() => {
+              if (user) {
+                initializeProgressMutation.mutate(plan.totalWeeks);
+              } else {
+                setSignupOpen(true);
+              }
+            }}
             size="lg"
             className="bg-gradient-to-r from-primary to-chart-2 hover:from-primary/90 hover:to-chart-2/90"
             data-testid="button-start-week-1"
