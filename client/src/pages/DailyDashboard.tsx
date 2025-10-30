@@ -319,30 +319,112 @@ export default function DailyDashboard() {
   };
 
   const handleCompleteDay = async () => {
-    if (completedActivities.length === 0) {
+    if (todayTasks.length === 0) {
       toast({
-        title: "Complete at least one activity",
-        description: "Please complete some activities before marking the day as done.",
+        title: "No tasks available",
+        description: "There are no tasks to complete for this day.",
         variant: "destructive",
       });
       return;
     }
 
-    await updateDayProgressMutation.mutateAsync({
-      status: "completed",
-      completedAt: new Date().toISOString(),
-      completedActivities,
-      timeSpent: dailySchedule?.duration || 0,
-    });
+    if (isFirebaseMode && user?.uid) {
+      const incompleteTasks = todayTasks
+        .filter(task => !completedActivities.includes(task.taskId))
+        .map(task => task.taskId);
 
-    toast({
-      title: "Day Complete!",
-      description: "Great work! You've completed today's study session.",
-    });
+      if (incompleteTasks.length === 0) {
+        toast({
+          title: "All tasks already completed!",
+          description: "You've already completed all tasks for today.",
+        });
+        setTimeout(() => {
+          setLocation(`/dashboard/week/${weekNumber}`);
+        }, 1500);
+        return;
+      }
 
-    setTimeout(() => {
-      setLocation(`/dashboard/week/${weekNumber}`);
-    }, 1500);
+      setCompletingTask(true);
+      try {
+        const response = await fetch('https://us-central1-certply-56653.cloudfunctions.net/completeTasks', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            uid: user.uid,
+            taskIds: incompleteTasks
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to complete tasks: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log('All tasks completed:', result);
+        
+        setCompletedActivities([...completedActivities, ...incompleteTasks]);
+        
+        toast({
+          title: "Day Complete!",
+          description: `Great work! You've completed all ${todayTasks.length} tasks for today.`,
+        });
+        
+        const loadResponse = await fetch('https://us-central1-certply-56653.cloudfunctions.net/getAllTasksByUid', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            uid: user.uid
+          })
+        });
+        
+        if (loadResponse.ok) {
+          const data = await loadResponse.json();
+          setFirebaseData(data || null);
+        }
+
+        setTimeout(() => {
+          setLocation(`/dashboard/week/${weekNumber}`);
+        }, 1500);
+      } catch (error) {
+        console.error('Error completing day:', error);
+        toast({
+          title: "Error",
+          description: "Failed to complete all tasks. Please try again.",
+          variant: "destructive",
+        });
+      } finally {
+        setCompletingTask(false);
+      }
+    } else {
+      if (completedActivities.length === 0) {
+        toast({
+          title: "Complete at least one activity",
+          description: "Please complete some activities before marking the day as done.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      await updateDayProgressMutation.mutateAsync({
+        status: "completed",
+        completedAt: new Date().toISOString(),
+        completedActivities,
+        timeSpent: dailySchedule?.duration || 0,
+      });
+
+      toast({
+        title: "Day Complete!",
+        description: "Great work! You've completed today's study session.",
+      });
+
+      setTimeout(() => {
+        setLocation(`/dashboard/week/${weekNumber}`);
+      }, 1500);
+    }
   };
 
   const progressPct = todayTasks.length > 0 
@@ -506,11 +588,12 @@ export default function DailyDashboard() {
           </Button>
           <Button
             onClick={handleCompleteDay}
-            disabled={updateDayProgressMutation.isPending || currentDayProgress?.status === "completed"}
+            disabled={completingTask || updateDayProgressMutation.isPending || currentDayProgress?.status === "completed"}
             className="flex-1 bg-gradient-to-r from-primary to-chart-2 hover:from-primary/90 hover:to-chart-2/90"
             data-testid="button-complete-day"
           >
-            {updateDayProgressMutation.isPending ? "Saving..." : 
+            {completingTask ? "Completing tasks..." :
+             updateDayProgressMutation.isPending ? "Saving..." : 
              currentDayProgress?.status === "completed" ? "Already Completed" : "Complete Day"}
           </Button>
         </div>
