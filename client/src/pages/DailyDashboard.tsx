@@ -171,12 +171,18 @@ export default function DailyDashboard() {
   }
 
   const [completedActivities, setCompletedActivities] = useState<string[]>([]);
+  const [completingTask, setCompletingTask] = useState(false);
 
   useEffect(() => {
-    if (currentDayProgress?.completedActivities) {
+    if (isFirebaseMode && firebaseDayTasks.length > 0) {
+      const completed = firebaseDayTasks
+        .filter((task: any) => task.completedAt)
+        .map((task: any) => task.taskId);
+      setCompletedActivities(completed);
+    } else if (currentDayProgress?.completedActivities) {
       setCompletedActivities(currentDayProgress.completedActivities as string[]);
     }
-  }, [currentDayProgress]);
+  }, [currentDayProgress, firebaseDayTasks, isFirebaseMode]);
 
   if (isLoading || loadingFirebase) {
     return (
@@ -227,17 +233,89 @@ export default function DailyDashboard() {
     );
   }
 
-  const todayTasks = dailySchedule?.topic.keyPoints.map(point => ({ 
-    topic: dailySchedule?.topic.name || '', 
-    task: point 
-  })) || [];
+  const todayTasks = isFirebaseMode && firebaseDayTasks.length > 0
+    ? firebaseDayTasks.map((task: any) => ({
+        taskId: task.taskId,
+        topic: task.topic || 'Study Topic',
+        task: task.keyPoint || task.task || task.description || 'Study task'
+      }))
+    : dailySchedule?.topic.keyPoints.map((point, index) => ({ 
+        taskId: `task-${dayIndex}-${index}`,
+        topic: dailySchedule?.topic.name || '', 
+        task: point 
+      })) || [];
 
-  const handleToggleActivity = (activityId: string) => {
-    const newCompleted = completedActivities.includes(activityId)
-      ? completedActivities.filter(id => id !== activityId)
-      : [...completedActivities, activityId];
-    
-    setCompletedActivities(newCompleted);
+  const handleToggleActivity = async (taskId: string) => {
+    if (isFirebaseMode && user?.uid) {
+      const isCompleted = completedActivities.includes(taskId);
+      
+      if (isCompleted) {
+        toast({
+          title: "Cannot uncomplete tasks",
+          description: "Once a task is completed, it cannot be unmarked in Firebase mode.",
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      setCompletingTask(true);
+      try {
+        const response = await fetch('https://us-central1-certply-56653.cloudfunctions.net/completeTasks', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            uid: user.uid,
+            taskIds: [taskId]
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to complete task: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log('Task completed:', result);
+        
+        setCompletedActivities([...completedActivities, taskId]);
+        
+        toast({
+          title: "Task Completed!",
+          description: "Great work! Keep up the progress.",
+        });
+        
+        const loadResponse = await fetch('https://us-central1-certply-56653.cloudfunctions.net/getAllTasksByUid', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            uid: user.uid
+          })
+        });
+        
+        if (loadResponse.ok) {
+          const data = await loadResponse.json();
+          setFirebaseData(data || null);
+        }
+      } catch (error) {
+        console.error('Error completing task:', error);
+        toast({
+          title: "Error",
+          description: "Failed to complete task. Please try again.",
+          variant: "destructive",
+        });
+      } finally {
+        setCompletingTask(false);
+      }
+    } else {
+      const newCompleted = completedActivities.includes(taskId)
+        ? completedActivities.filter(id => id !== taskId)
+        : [...completedActivities, taskId];
+      
+      setCompletedActivities(newCompleted);
+    }
   };
 
   const handleCompleteDay = async () => {
@@ -355,12 +433,11 @@ export default function DailyDashboard() {
           ) : (
             <div className="space-y-4">
               {todayTasks.map((task, index) => {
-                const taskId = `task-${dayIndex}-${index}`;
-                const isCompleted = completedActivities.includes(taskId);
+                const isCompleted = completedActivities.includes(task.taskId);
 
                 return (
                   <div 
-                    key={index}
+                    key={task.taskId}
                     className={`p-4 rounded-lg border-2 transition-all ${
                       isCompleted 
                         ? "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800" 
@@ -370,15 +447,16 @@ export default function DailyDashboard() {
                   >
                     <div className="flex items-start gap-4">
                       <Checkbox
-                        id={taskId}
+                        id={task.taskId}
                         checked={isCompleted}
-                        onCheckedChange={() => handleToggleActivity(taskId)}
+                        onCheckedChange={() => handleToggleActivity(task.taskId)}
                         className="mt-1"
+                        disabled={completingTask}
                         data-testid={`checkbox-task-${index}`}
                       />
                       <div className="flex-1">
                         <label
-                          htmlFor={taskId}
+                          htmlFor={task.taskId}
                           className={`block font-medium mb-1 cursor-pointer ${
                             isCompleted 
                               ? "text-green-700 dark:text-green-300 line-through" 
