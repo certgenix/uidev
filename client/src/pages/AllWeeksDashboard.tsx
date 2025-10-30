@@ -8,7 +8,6 @@ import { Progress } from "@/components/ui/progress";
 import { Calendar, CheckCircle2, Lock, Clock, AlertCircle, ChevronRight } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useAuth } from "@/contexts/AuthContext";
-import { fetchWeeksAndTasks, WeekData, WeekTask } from "@/lib/firebase";
 import { useEffect, useState } from "react";
 
 interface DayProgress {
@@ -34,7 +33,7 @@ interface WeekProgressWithDays {
 export default function AllWeeksDashboard() {
   const [, setLocation] = useLocation();
   const { user } = useAuth();
-  const [firebaseWeeks, setFirebaseWeeks] = useState<WeekData[]>([]);
+  const [firebaseWeeks, setFirebaseWeeks] = useState<any[]>([]);
   const [loadingFirebase, setLoadingFirebase] = useState(false);
 
   // Fetch from API (fallback)
@@ -42,17 +41,32 @@ export default function AllWeeksDashboard() {
     queryKey: ["/api/progress/weeks"],
   });
 
-  // Fetch from Firebase when user is logged in
+  // Fetch from Firebase Cloud Function when user is logged in
   useEffect(() => {
     const loadFirebaseData = async () => {
       if (user?.uid) {
         setLoadingFirebase(true);
         try {
-          const weeks = await fetchWeeksAndTasks(user.uid);
-          console.log('Fetched weeks and tasks from Firebase:', weeks);
-          setFirebaseWeeks(weeks);
+          const response = await fetch('https://us-central1-certply-56653.cloudfunctions.net/getAllTasksByUid', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              uid: user.uid
+            })
+          });
+
+          if (!response.ok) {
+            throw new Error(`Firebase function error: ${response.status}`);
+          }
+
+          const data = await response.json();
+          console.log('Fetched weeks and tasks from Firebase Cloud Function:', data);
+          setFirebaseWeeks(data || []);
         } catch (error) {
           console.error('Error loading Firebase weeks:', error);
+          setFirebaseWeeks([]);
         } finally {
           setLoadingFirebase(false);
         }
