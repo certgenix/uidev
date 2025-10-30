@@ -19,7 +19,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Menu, X, ChevronDown, Target, Search, BarChart3, BookOpen, Briefcase, ArrowRight, Shield, FileCheck, Folder, Grid3x3, User, LogOut } from "lucide-react";
+import { Menu, X, ChevronDown, Target, Search, BarChart3, BookOpen, Briefcase, ArrowRight, Shield, FileCheck, Folder, Grid3x3, User, LogOut, Calendar } from "lucide-react";
 import { useState } from "react";
 import { Link } from "wouter";
 import logoImage from "@assets/Gemini_logo 11_1759728209053.png";
@@ -371,6 +371,12 @@ export default function Header() {
                 <DropdownMenuContent align="end" className="w-56">
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
+                  <Link href="/dashboard/all-weeks">
+                    <DropdownMenuItem data-testid="menu-item-plans">
+                      <Calendar className="mr-2 h-4 w-4" />
+                      <span>Plans</span>
+                    </DropdownMenuItem>
+                  </Link>
                   <DropdownMenuItem data-testid="menu-item-profile">
                     <User className="mr-2 h-4 w-4" />
                     <span>Profile</span>

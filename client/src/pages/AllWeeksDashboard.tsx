@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Calendar, CheckCircle2, Lock, Clock, AlertCircle, ChevronRight } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
+import { useAuth } from "@/contexts/AuthContext";
+import { fetchWeeksAndTasks, WeekData, WeekTask } from "@/lib/firebase";
+import { useEffect, useState } from "react";
 
 interface DayProgress {
   id: string;
@@ -30,10 +33,34 @@ interface WeekProgressWithDays {
 
 export default function AllWeeksDashboard() {
   const [, setLocation] = useLocation();
+  const { user } = useAuth();
+  const [firebaseWeeks, setFirebaseWeeks] = useState<WeekData[]>([]);
+  const [loadingFirebase, setLoadingFirebase] = useState(false);
 
+  // Fetch from API (fallback)
   const { data: allWeeks = [], isLoading } = useQuery<WeekProgressWithDays[]>({
     queryKey: ["/api/progress/weeks"],
   });
+
+  // Fetch from Firebase when user is logged in
+  useEffect(() => {
+    const loadFirebaseData = async () => {
+      if (user?.uid) {
+        setLoadingFirebase(true);
+        try {
+          const weeks = await fetchWeeksAndTasks(user.uid);
+          console.log('Fetched weeks and tasks from Firebase:', weeks);
+          setFirebaseWeeks(weeks);
+        } catch (error) {
+          console.error('Error loading Firebase weeks:', error);
+        } finally {
+          setLoadingFirebase(false);
+        }
+      }
+    };
+    
+    loadFirebaseData();
+  }, [user]);
 
   const studyPlan = (() => {
     try {
@@ -98,21 +125,47 @@ export default function AllWeeksDashboard() {
     }
   };
 
+  // Use Firebase data if available, otherwise fallback to API data
+  const isFirebaseMode = firebaseWeeks.length > 0;
+
+  // Convert Firebase weeks to the same format as API weeks for display
+  const formattedWeeks = isFirebaseMode 
+    ? firebaseWeeks.map(fw => ({
+        id: fw.id,
+        weekNumber: fw.weekNumber,
+        status: fw.status,
+        startedAt: fw.startedAt,
+        completedAt: fw.completedAt,
+        completedTopics: fw.tasks.filter(t => t.status === 'completed').length,
+        totalTopics: fw.tasks.length,
+        timeSpent: 0, // You can calculate this from tasks if needed
+        days: fw.tasks.map((task, idx) => ({
+          id: task.id,
+          dayIndex: task.dayNumber,
+          dayName: `Day ${task.dayNumber}`,
+          status: task.status === 'completed' ? 'completed' : task.status === 'in_progress' ? 'available' : 'locked',
+          completedAt: task.completedAt || null
+        }))
+      }))
+    : allWeeks;
+
   const calculateOverallProgress = () => {
-    if (allWeeks.length === 0) return 0;
-    const completed = allWeeks.filter(w => w.status === "completed").length;
-    return Math.round((completed / allWeeks.length) * 100);
+    if (formattedWeeks.length === 0) return 0;
+    const completed = formattedWeeks.filter(w => w.status === "completed").length;
+    return Math.round((completed / formattedWeeks.length) * 100);
   };
 
-  const totalTimeSpent = allWeeks.reduce((sum, w) => sum + w.timeSpent, 0);
-  const completedWeeks = allWeeks.filter(w => w.status === "completed").length;
+  const totalTimeSpent = formattedWeeks.reduce((sum, w) => sum + (w.timeSpent || 0), 0);
+  const completedWeeks = formattedWeeks.filter(w => w.status === "completed").length;
 
-  if (isLoading) {
+  if (isLoading || loadingFirebase) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Header />
         <div className="container mx-auto px-4 py-20 text-center">
-          <div className="text-gray-600 dark:text-gray-300">Loading...</div>
+          <div className="text-gray-600 dark:text-gray-300">
+            {loadingFirebase ? 'Loading your study plan from Firebase...' : 'Loading...'}
+          </div>
         </div>
         <Footer />
       </div>
@@ -167,7 +220,7 @@ export default function AllWeeksDashboard() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {allWeeks.map((week) => {
+          {formattedWeeks.map((week) => {
             const weekData = getWeekData(week.weekNumber);
             const completedDays = week.days.filter(d => d.status === "completed").length;
             const weekProgress = week.days.length > 0 ? Math.round((completedDays / 7) * 100) : 0;
