@@ -1,6 +1,7 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useLocation, useRoute } from "wouter";
 import { useState, useEffect } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Card } from "@/components/ui/card";
@@ -56,9 +57,46 @@ export default function DailyDashboard() {
   const [, params] = useRoute("/dashboard/week/:weekNumber/day/:dayIndex");
   const [, setLocation] = useLocation();
   const { toast } = useToast();
+  const { user } = useAuth();
+  const [firebaseData, setFirebaseData] = useState<any>(null);
+  const [loadingFirebase, setLoadingFirebase] = useState(!!user?.uid);
   
   const weekNumber = parseInt(params?.weekNumber || "1");
   const dayIndex = parseInt(params?.dayIndex || "0");
+
+  useEffect(() => {
+    const loadFirebaseData = async () => {
+      if (user?.uid) {
+        setLoadingFirebase(true);
+        try {
+          const response = await fetch('https://us-central1-certply-56653.cloudfunctions.net/getAllTasksByUid', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              uid: user.uid
+            })
+          });
+
+          if (!response.ok) {
+            throw new Error(`Firebase function error: ${response.status}`);
+          }
+
+          const data = await response.json();
+          console.log('Fetched daily data from Firebase Cloud Function:', data);
+          setFirebaseData(data || null);
+        } catch (error) {
+          console.error('Error loading Firebase data:', error);
+          setFirebaseData(null);
+        } finally {
+          setLoadingFirebase(false);
+        }
+      }
+    };
+    
+    loadFirebaseData();
+  }, [user]);
 
   const { data: weekProgress, isLoading } = useQuery<WeekProgressWithDays[]>({
     queryKey: ["/api/progress/weeks", weekNumber],
@@ -67,6 +105,7 @@ export default function DailyDashboard() {
       if (!response.ok) throw new Error('Failed to fetch week progress');
       return response.json();
     },
+    enabled: !firebaseData?.success,
   });
 
   const updateDayProgressMutation = useMutation({
@@ -96,11 +135,40 @@ export default function DailyDashboard() {
     return { success: false, planObject: null };
   })();
 
+  const isFirebaseMode = !!(firebaseData?.success && firebaseData?.tasksByWeek);
   const plan = studyPlan?.planObject;
   const weekData: WeekData | undefined = plan?.weeks.find((w: any) => w.weekNumber === weekNumber);
   const currentWeekProgress = weekProgress?.[0];
   const currentDayProgress = currentWeekProgress?.days.find(d => d.dayIndex === dayIndex);
-  const dailySchedule = weekData?.dailySchedule[dayIndex];
+  
+  const dayNames = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+  const currentDayName = dayNames[dayIndex];
+  
+  let dailySchedule: DailySchedule | undefined;
+  let firebaseDayTasks: any[] = [];
+  
+  if (isFirebaseMode && firebaseData?.tasksByWeek[weekNumber]) {
+    const weekTasks = firebaseData.tasksByWeek[weekNumber];
+    firebaseDayTasks = weekTasks[currentDayName] || [];
+    
+    if (firebaseDayTasks.length > 0) {
+      const firstTask = firebaseDayTasks[0];
+      dailySchedule = {
+        day: currentDayName,
+        time: firstTask.time || "9:00 AM - 11:00 AM",
+        activity: firstTask.activity || "Study Session",
+        type: firstTask.type || "learning",
+        duration: firstTask.duration || 120,
+        topic: {
+          name: firstTask.topic || "Study Topic",
+          estimatedTime: firstTask.duration || 120,
+          keyPoints: firebaseDayTasks.map((task: any) => task.task || task.description || "Study task")
+        }
+      };
+    }
+  } else {
+    dailySchedule = weekData?.dailySchedule[dayIndex];
+  }
 
   const [completedActivities, setCompletedActivities] = useState<string[]>([]);
 
@@ -110,7 +178,21 @@ export default function DailyDashboard() {
     }
   }, [currentDayProgress]);
 
-  if (!plan || !weekData || !dailySchedule) {
+  if (isLoading || loadingFirebase) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        <Header />
+        <div className="container mx-auto px-4 py-20 text-center">
+          <div className="text-gray-600 dark:text-gray-300">
+            {loadingFirebase ? 'Loading your study plan from Firebase...' : 'Loading...'}
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (!dailySchedule && !isFirebaseMode) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Header />
@@ -125,11 +207,30 @@ export default function DailyDashboard() {
       </div>
     );
   }
+  
+  if (isFirebaseMode && firebaseDayTasks.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        <Header />
+        <div className="container mx-auto px-4 py-20 text-center">
+          <AlertCircle className="w-16 h-16 mx-auto mb-4 text-red-500" />
+          <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Day Not Found</h1>
+          <p className="text-gray-600 dark:text-gray-300 mb-4">
+            No tasks found for {currentDayName} in Week {weekNumber}
+          </p>
+          <Button onClick={() => setLocation(`/dashboard/week/${weekNumber}`)} data-testid="button-back-week">
+            Back to Week
+          </Button>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
-  const todayTasks = dailySchedule.topic.keyPoints.map(point => ({ 
-    topic: dailySchedule.topic.name, 
+  const todayTasks = dailySchedule?.topic.keyPoints.map(point => ({ 
+    topic: dailySchedule?.topic.name || '', 
     task: point 
-  }));
+  })) || [];
 
   const handleToggleActivity = (activityId: string) => {
     const newCompleted = completedActivities.includes(activityId)
@@ -153,7 +254,7 @@ export default function DailyDashboard() {
       status: "completed",
       completedAt: new Date().toISOString(),
       completedActivities,
-      timeSpent: dailySchedule.duration,
+      timeSpent: dailySchedule?.duration || 0,
     });
 
     toast({
@@ -199,10 +300,10 @@ export default function DailyDashboard() {
           </Button>
           
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2" data-testid="text-page-title">
-            {dailySchedule.day} - Week {weekNumber}
+            {dailySchedule?.day} - Week {weekNumber}
           </h1>
           <p className="text-gray-600 dark:text-gray-300">
-            {dailySchedule.time} • {dailySchedule.activity}
+            {dailySchedule?.time} • {dailySchedule?.activity}
           </p>
         </div>
 
@@ -234,7 +335,7 @@ export default function DailyDashboard() {
               <Clock className="w-5 h-5 text-primary" />
             </div>
             <div className="text-3xl font-bold text-gray-900 dark:text-white" data-testid="text-time">
-              {dailySchedule.duration}m
+              {dailySchedule?.duration}m
             </div>
           </Card>
         </div>
@@ -302,17 +403,19 @@ export default function DailyDashboard() {
           )}
         </Card>
 
-        <Card className="p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm mb-6">
-          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Learning Objectives for This Week</h3>
-          <div className="space-y-2">
-            {weekData.learningObjectives.slice(0, 3).map((objective, index) => (
-              <div key={index} className="flex items-start gap-2" data-testid={`objective-${index}`}>
-                <CheckCircle2 className="w-4 h-4 text-primary mt-1 flex-shrink-0" />
-                <p className="text-sm text-gray-700 dark:text-gray-300">{objective}</p>
-              </div>
-            ))}
-          </div>
-        </Card>
+        {!isFirebaseMode && weekData?.learningObjectives && weekData.learningObjectives.length > 0 && (
+          <Card className="p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm mb-6">
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Learning Objectives for This Week</h3>
+            <div className="space-y-2">
+              {weekData.learningObjectives.slice(0, 3).map((objective, index) => (
+                <div key={index} className="flex items-start gap-2" data-testid={`objective-${index}`}>
+                  <CheckCircle2 className="w-4 h-4 text-primary mt-1 flex-shrink-0" />
+                  <p className="text-sm text-gray-700 dark:text-gray-300">{objective}</p>
+                </div>
+              ))}
+            </div>
+          </Card>
+        )}
 
         <div className="flex gap-4">
           <Button
