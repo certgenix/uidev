@@ -33,7 +33,7 @@ interface WeekProgressWithDays {
 export default function AllWeeksDashboard() {
   const [, setLocation] = useLocation();
   const { user } = useAuth();
-  const [firebaseWeeks, setFirebaseWeeks] = useState<any[]>([]);
+  const [firebaseData, setFirebaseData] = useState<any>(null);
   const [loadingFirebase, setLoadingFirebase] = useState(false);
 
   // Fetch from API (fallback)
@@ -63,10 +63,10 @@ export default function AllWeeksDashboard() {
 
           const data = await response.json();
           console.log('Fetched weeks and tasks from Firebase Cloud Function:', data);
-          setFirebaseWeeks(data || []);
+          setFirebaseData(data || null);
         } catch (error) {
           console.error('Error loading Firebase weeks:', error);
-          setFirebaseWeeks([]);
+          setFirebaseData(null);
         } finally {
           setLoadingFirebase(false);
         }
@@ -75,6 +75,9 @@ export default function AllWeeksDashboard() {
     
     loadFirebaseData();
   }, [user]);
+
+  // Use Firebase data if available
+  const isFirebaseMode = firebaseData?.success && firebaseData?.tasksByWeek;
 
   const studyPlan = (() => {
     try {
@@ -90,7 +93,8 @@ export default function AllWeeksDashboard() {
 
   const plan = studyPlan?.planObject;
 
-  if (!plan) {
+  // Show error only if both localStorage and Firebase data are missing
+  if (!plan && !isFirebaseMode && !loadingFirebase) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Header />
@@ -114,7 +118,7 @@ export default function AllWeeksDashboard() {
   }
 
   const getWeekData = (weekNumber: number) => {
-    return plan.weeks.find((w: any) => w.weekNumber === weekNumber);
+    return plan?.weeks?.find((w: any) => w.weekNumber === weekNumber);
   };
 
   const getStatusIcon = (status: string) => {
@@ -139,28 +143,36 @@ export default function AllWeeksDashboard() {
     }
   };
 
-  // Use Firebase data if available, otherwise fallback to API data
-  const isFirebaseMode = firebaseWeeks.length > 0;
-
   // Convert Firebase weeks to the same format as API weeks for display
-  const formattedWeeks = isFirebaseMode 
-    ? firebaseWeeks.map(fw => ({
-        id: fw.id,
-        weekNumber: fw.weekNumber,
-        status: fw.status,
-        startedAt: fw.startedAt,
-        completedAt: fw.completedAt,
-        completedTopics: fw.tasks.filter(t => t.status === 'completed').length,
-        totalTopics: fw.tasks.length,
-        timeSpent: 0, // You can calculate this from tasks if needed
-        days: fw.tasks.map((task, idx) => ({
-          id: task.id,
-          dayIndex: task.dayNumber,
-          dayName: `Day ${task.dayNumber}`,
-          status: task.status === 'completed' ? 'completed' : task.status === 'in_progress' ? 'available' : 'locked',
-          completedAt: task.completedAt || null
-        }))
-      }))
+  const formattedWeeks = isFirebaseMode && firebaseData?.weeks
+    ? firebaseData.weeks.map((weekNum: number) => {
+        const weekTasks = firebaseData.tasksByWeek[weekNum] || {};
+        const allTasks = Object.values(weekTasks).flat();
+        const completedTasks = allTasks.filter((task: any) => task.completedAt).length;
+        
+        // Determine week status based on tasks
+        const hasAvailableTask = allTasks.some((task: any) => !task.completedAt);
+        const allCompleted = allTasks.length > 0 && allTasks.every((task: any) => task.completedAt);
+        const status = allCompleted ? 'completed' : hasAvailableTask ? 'available' : 'locked';
+        
+        return {
+          id: `week-${weekNum}`,
+          weekNumber: weekNum,
+          status,
+          startedAt: null,
+          completedAt: null,
+          completedTopics: completedTasks,
+          totalTopics: allTasks.length,
+          timeSpent: 0,
+          days: Object.entries(weekTasks).map(([day, tasks]: [string, any]) => ({
+            id: `${weekNum}-${day}`,
+            dayIndex: ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].indexOf(day),
+            dayName: day,
+            status: tasks.every((t: any) => t.completedAt) ? 'completed' : 'available',
+            completedAt: null
+          }))
+        };
+      })
     : allWeeks;
 
   const calculateOverallProgress = () => {
@@ -196,7 +208,7 @@ export default function AllWeeksDashboard() {
             Study Plan Overview
           </h1>
           <p className="text-gray-600 dark:text-gray-300">
-            Track your progress across all {plan.totalWeeks} weeks
+            Track your progress across all {plan?.totalWeeks || formattedWeeks.length} weeks
           </p>
         </div>
 
@@ -218,7 +230,7 @@ export default function AllWeeksDashboard() {
               <CheckCircle2 className="w-5 h-5 text-green-500" />
             </div>
             <div className="text-3xl font-bold text-gray-900 dark:text-white" data-testid="text-completed-weeks">
-              {completedWeeks} / {plan.totalWeeks}
+              {completedWeeks} / {plan?.totalWeeks || formattedWeeks.length}
             </div>
           </Card>
 
