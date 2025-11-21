@@ -1,5 +1,5 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { useLocation, useRoute } from "wouter";
+import { useLocation } from "wouter";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import Header from "@/components/Header";
@@ -53,16 +53,20 @@ interface WeekData {
   learningObjectives: string[];
 }
 
-export default function DailyDashboard() {
-  const [, params] = useRoute("/dashboard/week/:weekNumber/day/:dayIndex");
+interface DailyDashboardProps {
+  weekNumber?: string;
+  dayIndex?: string;
+}
+
+export default function DailyDashboard({ weekNumber: weekNumberProp, dayIndex: dayIndexProp }: DailyDashboardProps) {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const { user } = useAuth();
   const [firebaseData, setFirebaseData] = useState<any>(null);
   const [loadingFirebase, setLoadingFirebase] = useState(!!user?.uid);
   
-  const weekNumber = parseInt(params?.weekNumber || "1");
-  const dayIndex = parseInt(params?.dayIndex || "0");
+  const weekNumber = parseInt(weekNumberProp || "1");
+  const dayIndex = parseInt(dayIndexProp || "0");
 
   useEffect(() => {
     const loadFirebaseData = async () => {

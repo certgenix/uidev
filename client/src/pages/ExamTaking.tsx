@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useParams, useLocation } from "wouter";
+import { useLocation } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
@@ -23,8 +23,12 @@ interface QuestionItem {
   options: Array<{ id: string; text: string }>;
 }
 
-export default function ExamTaking() {
-  const { sessionId } = useParams();
+interface ExamTakingProps {
+  sessionId?: string;
+}
+
+export default function ExamTaking({ sessionId: sessionIdProp }: ExamTakingProps) {
+  const sessionId = sessionIdProp;
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const [currentIndex, setCurrentIndex] = useState(0);

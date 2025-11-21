@@ -1,4 +1,3 @@
-import { useParams } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/Header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,8 +5,12 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { CheckCircle2, XCircle } from "lucide-react";
 
-export default function ExamResults() {
-  const { sessionId } = useParams();
+interface ExamResultsProps {
+  sessionId?: string;
+}
+
+export default function ExamResults({ sessionId: sessionIdProp }: ExamResultsProps) {
+  const sessionId = sessionIdProp;
 
   const { data: results, isLoading } = useQuery({
     queryKey: ["/api/sessions", sessionId, "results"],

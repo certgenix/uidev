@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { useLocation, useRoute, Link } from "wouter";
+import { useLocation, Link } from "wouter";
 import { useAuth } from "@/contexts/AuthContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -60,15 +60,18 @@ interface WeekData {
   totalTime: number;
 }
 
-export default function WeeklyDashboard() {
-  const [, params] = useRoute("/dashboard/week/:weekNumber");
+interface WeeklyDashboardProps {
+  weekNumber?: string;
+}
+
+export default function WeeklyDashboard({ weekNumber: weekNumberProp }: WeeklyDashboardProps) {
   const [, setLocation] = useLocation();
   const { user } = useAuth();
   const [firebaseData, setFirebaseData] = useState<any>(null);
   // Initialize loadingFirebase to true if user exists, so we show loading screen first
   const [loadingFirebase, setLoadingFirebase] = useState(!!user?.uid);
   
-  const weekNumber = parseInt(params?.weekNumber || "1");
+  const weekNumber = parseInt(weekNumberProp || "1");
 
   useEffect(() => {
     const loadFirebaseData = async () => {
