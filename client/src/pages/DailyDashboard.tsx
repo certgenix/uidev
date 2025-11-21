@@ -112,6 +112,33 @@ export default function DailyDashboard({ weekNumber: weekNumberProp, dayIndex: d
     enabled: !firebaseData?.success,
   });
 
+  // Progressive unlock guard: check if week should be accessible
+  useEffect(() => {
+    if (weekNumber > 1 && !loadingFirebase && !isLoading) {
+      let shouldBlock = false;
+      
+      // Check Firebase mode
+      if (firebaseData?.tasksByWeek) {
+        const prevWeekNum = weekNumber - 1;
+        const prevWeekTasks = firebaseData.tasksByWeek[prevWeekNum] || {};
+        const prevAllTasks = Object.values(prevWeekTasks).flat() as any[];
+        const prevWeekCompleted = prevAllTasks.length > 0 && prevAllTasks.every((task: any) => task.completedAt);
+        shouldBlock = !prevWeekCompleted;
+      } 
+      // Check localStorage/API mode
+      else if (weekProgress && weekProgress.length > 0) {
+        const prevWeekNum = weekNumber - 1;
+        const prevWeek = weekProgress.find((w: WeekProgressWithDays) => w.weekNumber === prevWeekNum);
+        shouldBlock = !prevWeek || prevWeek.status !== 'completed';
+      }
+      
+      if (shouldBlock) {
+        console.log(`Week ${weekNumber} is locked. Redirecting to all weeks dashboard.`);
+        setLocation('/dashboard/all-weeks');
+      }
+    }
+  }, [weekNumber, firebaseData, weekProgress, loadingFirebase, isLoading, setLocation]);
+
   const updateDayProgressMutation = useMutation({
     mutationFn: async (updates: any) => {
       const response = await fetch(`/api/progress/weeks/${weekNumber}/days/${dayIndex}`, {
