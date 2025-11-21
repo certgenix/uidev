@@ -251,15 +251,28 @@ export default function AllWeeksDashboard() {
             const completedDays = week.days.filter(d => d.status === "completed").length;
             const totalDays = week.days.length;
             const weekProgress = totalDays > 0 ? Math.round((completedDays / totalDays) * 100) : 0;
+            const isLocked = week.status === "locked";
 
             return (
               <Card 
                 key={week.id} 
-                className={`p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm transition-all hover:shadow-lg ${
-                  week.status === "available" ? "border-2 border-primary" : ""
+                className={`p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm transition-all relative ${
+                  week.status === "available" ? "border-2 border-primary hover:shadow-lg" : 
+                  isLocked ? "opacity-60" : "hover:shadow-lg"
                 }`}
                 data-testid={`card-week-${week.weekNumber}`}
               >
+                {isLocked && (
+                  <div className="absolute inset-0 bg-gray-900/5 dark:bg-gray-900/30 backdrop-blur-[2px] rounded-lg flex items-center justify-center z-10">
+                    <div className="text-center">
+                      <Lock className="w-12 h-12 mx-auto mb-2 text-gray-400 dark:text-gray-500" />
+                      <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                        Complete Week {week.weekNumber - 1} to unlock
+                      </p>
+                    </div>
+                  </div>
+                )}
+                
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
@@ -310,8 +323,22 @@ export default function AllWeeksDashboard() {
                   disabled={week.status === "locked"}
                   data-testid={`button-view-week-${week.weekNumber}`}
                 >
-                  {week.status === "locked" ? "Locked" : "View Week"}
-                  {week.status !== "locked" && <ChevronRight className="w-4 h-4 ml-2" />}
+                  {week.status === "locked" ? (
+                    <>
+                      <Lock className="w-4 h-4 mr-2" />
+                      Locked
+                    </>
+                  ) : week.status === "completed" ? (
+                    <>
+                      <CheckCircle2 className="w-4 h-4 mr-2" />
+                      View Week
+                    </>
+                  ) : (
+                    <>
+                      View Week
+                      <ChevronRight className="w-4 h-4 ml-2" />
+                    </>
+                  )}
                 </Button>
               </Card>
             );
