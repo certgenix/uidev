@@ -8,7 +8,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ArrowLeft, CheckCircle2, Clock, Target, BookOpen, AlertCircle } from "lucide-react";
+import { ArrowLeft, CheckCircle2, Clock, Target, BookOpen, AlertCircle, Lock } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
@@ -514,51 +514,74 @@ export default function DailyDashboard() {
             </div>
           ) : (
             <div className="space-y-4">
-              {todayTasks.map((task, index) => {
-                const isCompleted = completedActivities.includes(task.taskId);
+              {(() => {
+                const firstIncompleteIndex = todayTasks.findIndex(t => !completedActivities.includes(t.taskId));
+                
+                return todayTasks.map((task, index) => {
+                  const isCompleted = completedActivities.includes(task.taskId);
+                  const isAvailable = firstIncompleteIndex === -1 ? false : index === firstIncompleteIndex;
+                  const isLocked = !isCompleted && !isAvailable;
 
-                return (
-                  <div 
-                    key={task.taskId}
-                    className={`p-4 rounded-lg border-2 transition-all ${
-                      isCompleted 
-                        ? "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800" 
-                        : "bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700"
-                    }`}
-                    data-testid={`task-${index}`}
-                  >
-                    <div className="flex items-start gap-4">
-                      <Checkbox
-                        id={task.taskId}
-                        checked={isCompleted}
-                        onCheckedChange={() => handleToggleActivity(task.taskId)}
-                        className="mt-1"
-                        disabled={completingTask}
-                        data-testid={`checkbox-task-${index}`}
-                      />
-                      <div className="flex-1">
-                        <label
-                          htmlFor={task.taskId}
-                          className={`block font-medium mb-1 cursor-pointer ${
+                  return (
+                    <div 
+                      key={task.taskId}
+                      className={`p-4 rounded-lg border-2 transition-all ${
+                        isCompleted 
+                          ? "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800" 
+                          : isAvailable
+                          ? "bg-primary/10 dark:bg-primary/20 border-primary"
+                          : "bg-muted border-muted"
+                      }`}
+                      data-testid={`task-${index}`}
+                    >
+                      <div className="flex items-start gap-4">
+                        {isLocked ? (
+                          <Lock className="w-5 h-5 text-muted-foreground mt-1" data-testid={`lock-task-${index}`} />
+                        ) : isCompleted ? (
+                          <CheckCircle2 className="w-5 h-5 text-green-500 mt-1" data-testid={`check-task-${index}`} />
+                        ) : (
+                          <Checkbox
+                            id={task.taskId}
+                            checked={false}
+                            onCheckedChange={() => handleToggleActivity(task.taskId)}
+                            className="mt-1"
+                            disabled={!isAvailable || completingTask}
+                            data-testid={`checkbox-task-${index}`}
+                          />
+                        )}
+                        <div className="flex-1">
+                          <label
+                            htmlFor={task.taskId}
+                            className={`block font-medium mb-1 ${
+                              isCompleted 
+                                ? "text-green-700 dark:text-green-300 line-through cursor-pointer" 
+                                : isAvailable
+                                ? "text-foreground cursor-pointer"
+                                : "text-muted-foreground"
+                            }`}
+                          >
+                            {task.topic}
+                          </label>
+                          <p className={`text-sm ${
                             isCompleted 
-                              ? "text-green-700 dark:text-green-300 line-through" 
-                              : "text-gray-900 dark:text-white"
-                          }`}
-                        >
-                          {task.topic}
-                        </label>
-                        <p className={`text-sm ${
-                          isCompleted 
-                            ? "text-green-600 dark:text-green-400" 
-                            : "text-gray-600 dark:text-gray-400"
-                        }`}>
-                          {task.task}
-                        </p>
+                              ? "text-green-600 dark:text-green-400" 
+                              : isAvailable
+                              ? "text-muted-foreground"
+                              : "text-muted-foreground"
+                          }`}>
+                            {task.task}
+                          </p>
+                          {isLocked && (
+                            <p className="text-xs text-muted-foreground mt-1 italic">
+                              Complete previous tasks to unlock
+                            </p>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                });
+              })()}
             </div>
           )}
         </Card>
