@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type Question, type InsertQuestion, type Session, type InsertSession, type WeekProgress, type InsertWeekProgress, type DayProgress, type InsertDayProgress } from "@shared/schema";
+import { type User, type InsertUser, type Question, type InsertQuestion, type Session, type InsertSession, type WeekProgress, type InsertWeekProgress, type DayProgress, type InsertDayProgress, type Certificate, type InsertCertificate } from "@shared/schema";
 import { randomUUID } from "crypto";
 
 export interface IStorage {
@@ -27,6 +27,10 @@ export interface IStorage {
   getDayProgressById(id: string): Promise<DayProgress | undefined>;
   createDayProgress(dayProgress: InsertDayProgress): Promise<DayProgress>;
   updateDayProgress(id: string, updates: Partial<DayProgress>): Promise<DayProgress | undefined>;
+
+  getCertificate(userId: string, planName: string): Promise<Certificate | undefined>;
+  getUserCertificates(userId: string): Promise<Certificate[]>;
+  createCertificate(certificate: InsertCertificate): Promise<Certificate>;
 }
 
 export class MemStorage implements IStorage {
@@ -35,6 +39,7 @@ export class MemStorage implements IStorage {
   private sessions: Map<string, Session>;
   private weekProgress: Map<string, WeekProgress>;
   private dayProgress: Map<string, DayProgress>;
+  private certificates: Map<string, Certificate>;
 
   constructor() {
     this.users = new Map();
@@ -42,6 +47,7 @@ export class MemStorage implements IStorage {
     this.sessions = new Map();
     this.weekProgress = new Map();
     this.dayProgress = new Map();
+    this.certificates = new Map();
   }
 
   async getUser(id: string): Promise<User | undefined> {
@@ -256,6 +262,30 @@ export class MemStorage implements IStorage {
     };
     this.dayProgress.set(id, updatedDayProgress);
     return updatedDayProgress;
+  }
+
+  async getCertificate(userId: string, planName: string): Promise<Certificate | undefined> {
+    return Array.from(this.certificates.values()).find(
+      (cert) => cert.userId === userId && cert.planName === planName
+    );
+  }
+
+  async getUserCertificates(userId: string): Promise<Certificate[]> {
+    return Array.from(this.certificates.values()).filter(
+      (cert) => cert.userId === userId
+    );
+  }
+
+  async createCertificate(insertCertificate: InsertCertificate): Promise<Certificate> {
+    const id = randomUUID();
+    const now = new Date();
+    const certificate: Certificate = {
+      ...insertCertificate,
+      id,
+      createdAt: now,
+    };
+    this.certificates.set(id, certificate);
+    return certificate;
   }
 }
 

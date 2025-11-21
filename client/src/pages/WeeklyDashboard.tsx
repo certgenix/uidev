@@ -8,8 +8,9 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calendar, CheckCircle2, Lock, Clock, AlertCircle, ArrowLeft, Target, BookOpen } from "lucide-react";
+import { Calendar, CheckCircle2, Lock, Clock, AlertCircle, ArrowLeft, Target, BookOpen, Award, Download } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
 interface DayProgress {
   id: string;
@@ -68,8 +69,8 @@ export default function WeeklyDashboard({ weekNumber: weekNumberProp }: WeeklyDa
   const [, setLocation] = useLocation();
   const { user } = useAuth();
   const [firebaseData, setFirebaseData] = useState<any>(null);
-  // Initialize loadingFirebase to true if user exists, so we show loading screen first
   const [loadingFirebase, setLoadingFirebase] = useState(!!user?.uid);
+  const { toast } = useToast();
   
   const weekNumber = parseInt(weekNumberProp || "1");
 
@@ -115,6 +116,54 @@ export default function WeeklyDashboard({ weekNumber: weekNumberProp }: WeeklyDa
       return response.json();
     },
     enabled: !firebaseData?.success,
+  });
+
+  const { data: allWeeksProgress = [] } = useQuery<WeekProgressWithDays[]>({
+    queryKey: ["/api/progress/weeks"],
+    enabled: !firebaseData?.success,
+  });
+
+  const generateCertificateMutation = useMutation({
+    mutationFn: async () => {
+      if (!allWeeksCompleted) {
+        throw new Error("Not all weeks are completed yet");
+      }
+      
+      const planName = plan?.certification || "Certification Study Plan";
+      const userName = user?.displayName || user?.email || "Student";
+      const userId = user?.uid || "demo-user";
+      
+      const response = await apiRequest("POST", "/api/certificates", { 
+        userId, 
+        userName, 
+        planName,
+        isFirebaseMode 
+      });
+      return await response.json();
+    },
+    onSuccess: (certificate: any) => {
+      toast({
+        title: "Certificate Generated!",
+        description: "Your certificate has been generated successfully.",
+      });
+      queryClient.invalidateQueries({ queryKey: ["/api/certificates"] });
+      
+      const fileName = certificate.filePath.split('/').pop();
+      const downloadUrl = `/api/certificates/download/${fileName}`;
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to generate certificate",
+        variant: "destructive"
+      });
+    }
   });
 
   // Progressive unlock guard: check if week should be accessible
@@ -236,6 +285,17 @@ export default function WeeklyDashboard({ weekNumber: weekNumberProp }: WeeklyDa
   const completedDays = currentWeekProgress?.days.filter(d => d.status === "completed").length || 0;
   const totalDays = currentWeekProgress?.days.length || 0;
   const weekProgressPct = totalDays ? Math.round((completedDays / totalDays) * 100) : 0;
+  
+  const allWeeksCompleted = (() => {
+    if (isFirebaseMode && firebaseData?.weeks) {
+      return firebaseData.weeks.every((weekNum: number) => {
+        const weekTasks = firebaseData.tasksByWeek[weekNum] || {};
+        const allTasks = Object.values(weekTasks).flat() as any[];
+        return allTasks.length > 0 && allTasks.every((task: any) => task.completedAt);
+      });
+    }
+    return allWeeksProgress.length > 0 && allWeeksProgress.every((w: WeekProgressWithDays) => w.status === "completed");
+  })();
   
   // Get the scheduled day indices from the study plan
   const scheduledDayIndices = weekData?.dailySchedule?.map((_, index) => index) || [];
@@ -534,6 +594,44 @@ export default function WeeklyDashboard({ weekNumber: weekNumberProp }: WeeklyDa
             </Button>
           </div>
         )}
+
+        <div className="mt-8">
+          <Card className="p-6 bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-950/20 dark:to-yellow-950/20 border-2 border-amber-200 dark:border-amber-800">
+            <div className="flex items-center justify-between gap-4 flex-wrap">
+              <div className="flex items-center gap-4">
+                <div className="bg-amber-100 dark:bg-amber-900/30 p-3 rounded-lg">
+                  <Award className="w-8 h-8 text-amber-600 dark:text-amber-400" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
+                    Certificate of Completion
+                  </h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                    {allWeeksCompleted 
+                      ? "Congratulations! You've completed all weeks. Get your certificate!" 
+                      : "Complete all weeks to earn your certificate"}
+                  </p>
+                </div>
+              </div>
+              <Button
+                onClick={() => generateCertificateMutation.mutate()}
+                disabled={!allWeeksCompleted || generateCertificateMutation.isPending}
+                size="lg"
+                className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-white gap-2"
+                data-testid="button-get-certificate"
+              >
+                {generateCertificateMutation.isPending ? (
+                  "Generating..."
+                ) : (
+                  <>
+                    <Download className="w-5 h-5" />
+                    Get Certificate
+                  </>
+                )}
+              </Button>
+            </div>
+          </Card>
+        </div>
       </div>
 
       <Footer />

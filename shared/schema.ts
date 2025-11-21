@@ -137,3 +137,20 @@ export const insertDayProgressSchema = createInsertSchema(dayProgress).omit({
 
 export type InsertDayProgress = z.infer<typeof insertDayProgressSchema>;
 export type DayProgress = typeof dayProgress.$inferSelect;
+
+export const certificates = pgTable("certificates", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull(),
+  planName: text("plan_name").notNull(),
+  completedAt: timestamp("completed_at").notNull(),
+  filePath: text("file_path").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertCertificateSchema = createInsertSchema(certificates).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type InsertCertificate = z.infer<typeof insertCertificateSchema>;
+export type Certificate = typeof certificates.$inferSelect;

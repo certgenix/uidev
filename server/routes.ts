@@ -3,6 +3,8 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { allocateQuestions, gradeQuestion, calculateFinalScore } from "./examLogic";
 import type { Question } from "@shared/schema";
+import { generateCertificate } from "./certificateGenerator";
+import { join } from "path";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   
@@ -409,6 +411,64 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       res.json(updated);
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+
+  app.post("/api/certificates", async (req, res) => {
+    try {
+      const { userId, userName, planName, isFirebaseMode } = req.body;
+      
+      const existing = await storage.getCertificate(userId, planName);
+      if (existing) {
+        return res.json(existing);
+      }
+
+      if (!isFirebaseMode) {
+        const allWeeks = await storage.getWeekProgress(userId);
+        const allCompleted = allWeeks.length > 0 && allWeeks.every(w => w.status === "completed");
+        
+        if (!allCompleted) {
+          return res.status(400).json({ message: "Not all weeks are completed yet", type: "incomplete" });
+        }
+      }
+
+      const filePath = await generateCertificate({
+        userId,
+        userName,
+        planName,
+        completedAt: new Date()
+      });
+
+      const certificate = await storage.createCertificate({
+        userId,
+        planName,
+        completedAt: new Date(),
+        filePath
+      });
+
+      res.json(certificate);
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+
+  app.get("/api/certificates", async (req, res) => {
+    try {
+      const userId = req.query.userId as string || "demo-user";
+      const certificates = await storage.getUserCertificates(userId);
+      res.json(certificates);
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+
+  app.get("/api/certificates/download/:fileName", async (req, res) => {
+    try {
+      const fileName = req.params.fileName;
+      const filePath = join(process.cwd(), 'attached_assets', 'certificates', fileName);
+      res.download(filePath);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }
