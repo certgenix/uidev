@@ -249,7 +249,8 @@ export default function AllWeeksDashboard() {
           {formattedWeeks.map((week) => {
             const weekData = getWeekData(week.weekNumber);
             const completedDays = week.days.filter(d => d.status === "completed").length;
-            const weekProgress = week.days.length > 0 ? Math.round((completedDays / 7) * 100) : 0;
+            const totalDays = week.days.length;
+            const weekProgress = totalDays > 0 ? Math.round((completedDays / totalDays) * 100) : 0;
 
             return (
               <Card 
@@ -287,7 +288,7 @@ export default function AllWeeksDashboard() {
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600 dark:text-gray-400">Days</span>
                     <span className="text-gray-900 dark:text-white font-medium">
-                      {completedDays} / 7
+                      {completedDays} / {totalDays}
                     </span>
                   </div>
 

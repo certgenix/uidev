@@ -204,7 +204,8 @@ export default function WeeklyDashboard() {
   }
 
   const completedDays = currentWeekProgress?.days.filter(d => d.status === "completed").length || 0;
-  const weekProgressPct = currentWeekProgress?.days.length ? Math.round((completedDays / 7) * 100) : 0;
+  const totalDays = currentWeekProgress?.days.length || 0;
+  const weekProgressPct = totalDays ? Math.round((completedDays / totalDays) * 100) : 0;
   
   // Get the scheduled day indices from the study plan
   const scheduledDayIndices = weekData?.dailySchedule?.map((_, index) => index) || [];
@@ -288,7 +289,7 @@ export default function WeeklyDashboard() {
               <CheckCircle2 className="w-5 h-5 text-green-500" />
             </div>
             <div className="text-3xl font-bold text-gray-900 dark:text-white" data-testid="text-days-complete">
-              {completedDays} / 7
+              {completedDays} / {totalDays}
             </div>
           </Card>
 
@@ -411,7 +412,7 @@ export default function WeeklyDashboard() {
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4 text-primary" />
                     <span className="text-sm text-gray-700 dark:text-gray-300">
-                      {completedDays} of 7 days completed
+                      {completedDays} of {totalDays} days completed
                     </span>
                   </div>
                 </div>
