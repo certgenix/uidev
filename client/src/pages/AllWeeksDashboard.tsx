@@ -177,12 +177,12 @@ export default function AllWeeksDashboard() {
 
   const calculateOverallProgress = () => {
     if (formattedWeeks.length === 0) return 0;
-    const completed = formattedWeeks.filter(w => w.status === "completed").length;
+    const completed = formattedWeeks.filter((w: WeekProgressWithDays) => w.status === "completed").length;
     return Math.round((completed / formattedWeeks.length) * 100);
   };
 
-  const totalTimeSpent = formattedWeeks.reduce((sum, w) => sum + (w.timeSpent || 0), 0);
-  const completedWeeks = formattedWeeks.filter(w => w.status === "completed").length;
+  const totalTimeSpent = formattedWeeks.reduce((sum: number, w: WeekProgressWithDays) => sum + (w.timeSpent || 0), 0);
+  const completedWeeks = formattedWeeks.filter((w: WeekProgressWithDays) => w.status === "completed").length;
 
   if (isLoading || loadingFirebase) {
     return (
@@ -246,9 +246,9 @@ export default function AllWeeksDashboard() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {formattedWeeks.map((week) => {
+          {formattedWeeks.map((week: WeekProgressWithDays) => {
             const weekData = getWeekData(week.weekNumber);
-            const completedDays = week.days.filter(d => d.status === "completed").length;
+            const completedDays = week.days.filter((d: DayProgress) => d.status === "completed").length;
             const totalDays = week.days.length;
             const weekProgress = totalDays > 0 ? Math.round((completedDays / totalDays) * 100) : 0;
             const isLocked = week.status === "locked";
@@ -266,7 +266,10 @@ export default function AllWeeksDashboard() {
                   <div className="absolute inset-0 bg-gray-900/5 dark:bg-gray-900/30 backdrop-blur-[2px] rounded-lg flex items-center justify-center z-10">
                     <div className="text-center">
                       <Lock className="w-12 h-12 mx-auto mb-2 text-gray-400 dark:text-gray-500" />
-                      <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                      <p 
+                        className="text-sm font-medium text-gray-600 dark:text-gray-400"
+                        data-testid={`text-unlock-message-week-${week.weekNumber}`}
+                      >
                         Complete Week {week.weekNumber - 1} to unlock
                       </p>
                     </div>
