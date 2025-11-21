@@ -143,17 +143,38 @@ export default function AllWeeksDashboard() {
     }
   };
 
-  // Convert Firebase weeks to the same format as API weeks for display
+  // Convert Firebase weeks to the same format as API weeks for display with progressive unlocking
   const formattedWeeks = isFirebaseMode && firebaseData?.weeks
-    ? firebaseData.weeks.map((weekNum: number) => {
+    ? firebaseData.weeks.map((weekNum: number, index: number) => {
         const weekTasks = firebaseData.tasksByWeek[weekNum] || {};
         const allTasks = Object.values(weekTasks).flat();
         const completedTasks = allTasks.filter((task: any) => task.completedAt).length;
         
-        // Determine week status based on tasks
-        const hasAvailableTask = allTasks.some((task: any) => !task.completedAt);
+        // Check if all tasks in this week are completed
         const allCompleted = allTasks.length > 0 && allTasks.every((task: any) => task.completedAt);
-        const status = allCompleted ? 'completed' : hasAvailableTask ? 'available' : 'locked';
+        
+        // Progressive unlocking logic: 
+        // Week 1 is always available
+        // Other weeks are only available if the previous week is completed
+        let status = 'locked';
+        if (weekNum === 1) {
+          // Week 1 is always available or completed
+          status = allCompleted ? 'completed' : 'available';
+        } else {
+          // Check if previous week is completed
+          const prevWeekNum = weekNum - 1;
+          const prevWeekTasks = firebaseData.tasksByWeek[prevWeekNum] || {};
+          const prevAllTasks = Object.values(prevWeekTasks).flat();
+          const prevWeekCompleted = prevAllTasks.length > 0 && prevAllTasks.every((task: any) => task.completedAt);
+          
+          if (prevWeekCompleted) {
+            // Previous week is completed, so this week is unlocked
+            status = allCompleted ? 'completed' : 'available';
+          } else {
+            // Previous week not completed, this week stays locked
+            status = 'locked';
+          }
+        }
         
         return {
           id: `week-${weekNum}`,
