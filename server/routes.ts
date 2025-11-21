@@ -420,8 +420,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { userId, userName, planName, isFirebaseMode } = req.body;
       
+      console.log(`[Certificate Generation] Request received for userId=${userId}, planName=${planName}, isFirebaseMode=${isFirebaseMode}`);
+      
       const existing = await storage.getCertificate(userId, planName);
       if (existing) {
+        console.log(`[Certificate Generation] Returning existing certificate for userId=${userId}`);
         return res.json(existing);
       }
 
@@ -430,8 +433,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const allCompleted = allWeeks.length > 0 && allWeeks.every(w => w.status === "completed");
         
         if (!allCompleted) {
+          console.log(`[Certificate Generation] Validation failed - not all weeks completed for userId=${userId}`);
           return res.status(400).json({ message: "Not all weeks are completed yet", type: "incomplete" });
         }
+        console.log(`[Certificate Generation] Local mode validation passed for userId=${userId}`);
+      } else {
+        console.log(`[Certificate Generation] Firebase mode - trusting client completion status for userId=${userId}`);
       }
 
       const filePath = await generateCertificate({
@@ -448,8 +455,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         filePath
       });
 
+      console.log(`[Certificate Generation] Certificate generated successfully for userId=${userId}, saved to ${filePath}`);
       res.json(certificate);
     } catch (error: any) {
+      console.error(`[Certificate Generation] Error:`, error);
       res.status(500).json({ message: error.message });
     }
   });
